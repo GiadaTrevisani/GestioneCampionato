@@ -9,10 +9,10 @@ package model;
  *
  * @author giadatrevisani
  */
-public class ClassificaV extends Classifica{
+public class RankingVolley extends Ranking{
 
-    public ClassificaV(Squadra[] squadre, Classifica classifica, int numero) {
-        super(squadre, classifica, numero);
+    public RankingVolley(Team[] teams, Ranking ranking, int numero) {
+        super(teams, ranking, numero);
     } 
     
     /*
@@ -21,16 +21,16 @@ public class ClassificaV extends Classifica{
      * fuori casa e quindi l'algoritmo non è perfetto
      */
     @Override
-    public int getVinteForSquadra(String nomeSquadra, Partita[] partite, int numero){
+    public int getWinForTeam(String TeamName, Match[] games, int numero){
         int partiteVinte = 0;
         for (int i = 0; i < numero; i++) {
-            if(nomeSquadra == partite[i].getSquadraCasa().getNome()){
+            if(TeamName == games[i].getHomeTeam().getName()){
                 /*
                  * se la condizione è vera vuol dire che la squadra in 
                  * questione è quella che cerchiamo, guardiamo se ha vinto e
                  * calcoliamo i punti da assegnare.
                  */
-                if(partite[i].getPuntiCasa() > partite[i].getPuntiOspite()){
+                if(games[i].getPointsHome() > games[i].getPointsGuest()){
                     /*
                      * se la condizione è vera vuol dire che la squadra in
                      * questione ha vinto il match.
@@ -39,13 +39,13 @@ public class ClassificaV extends Classifica{
                    partiteVinte ++;
                 }
             }
-            if(nomeSquadra == partite[i].getSquadraOspite().getNome()){
+            if(TeamName == games[i].getGuestTeam().getName()){
                 /*
                 * se la condizione è vera vuol dire che la squadra in 
                 * questione è quella che cerchiamo, guardiamo se ha vinto e
                 * calcoliamo i punti da assegnare.
                 */
-                if(partite[i].getPuntiOspite() > partite[i].getPuntiCasa()){
+                if(games[i].getPointsGuest() > games[i].getPointsHome()){
                     /*
                      * se la condizione è vera vuol dire che la squadra in
                      * questione ha vinto il match.
@@ -59,16 +59,16 @@ public class ClassificaV extends Classifica{
     }
 
     @Override
-    public int getPerseForSquadra(String nomeSquadra, int numero, Partita[] partite) {
+    public int getLooseForTeam(String TeamName, int numero, Match[] games) {
         int partitePerse = 0;
         for (int i = 0; i < numero; i++) {
-            if(nomeSquadra == partite[i].getSquadraCasa().getNome()){
+            if(TeamName == games[i].getHomeTeam().getName()){
                 /*
                  * se la condizione è vera vuol dire che la squadra in 
                  * questione è quella che cerchiamo, guardiamo se ha vinto e
                  * calcoliamo i punti da assegnare.
                  */
-                if(partite[i].getPuntiCasa() < partite[i].getPuntiOspite()){
+                if(games[i].getPointsHome() < games[i].getPointsGuest()){
                     /*
                      * se la condizione è vera, aggiungiamo una partita persa
                      * al totale delle partite perse.
@@ -76,13 +76,13 @@ public class ClassificaV extends Classifica{
                     partitePerse++;
                 }
             }
-            if(nomeSquadra == partite[i].getSquadraOspite().getNome()){
+            if(TeamName == games[i].getGuestTeam().getName()){
                 /*
                 * se la condizione è vera vuol dire che la squadra in 
                 * questione è quella che cerchiamo, guardiamo se ha vinto e
                 * calcoliamo i punti da assegnare.
                 */
-                if(partite[i].getPuntiOspite() > partite[i].getPuntiCasa() ){
+                if(games[i].getPointsGuest() > games[i].getPointsHome() ){
                     /*
                      * se la condizione è vera, la squadra ha perso il match,
                      * quindi aggiungiamo una partita persa al totale delle 
@@ -96,21 +96,21 @@ public class ClassificaV extends Classifica{
     }
 
     @Override
-    public int getPuntiForSquadra(String nomeSquadra, int numero, Partita[] partite) {
+    public int getpointsForTeam(String TeamName, int numero, Match[] games) {
         int totalePunti = 0;
         for (int i = 0; i < numero; i++) {
-            if(nomeSquadra == partite[i].getSquadraCasa().getNome()){
+            if(TeamName == games[i].getHomeTeam().getName()){
                 /*
                  * se la condizione è vera vuol dire che la squadra in 
                  * questione è quella che cerchiamo, guardiamo se ha vinto e
                  * calcoliamo i punti da assegnare.
                  */
-                if(partite[i].getPuntiCasa() > partite[i].getPuntiOspite()){
+                if(games[i].getPointsHome() > games[i].getPointsGuest()){
                     /*
                      * se la condizione è vera vuol dire che la squadra in
                      * questione ha vinto il match.
                     */
-                    if(partite[i].getPuntiOspite() == 2 ){
+                    if(games[i].getPointsGuest() == 2 ){
                         /*
                          * se la condizione è vera il match è stato vinto 3 a 2 
                          * quindi assegneremo alla squadra di casa 2 punti 
@@ -132,7 +132,7 @@ public class ClassificaV extends Classifica{
                      * questione ha perso il match, vediamo se ha vinto almeno 
                      * due set in modo tale da assegnargli 1 punto.
                     */
-                    if(partite[i].getPuntiCasa() == 2){
+                    if(games[i].getPointsHome() == 2){
                         /*
                          * se la condizione è vera la squadra ha vinto almeno 
                          * due set, in modo tale da guadagnarsi almeno un punto.
@@ -148,18 +148,18 @@ public class ClassificaV extends Classifica{
                     }                    
                 }
             }
-            if(nomeSquadra == partite[i].getSquadraOspite().getNome()){
+            if(TeamName == games[i].getGuestTeam().getName()){
                 /*
                 * se la condizione è vera vuol dire che la squadra in 
                 * questione è quella che cerchiamo, guardiamo se ha vinto e
                 * calcoliamo i punti da assegnare.
                 */
-                if(partite[i].getPuntiOspite() > partite[i].getPuntiCasa() ){
+                if(games[i].getPointsGuest() > games[i].getPointsHome() ){
                     /*
                      * se la condizione è vera vuol dire che la squadra in
                      * questione ha vinto il match.
                     */
-                    if(partite[i].getPuntiCasa() == 2 ){
+                    if(games[i].getPointsHome() == 2 ){
                         /*
                          * se la condizione è vera il match è stato vinto 3 a 2 
                          * quindi assegneremo alla squadra di casa 2 punti 
@@ -180,7 +180,7 @@ public class ClassificaV extends Classifica{
                      * questione ha perso il match, vediamo se ha vinto almeno 
                      * due set in modo tale da assegnargli 1 punto.
                     */
-                    if(partite[i].getPuntiOspite() == 2){
+                    if(games[i].getPointsGuest() == 2){
                         /*
                          * se la condizione è vera la squadra ha vinto almeno 
                          * due set, in modo tale da guadagnarsi almeno un punto.

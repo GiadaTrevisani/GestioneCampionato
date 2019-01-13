@@ -9,23 +9,23 @@ package model;
  *
  * @author giadatrevisani
  */
-public class ClassificaB extends Classifica{
+public class RankingBasket extends Ranking{
 
-    public ClassificaB(Squadra[] squadre, Classifica classifica, int numero) {
-        super(squadre, classifica, numero);
+    public RankingBasket(Team[] teams, Ranking ranking, int numero) {
+        super(teams, ranking, numero);
     }
 
     @Override
-    public int getVinteForSquadra(String nomeSquadra, Partita[] partite, int numero) {
+    public int getWinForTeam(String teamName, Match[] games, int numero) {
         int partiteVinte = 0;
         for (int i = 0; i < numero; i++) {
-            if(nomeSquadra == partite[i].getSquadraCasa().getNome()){
-                if(partite[i].getPuntiCasa() > partite[i].getPuntiOspite()){
+            if(teamName == games[i].getHomeTeam().getName()){
+                if(games[i].getPointsHome() > games[i].getPointsGuest()){
                    partiteVinte++;
                 }
             }
-            if(nomeSquadra == partite[i].getSquadraOspite().getNome()){
-                if(partite[i].getPuntiOspite() > partite[i].getPuntiCasa()){
+            if(teamName == games[i].getGuestTeam().getName()){
+                if(games[i].getPointsGuest() > games[i].getPointsHome()){
                    partiteVinte++;
                 }
             }
@@ -34,16 +34,16 @@ public class ClassificaB extends Classifica{
     }
     
     @Override
-    public int getPerseForSquadra(String nomeSquadra, int numero, Partita[] partite) {
+    public int getLooseForTeam(String teamName, int numero, Match[] games) {
         int partitePerse = 0;
         for (int i = 0; i < numero; i++) {
-            if(nomeSquadra == partite[i].getSquadraCasa().getNome()){
-                if(partite[i].getPuntiCasa() < partite[i].getPuntiOspite()){
+            if(teamName == games[i].getHomeTeam().getName()){
+                if(games[i].getPointsHome() < games[i].getPointsGuest()){
                    partitePerse++;
                 }
             }
-            if(nomeSquadra == partite[i].getSquadraOspite().getNome()){
-                if(partite[i].getPuntiOspite() < partite[i].getPuntiCasa()){
+            if(teamName == games[i].getGuestTeam().getName()){
+                if(games[i].getPointsGuest() < games[i].getPointsHome()){
                    partitePerse++;
                 }
             }
@@ -53,16 +53,16 @@ public class ClassificaB extends Classifica{
     }
 
     @Override
-    public int getPuntiForSquadra(String nomeSquadra, int numero, Partita[] partite) {
+    public int getpointsForTeam(String teamName, int numero, Match[] games) {
          int totalePunti = 0;
         for (int i = 0; i < numero; i++) {
-            if(nomeSquadra == partite[i].getSquadraCasa().getNome()){
+            if(teamName == games[i].getHomeTeam().getName()){
                 /*
                  * se la condizione è vera vuol dire che la squadra in 
                  * questione è quella che cerchiamo, guardiamo se ha vinto e
                  * calcoliamo i punti da assegnare.
                  */
-                if(partite[i].getPuntiCasa() > partite[i].getPuntiOspite()){
+                if(games[i].getPointsHome() > games[i].getPointsGuest()){
                     /*
                      * se la condizione è vera vuol dire che la squadra in
                      * questione ha vinto il match.
@@ -70,7 +70,7 @@ public class ClassificaB extends Classifica{
                         totalePunti = totalePunti + 2;
                     }
                 }
-                if(partite[i].getPuntiCasa() < partite[i].getPuntiOspite()){
+                if(games[i].getPointsHome() < games[i].getPointsGuest()){
                     /*
                      * oppure se i punti sono minori di quelli della squadra
                      * allora la partita è persa, quindi non aggiungeremo
@@ -79,13 +79,13 @@ public class ClassificaB extends Classifica{
                         totalePunti = totalePunti +0;
                 }
             
-            if(nomeSquadra == partite[i].getSquadraOspite().getNome()){
+            if(teamName == games[i].getGuestTeam().getName()){
                 /*
                 * se la condizione è vera vuol dire che la squadra in 
                 * questione è quella che cerchiamo, guardiamo se ha vinto e
                 * calcoliamo i punti da assegnare.
                 */
-                if(partite[i].getPuntiOspite() > partite[i].getPuntiCasa()){
+                if(games[i].getPointsGuest() > games[i].getPointsHome()){
                     /*
                      * se la condizione è vera vuol dire che la squadra in
                      * questione ha vinto il match.
@@ -93,7 +93,7 @@ public class ClassificaB extends Classifica{
                         totalePunti = totalePunti + 2;
                     
                 }
-                if(partite[i].getPuntiOspite() < partite[i].getPuntiCasa()){
+                if(games[i].getPointsGuest() < games[i].getPointsHome()){
                     /*
                      * oppure se i punti sono minori di quelli della squadra
                      * allora la partita è persa, quindi non aggiungeremo

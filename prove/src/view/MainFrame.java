@@ -24,45 +24,49 @@ import java.awt.event.ActionListener;
  * Nel peimo frame si dovrà scegliere su quale sport si 
  * vuole intervenire.
  */
-public class MainFrame extends JFrame {
+public class MainFrame extends JFrame{
 
-    private final JButton calciobtn;
+    private final JButton soccerbtn;
     private final JButton volleybtn;
     private final JButton basketbtn;
     private final JPanel whichsports;
     Box vertical;
     public MainFrame(String gestione_campionati) {
         whichsports = new JPanel();
-        calciobtn = new JButton("Calcio");
+        soccerbtn = new JButton("Calcio");
         volleybtn = new JButton("Volley");
         basketbtn = new JButton("Basket");
         vertical = Box.createHorizontalBox();
-    this.creaGUI();
+    this.createGUI();
     }
     
     @SuppressWarnings("empty-statement")
-    private void creaGUI(){
+    private void createGUI(){
        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
        this.setMinimumSize(new Dimension(300, 300));;
        this.setSize(800, 600);
        //se voglio mettere che quando clicco x mi chieda se sono sicura
        //creo il listeners qua sotto
-       // this.addWindowListener(new FrameClosingListener(this));
-       calciobtn.setPreferredSize(new Dimension(150, 150));
-       ActionListener calcioactionListener = new OpenSelectWindow("calcio");
-       calciobtn.addActionListener(calcioactionListener);
+       //this.addWindowListener(new FrameClosingListener(this));
+       soccerbtn.setPreferredSize(new Dimension(150, 150));
+       ActionListener calcioactionListener = new OpenSelectWindow("calcio", whichsports, this);
+       soccerbtn.addActionListener(calcioactionListener);
        volleybtn.setPreferredSize(new Dimension(150, 150));
-       ActionListener volleyactionListener = new OpenSelectWindow("voley");
+       ActionListener volleyactionListener = new OpenSelectWindow("volley", whichsports, this);
        volleybtn.addActionListener(volleyactionListener);
        basketbtn.setPreferredSize(new Dimension(150, 150));
-       ActionListener basketactionListener = new OpenSelectWindow("basket");
+       ActionListener basketactionListener = new OpenSelectWindow("basket", whichsports, this);
        basketbtn.addActionListener(basketactionListener);
        whichsports.setLayout(new GridBagLayout());
        GridBagConstraints gbc = new GridBagConstraints();
-       whichsports.add(calciobtn, gbc);
+       whichsports.add(soccerbtn, gbc);
        whichsports.add(volleybtn, gbc);
        whichsports.add(basketbtn, gbc);
+       whichsports.setVisible(true);
        this.add(whichsports, SwingConstants.CENTER);
+       
     }
     
+
+
 }

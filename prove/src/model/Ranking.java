@@ -11,32 +11,32 @@ import org.json.simple.JSONObject;
  *
  * @author giadatrevisani
  */
-public abstract class Classifica {
-    private Squadra[] squadre;
-    private Classifica classifica;
+public abstract class Ranking {
+    private Team[] teams;
+    private Ranking ranking;
     
-    public Classifica(Squadra[] squadre, Classifica classifica, int numero){
-        this.classifica = classifica;
+    public Ranking(Team[] teams, Ranking ranking, int numero){
+        this.ranking = ranking;
         for (int i = 0; i < numero; i++) {
-            this.squadre[i] = squadre[i];
+            this.teams[i] = teams[i];
         }
     }
     
-    public Classifica getClassifica(){
-        return classifica;
+    public Ranking getRanking(){
+        return ranking;
     }
     
-    public Squadra[] getSquadre(){
-        return squadre;
+    public Team[] getTeams(){
+        return teams;
     }
     
-    public void setClassifica(Classifica classifica){
-        this.classifica = classifica;
+    public void setRanking(Ranking ranking){
+        this.ranking = ranking;
     }
     
-    public void setSquadre(Squadra[] squadre, int numero){
+    public void setTeams(Team[] teams, int numero){
         for (int i = 0; i < numero ; i++) {
-            this.squadre[i] = squadre[i];
+            this.teams[i] = teams[i];
         }
     }
     /*
@@ -48,12 +48,12 @@ public abstract class Classifica {
          * Per creare questo file mi affiderò alle librerie di Java
          * riportate all'inizio del file.
          */
-    public void salvaSquadre(int numero, Squadra[] squadre) throws FileNotFoundException{
+    public void saveTeams(int numero, Team[] teams) throws FileNotFoundException{
         JSONObject jo = new JSONObject();
         for (int i = 0; i < numero; i++) {
-            jo.put("nome" , squadre[i].getNome());
-            jo.put("città", squadre[i].getCittà());
-            jo.put("logo", squadre[i].getLogo());
+            jo.put("nome" , teams[i].getName());
+            jo.put("città", teams[i].getCity());
+            jo.put("logo", teams[i].getLogo());
         }
         // writing JSON to file:"JSONExample.json" in cwd 
         PrintWriter pw = new PrintWriter("JSONExample.json"); 
@@ -63,9 +63,9 @@ public abstract class Classifica {
         pw.close(); 
     }
     
-    public abstract int getVinteForSquadra(String nomeSquadra, Partita[] partite, int numero);
+    public abstract int getWinForTeam(String teamName, Match[] games, int numero);
     
-    public abstract int getPerseForSquadra(String nomeSquadra, int numero, Partita[] partite);
+    public abstract int getLooseForTeam(String teamName, int numero, Match[] games);
     
-    public abstract int getPuntiForSquadra(String nomeSquadra, int numero, Partita[] partite);
+    public abstract int getpointsForTeam(String teamName, int numero, Match[] games);
 }

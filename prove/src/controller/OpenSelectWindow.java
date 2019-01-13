@@ -7,7 +7,10 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 import view.Select;
+
 
 /**
  *
@@ -15,18 +18,16 @@ import view.Select;
  */
 public class OpenSelectWindow implements ActionListener{
 
-    private String sport;
+    private final String sport;
     
-    public OpenSelectWindow(String sport){
+    public OpenSelectWindow(String sport, JPanel whichsports, JFrame firstJfame){
         this.sport = sport;
-    }
-
-    public OpenSelectWindow() {
+        whichsports.setVisible(false);
         Select select = new Select(sport);
         select.setVisible(true);
-        
+        System.out.println(sport);
     }
-
+    
     @Override
     public void actionPerformed(ActionEvent e) {
         Select select = new Select(sport);

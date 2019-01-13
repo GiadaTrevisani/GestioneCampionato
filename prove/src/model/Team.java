@@ -11,42 +11,42 @@ package model;
  */
 
 /*
- * La classe Squadra avrà come parametri il nome della squadra,
+ * La classe Team avrà come parametri il nome della squadra,
  * il nome della città e il logo.
  * Il logo sarà rappresentato da un'immagine del logo della squdra,
  * se non esiste un logo, ne sarà assegnato uno di default.
 */
 
 
-public class Squadra {
+public class Team {
     
-    private String nome, città;
+    private String name, city;
     private int logo; 
     
-    public Squadra(String nome, String città, int logo){
-        this.nome = nome;
-        this.città = città;
+    public Team(String name, String city, int logo){
+        this.name = name;
+        this.city = city;
         this.logo = logo;
     }
     
-    public String getNome(){
-        return nome;
+    public String getName(){
+        return name;
     }
     
-    public String getCittà(){
-        return città;
+    public String getCity(){
+        return city;
     }
     
     public int getLogo(){
         return logo;
     }
     
-    public void setNome(String nome){
-        this.nome = nome;
+    public void setName(String name){
+        this.name = name;
     }
     
-    public void setCittà(String città){
-        this.città = città;
+    public void setCity(String city){
+        this.city = city;
     }
     
     public void setLogo(int logo){
