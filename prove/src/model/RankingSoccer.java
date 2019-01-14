@@ -21,12 +21,12 @@ public class RankingSoccer extends Ranking{
     public int getWinForTeam(String TeamName, ArrayList<Match> games) {
         int partiteVinte = 0;
         for (int i = 0; i < games.size(); i++) {
-            if(TeamName == games.get(i).getHomeTeam().getName()){
+            if(TeamName.equals(games.get(i).getHomeTeam().getName())){
                 if(games.get(i).getPointsHome() > games.get(i).getPointsGuest()){
                    partiteVinte++;
                 }
             }
-            if(TeamName == games.get(i).getGuestTeam().getName()){
+            if(TeamName.equals(games.get(i).getGuestTeam().getName())){
                 if(games.get(i).getPointsGuest() > games.get(i).getPointsHome()){
                    partiteVinte++;
                 }
@@ -39,12 +39,12 @@ public class RankingSoccer extends Ranking{
     public int getLooseForTeam(String TeamName, ArrayList<Match> games) {
         int partitePerse = 0;
         for (int i = 0; i < games.size(); i++) {
-            if(TeamName == games.get(i).getHomeTeam().getName()){
+            if(TeamName.equals(games.get(i).getHomeTeam().getName())){
                 if(games.get(i).getPointsHome() < games.get(i).getPointsGuest()){
                    partitePerse++;
                 }
             }
-            if(TeamName == games.get(i).getGuestTeam().getName()){
+            if(TeamName.equals(games.get(i).getGuestTeam().getName())){
                 if(games.get(i).getPointsGuest() < games.get(i).getPointsHome()){
                    partitePerse++;
                 }
@@ -58,7 +58,7 @@ public class RankingSoccer extends Ranking{
     public int getpointsForTeam(String TeamName, ArrayList<Match> games) {
          int totalePunti = 0;
         for (int i = 0; i < games.size(); i++) {
-            if(TeamName == games.get(i).getHomeTeam().getName()){
+            if(TeamName.equals(games.get(i).getHomeTeam().getName())){
                 /*
                  * se la condizione è vera vuol dire che la squadra in 
                  * questione è quella che cerchiamo, guardiamo se ha vinto e
@@ -87,7 +87,7 @@ public class RankingSoccer extends Ranking{
                     totalePunti = totalePunti + 1;                  
                 }
             
-            if(TeamName == games.get(i).getGuestTeam().getName()){
+            if(TeamName.equals(games.get(i).getGuestTeam().getName())){
                 /*
                 * se la condizione è vera vuol dire che la squadra in 
                 * questione è quella che cerchiamo, guardiamo se ha vinto e
@@ -124,12 +124,12 @@ public class RankingSoccer extends Ranking{
    public int getPareggiateForSqadra(String TeamName, ArrayList<Match> games){
        int partitePareggiate = 0;
        for (int i = 0; i < games.size(); i++) {
-           if(TeamName == games.get(i).getHomeTeam().getName()){
+           if(TeamName.equals(games.get(i).getHomeTeam().getName())){
                 if(games.get(i).getPointsHome() == games.get(i).getPointsGuest()){
                    partitePareggiate++;
                 }
             }
-            if(TeamName == games.get(i).getGuestTeam().getName()){
+            if(TeamName.equals(games.get(i).getGuestTeam().getName())){
                 if(games.get(i).getPointsGuest() == games.get(i).getPointsHome()){
                    partitePareggiate++;
                 }

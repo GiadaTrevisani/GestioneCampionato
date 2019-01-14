@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package model;
-import java.awt.List;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter; 
 import java.util.ArrayList;

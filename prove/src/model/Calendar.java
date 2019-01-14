@@ -5,6 +5,7 @@
  */
 package model;
 
+import java.util.ArrayList;
 import java.util.Date;
 /**
  *
@@ -17,23 +18,15 @@ import java.util.Date;
  */
 public class Calendar {
     
-    private Match[] games;
-    private int year, numero;
+    private ArrayList<Match> games;
+    private int year;
     
-    public Calendar(Match[] games, int year, int numeroPartite){
-        this.numero = numeroPartite;
-        this.games = new Match[numero];
-        for (int i = 0; i < numero; i++) {
-            this.games[i] = games[i];
-        }
+    public Calendar(ArrayList<Match> games, int year){
+        this.games = games;
         this.year = year;
     }
   
-    public int getNumber(){
-        return numero;
-    }
-    
-    public Match[] getGames(){
+    public ArrayList<Match> getGames(){
         return games;      
     }
     
@@ -41,29 +34,21 @@ public class Calendar {
         return year;
     }
     
-    public void setGames(Match[] games, int numero){
-            for (int i = 0; i < numero; i++) {
-                this.games[i] = games[i]; 
-            }
+    public void setGames(ArrayList<Match> games){
+        this.games = games; 
     }
     
     public void setYear(int year){
         this.year = year;
     }
-    
-    public void setNumber(int numero){
-        this.numero = numero;
-    }
-    
-    public Match[] getGamesForDate(Date data){
-        Match[] p = new Match[numero];
-        for (int i = 0; i < numero; i++) {
-            p[i] = null;
-        }
+
+    public ArrayList getGamesForDate(Date data){
+        ArrayList<Match> p;
+        p = new ArrayList();
         int j = 0;
-        for (int i = 0; i < numero; i++) {
-            if(data == games[i].getData()){
-               p[j] = games[i];
+        for (int i = 0; i < games.size(); i++) {
+            if(data == games.get(i).getData()){
+               p.set(j, games.get(i));
                j++;
             }
         }
@@ -71,34 +56,30 @@ public class Calendar {
         return p;
     }  
     
-    public Match[] getGamesForTeam(String teamName){
-        Match[] p = new Match[numero];
-        for (int i = 0; i < numero; i++) {
-            p[i] = null;
-        }
+    public ArrayList<Match> getGamesForTeam(String teamName){
+        ArrayList<Match> p;
+        p = new ArrayList();
         int j = 0;
-        for (int i = 0; i < numero; i++) {
-            if(teamName == games[i].getHomeTeam().getName()){
-               p[j] = games[i];
+        for (int i = 0; i < games.size(); i++) {
+            if(teamName.equals(games.get(i).getHomeTeam().getName())){
+               p.set(j, games.get(i));
                j++;
             }
-            if(teamName == games[i].getGuestTeam().getName()){
-                p[j] = games[i];
+            if(teamName.equals(games.get(i).getGuestTeam().getName())){
+                p.set(j, games.get(i));
                j++;
             }
         }  
         return p;
     }
     
-    public Match[] getPlayedGames(Boolean is_played){
-        Match[] p = new Match[numero];
-        for (int i = 0; i < numero; i++) {
-            p[i] = null;
-        }
+    public ArrayList<Match> getPlayedGames(Boolean is_played){
+        ArrayList<Match> p;
+        p = new ArrayList();
         int j = 0;
-        for (int i = 0; i < numero; i++) {
-            if(is_played == games[i].getPlayed()){
-               p[j] = games[i];
+        for (int i = 0; i < games.size(); i++) {
+            if(is_played == games.get(i).getPlayed()){
+               p.set(j, games.get(i));
                j++;
             }
         }  
