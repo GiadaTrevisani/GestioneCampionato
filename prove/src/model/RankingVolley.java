@@ -5,14 +5,16 @@
  */
 package model;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author giadatrevisani
  */
 public class RankingVolley extends Ranking{
 
-    public RankingVolley(Team[] teams, Ranking ranking, int numero) {
-        super(teams, ranking, numero);
+    public RankingVolley(ArrayList<Team> teams, Ranking ranking) {
+        super(teams, ranking);
     } 
     
     /*
@@ -21,16 +23,16 @@ public class RankingVolley extends Ranking{
      * fuori casa e quindi l'algoritmo non è perfetto
      */
     @Override
-    public int getWinForTeam(String TeamName, Match[] games, int numero){
+    public int getWinForTeam(String TeamName, ArrayList<Match> games){
         int partiteVinte = 0;
-        for (int i = 0; i < numero; i++) {
-            if(TeamName == games[i].getHomeTeam().getName()){
+        for (int i = 0; i < games.size(); i++) {
+            if(TeamName == games.get(i).getHomeTeam().getName()){
                 /*
                  * se la condizione è vera vuol dire che la squadra in 
                  * questione è quella che cerchiamo, guardiamo se ha vinto e
                  * calcoliamo i punti da assegnare.
                  */
-                if(games[i].getPointsHome() > games[i].getPointsGuest()){
+                if(games.get(i).getPointsHome() > games.get(i).getPointsGuest()){
                     /*
                      * se la condizione è vera vuol dire che la squadra in
                      * questione ha vinto il match.
@@ -39,13 +41,13 @@ public class RankingVolley extends Ranking{
                    partiteVinte ++;
                 }
             }
-            if(TeamName == games[i].getGuestTeam().getName()){
+            if(TeamName == games.get(i).getGuestTeam().getName()){
                 /*
                 * se la condizione è vera vuol dire che la squadra in 
                 * questione è quella che cerchiamo, guardiamo se ha vinto e
                 * calcoliamo i punti da assegnare.
                 */
-                if(games[i].getPointsGuest() > games[i].getPointsHome()){
+                if(games.get(i).getPointsGuest() > games.get(i).getPointsHome()){
                     /*
                      * se la condizione è vera vuol dire che la squadra in
                      * questione ha vinto il match.
@@ -59,16 +61,16 @@ public class RankingVolley extends Ranking{
     }
 
     @Override
-    public int getLooseForTeam(String TeamName, int numero, Match[] games) {
+    public int getLooseForTeam(String TeamName, ArrayList<Match> games) {
         int partitePerse = 0;
-        for (int i = 0; i < numero; i++) {
-            if(TeamName == games[i].getHomeTeam().getName()){
+        for (int i = 0; i < games.size(); i++) {
+            if(TeamName == games.get(i).getHomeTeam().getName()){
                 /*
                  * se la condizione è vera vuol dire che la squadra in 
                  * questione è quella che cerchiamo, guardiamo se ha vinto e
                  * calcoliamo i punti da assegnare.
                  */
-                if(games[i].getPointsHome() < games[i].getPointsGuest()){
+                if(games.get(i).getPointsHome() < games.get(i).getPointsGuest()){
                     /*
                      * se la condizione è vera, aggiungiamo una partita persa
                      * al totale delle partite perse.
@@ -76,13 +78,13 @@ public class RankingVolley extends Ranking{
                     partitePerse++;
                 }
             }
-            if(TeamName == games[i].getGuestTeam().getName()){
+            if(TeamName == games.get(i).getGuestTeam().getName()){
                 /*
                 * se la condizione è vera vuol dire che la squadra in 
                 * questione è quella che cerchiamo, guardiamo se ha vinto e
                 * calcoliamo i punti da assegnare.
                 */
-                if(games[i].getPointsGuest() > games[i].getPointsHome() ){
+                if(games.get(i).getPointsGuest() > games.get(i).getPointsHome() ){
                     /*
                      * se la condizione è vera, la squadra ha perso il match,
                      * quindi aggiungiamo una partita persa al totale delle 
@@ -96,21 +98,21 @@ public class RankingVolley extends Ranking{
     }
 
     @Override
-    public int getpointsForTeam(String TeamName, int numero, Match[] games) {
+    public int getpointsForTeam(String TeamName, ArrayList<Match> games) {
         int totalePunti = 0;
-        for (int i = 0; i < numero; i++) {
-            if(TeamName == games[i].getHomeTeam().getName()){
+        for (int i = 0; i < games.size(); i++) {
+            if(TeamName == games.get(i).getHomeTeam().getName()){
                 /*
                  * se la condizione è vera vuol dire che la squadra in 
                  * questione è quella che cerchiamo, guardiamo se ha vinto e
                  * calcoliamo i punti da assegnare.
                  */
-                if(games[i].getPointsHome() > games[i].getPointsGuest()){
+                if(games.get(i).getPointsHome() > games.get(i).getPointsGuest()){
                     /*
                      * se la condizione è vera vuol dire che la squadra in
                      * questione ha vinto il match.
                     */
-                    if(games[i].getPointsGuest() == 2 ){
+                    if(games.get(i).getPointsGuest() == 2 ){
                         /*
                          * se la condizione è vera il match è stato vinto 3 a 2 
                          * quindi assegneremo alla squadra di casa 2 punti 
@@ -132,7 +134,7 @@ public class RankingVolley extends Ranking{
                      * questione ha perso il match, vediamo se ha vinto almeno 
                      * due set in modo tale da assegnargli 1 punto.
                     */
-                    if(games[i].getPointsHome() == 2){
+                    if(games.get(i).getPointsHome() == 2){
                         /*
                          * se la condizione è vera la squadra ha vinto almeno 
                          * due set, in modo tale da guadagnarsi almeno un punto.
@@ -148,18 +150,18 @@ public class RankingVolley extends Ranking{
                     }                    
                 }
             }
-            if(TeamName == games[i].getGuestTeam().getName()){
+            if(TeamName == games.get(i).getGuestTeam().getName()){
                 /*
                 * se la condizione è vera vuol dire che la squadra in 
                 * questione è quella che cerchiamo, guardiamo se ha vinto e
                 * calcoliamo i punti da assegnare.
                 */
-                if(games[i].getPointsGuest() > games[i].getPointsHome() ){
+                if(games.get(i).getPointsGuest() > games.get(i).getPointsHome() ){
                     /*
                      * se la condizione è vera vuol dire che la squadra in
                      * questione ha vinto il match.
                     */
-                    if(games[i].getPointsHome() == 2 ){
+                    if(games.get(i).getPointsHome() == 2 ){
                         /*
                          * se la condizione è vera il match è stato vinto 3 a 2 
                          * quindi assegneremo alla squadra di casa 2 punti 
@@ -180,7 +182,7 @@ public class RankingVolley extends Ranking{
                      * questione ha perso il match, vediamo se ha vinto almeno 
                      * due set in modo tale da assegnargli 1 punto.
                     */
-                    if(games[i].getPointsGuest() == 2){
+                    if(games.get(i).getPointsGuest() == 2){
                         /*
                          * se la condizione è vera la squadra ha vinto almeno 
                          * due set, in modo tale da guadagnarsi almeno un punto.

@@ -20,7 +20,8 @@ package model;
 
 public class Team {
     
-    private String name, city;
+    private String name;
+    private String city;
     private int logo; 
     
     public Team(String name, String city, int logo){

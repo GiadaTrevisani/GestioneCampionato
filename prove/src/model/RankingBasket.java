@@ -5,27 +5,29 @@
  */
 package model;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author giadatrevisani
  */
 public class RankingBasket extends Ranking{
 
-    public RankingBasket(Team[] teams, Ranking ranking, int numero) {
-        super(teams, ranking, numero);
+    public RankingBasket(ArrayList<Team> teams, Ranking ranking) {
+        super(teams, ranking);
     }
 
     @Override
-    public int getWinForTeam(String teamName, Match[] games, int numero) {
+    public int getWinForTeam(String teamName, ArrayList<Match> games) {
         int partiteVinte = 0;
-        for (int i = 0; i < numero; i++) {
-            if(teamName == games[i].getHomeTeam().getName()){
-                if(games[i].getPointsHome() > games[i].getPointsGuest()){
+        for (int i = 0; i < games.size(); i++) {
+            if(teamName == games.get(i).getHomeTeam().getName()){
+                if(games.get(i).getPointsHome() > games.get(i).getPointsGuest()){
                    partiteVinte++;
                 }
             }
-            if(teamName == games[i].getGuestTeam().getName()){
-                if(games[i].getPointsGuest() > games[i].getPointsHome()){
+            if(teamName == games.get(i).getGuestTeam().getName()){
+                if(games.get(i).getPointsGuest() > games.get(i).getPointsHome()){
                    partiteVinte++;
                 }
             }
@@ -34,16 +36,16 @@ public class RankingBasket extends Ranking{
     }
     
     @Override
-    public int getLooseForTeam(String teamName, int numero, Match[] games) {
+    public int getLooseForTeam(String teamName, ArrayList<Match> games) {
         int partitePerse = 0;
-        for (int i = 0; i < numero; i++) {
-            if(teamName == games[i].getHomeTeam().getName()){
-                if(games[i].getPointsHome() < games[i].getPointsGuest()){
+        for (int i = 0; i < games.size(); i++) {
+            if(teamName == games.get(i).getHomeTeam().getName()){
+                if(games.get(i).getPointsHome() < games.get(i).getPointsGuest()){
                    partitePerse++;
                 }
             }
-            if(teamName == games[i].getGuestTeam().getName()){
-                if(games[i].getPointsGuest() < games[i].getPointsHome()){
+            if(teamName == games.get(i).getGuestTeam().getName()){
+                if(games.get(i).getPointsGuest() < games.get(i).getPointsHome()){
                    partitePerse++;
                 }
             }
@@ -53,16 +55,16 @@ public class RankingBasket extends Ranking{
     }
 
     @Override
-    public int getpointsForTeam(String teamName, int numero, Match[] games) {
+    public int getpointsForTeam(String teamName,ArrayList<Match> games) {
          int totalePunti = 0;
-        for (int i = 0; i < numero; i++) {
-            if(teamName == games[i].getHomeTeam().getName()){
+        for (int i = 0; i < games.size(); i++) {
+            if(teamName == games.get(i).getHomeTeam().getName()){
                 /*
                  * se la condizione è vera vuol dire che la squadra in 
                  * questione è quella che cerchiamo, guardiamo se ha vinto e
                  * calcoliamo i punti da assegnare.
                  */
-                if(games[i].getPointsHome() > games[i].getPointsGuest()){
+                if(games.get(i).getPointsHome() > games.get(i).getPointsGuest()){
                     /*
                      * se la condizione è vera vuol dire che la squadra in
                      * questione ha vinto il match.
@@ -70,7 +72,7 @@ public class RankingBasket extends Ranking{
                         totalePunti = totalePunti + 2;
                     }
                 }
-                if(games[i].getPointsHome() < games[i].getPointsGuest()){
+                if(games.get(i).getPointsHome() < games.get(i).getPointsGuest()){
                     /*
                      * oppure se i punti sono minori di quelli della squadra
                      * allora la partita è persa, quindi non aggiungeremo
@@ -79,13 +81,13 @@ public class RankingBasket extends Ranking{
                         totalePunti = totalePunti +0;
                 }
             
-            if(teamName == games[i].getGuestTeam().getName()){
+            if(teamName == games.get(i).getGuestTeam().getName()){
                 /*
                 * se la condizione è vera vuol dire che la squadra in 
                 * questione è quella che cerchiamo, guardiamo se ha vinto e
                 * calcoliamo i punti da assegnare.
                 */
-                if(games[i].getPointsGuest() > games[i].getPointsHome()){
+                if(games.get(i).getPointsGuest() > games.get(i).getPointsHome()){
                     /*
                      * se la condizione è vera vuol dire che la squadra in
                      * questione ha vinto il match.
@@ -93,7 +95,7 @@ public class RankingBasket extends Ranking{
                         totalePunti = totalePunti + 2;
                     
                 }
-                if(games[i].getPointsGuest() < games[i].getPointsHome()){
+                if(games.get(i).getPointsGuest() < games.get(i).getPointsHome()){
                     /*
                      * oppure se i punti sono minori di quelli della squadra
                      * allora la partita è persa, quindi non aggiungeremo
