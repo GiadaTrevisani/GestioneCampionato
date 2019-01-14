@@ -7,13 +7,12 @@ package view;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-import controller.OpenSelectWindow;
-import java.awt.event.ActionListener;
 /**
  *
  * @author giadatrevisani
@@ -40,7 +39,6 @@ public class MainFrame extends JFrame{
     this.createGUI();
     }
     
-    @SuppressWarnings("empty-statement")
     private void createGUI(){
        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
        this.setMinimumSize(new Dimension(300, 300));;
@@ -49,14 +47,30 @@ public class MainFrame extends JFrame{
        //creo il listeners qua sotto
        //this.addWindowListener(new FrameClosingListener(this));
        soccerbtn.setPreferredSize(new Dimension(150, 150));
-       ActionListener calcioactionListener = new OpenSelectWindow("calcio", whichsports, this);
-       soccerbtn.addActionListener(calcioactionListener);
        volleybtn.setPreferredSize(new Dimension(150, 150));
-       ActionListener volleyactionListener = new OpenSelectWindow("volley", whichsports, this);
-       volleybtn.addActionListener(volleyactionListener);
        basketbtn.setPreferredSize(new Dimension(150, 150));
-       ActionListener basketactionListener = new OpenSelectWindow("basket", whichsports, this);
-       basketbtn.addActionListener(basketactionListener);
+       
+       soccerbtn.addActionListener((ActionEvent e) -> {
+           Select select = new Select("calcio");
+           whichsports.setVisible(false);
+           select.setVisible(true);
+           this.add(select, SwingConstants.CENTER);
+       });
+       
+       volleybtn.addActionListener((ActionEvent e) -> {
+           Select select = new Select("volley");
+           whichsports.setVisible(false);
+           select.setVisible(true);
+           this.add(select, SwingConstants.CENTER);
+       });
+       
+       basketbtn.addActionListener((ActionEvent e) -> {
+           Select select = new Select("basket");
+           whichsports.setVisible(false);
+           select.setVisible(true);
+           this.add(select, SwingConstants.CENTER);
+       });
+
        whichsports.setLayout(new GridBagLayout());
        GridBagConstraints gbc = new GridBagConstraints();
        whichsports.add(soccerbtn, gbc);
@@ -66,7 +80,4 @@ public class MainFrame extends JFrame{
        this.add(whichsports, SwingConstants.CENTER);
        
     }
-    
-
-
 }

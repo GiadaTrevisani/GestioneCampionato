@@ -5,13 +5,13 @@
  */
 package view;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
 
 /**
  *
@@ -22,34 +22,39 @@ public class Select extends JPanel{
     private final JButton managementbtn;
     private final JButton calendarbtn;
     private final JButton rankingbtn;
+    private final JButton prevpage;
+    private final JPanel previus;
     private final String sport;
-    private final JPanel select;
+    
      
     public Select(String sport){
         this.sport = sport;
         managementbtn = new JButton("Gestione Squadre");
         calendarbtn = new JButton("Calendario");
         rankingbtn = new JButton("Classifica");
-        select = new JPanel();
+        prevpage = new JButton("<---");
+        previus = new JPanel();
         vertical = Box.createHorizontalBox();
         this.creaGui();
     }
     
-    @SuppressWarnings("empty-statement")
     private void creaGui(){
-        this.setMinimumSize(new Dimension(300, 300));;
+        this.setMinimumSize(new Dimension(300, 300));
         this.setSize(800, 600);
-        
+        prevpage.setPreferredSize(new Dimension(90, 23));
         managementbtn.setPreferredSize(new Dimension(150, 150));
-        rankingbtn.setPreferredSize(new Dimension(150, 150));
         calendarbtn.setPreferredSize(new Dimension(150, 150));
-        select.setLayout(new GridBagLayout());
+        rankingbtn.setPreferredSize(new Dimension(150, 150));
+        this.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
-        select.add(managementbtn, gbc);
-        select.add(calendarbtn, gbc);
-        select.add(rankingbtn, gbc);
-        this.add(select, SwingConstants.CENTER);
+        previus.add(prevpage, BorderLayout.PAGE_START);
+        this.add(previus);
+        this.add(managementbtn, gbc);
+        this.add(calendarbtn, gbc);
+        this.add(rankingbtn, gbc);
         this.setVisible(true);
+        
         System.out.println(sport);
     }
+
 }
