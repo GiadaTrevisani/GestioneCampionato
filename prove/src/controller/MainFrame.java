@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package view;
+package controller;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -18,7 +18,7 @@ import javax.swing.SwingConstants;
  * @author giadatrevisani
  */
 
-/*
+/**
  * Generazione del mainframe con interfaccia grafica.
  * Nel peimo frame si dovrà scegliere su quale sport si 
  * vuole intervenire.

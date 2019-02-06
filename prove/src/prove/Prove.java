@@ -5,7 +5,7 @@
  */
 package prove;
 
-import view.MainFrame;
+import controller.MainFrame;
 
 /**
  *
@@ -20,6 +20,7 @@ public class Prove {
         MainFrame mainframe = new MainFrame("Gestione campionati");
         mainframe.setVisible(true);
         System.out.println("Gestione campionati avviato");
+        
     }
     
 }

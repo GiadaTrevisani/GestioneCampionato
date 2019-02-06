@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package view;
+package controller;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -24,7 +24,9 @@ public class Select extends JPanel{
     private final JButton rankingbtn;
     private final JButton prevpage;
     private final JPanel previus;
+    private final JPanel body;
     private final String sport;
+    //private final BoxLayout prev;
     
      
     public Select(String sport){
@@ -33,7 +35,9 @@ public class Select extends JPanel{
         calendarbtn = new JButton("Calendario");
         rankingbtn = new JButton("Classifica");
         prevpage = new JButton("<---");
+        //prev = new BoxLayout(prev, );
         previus = new JPanel();
+        body = new JPanel();
         vertical = Box.createHorizontalBox();
         this.creaGui();
     }
@@ -48,11 +52,11 @@ public class Select extends JPanel{
         this.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         previus.add(prevpage, BorderLayout.PAGE_START);
+        body.add(managementbtn);
+        body.add(calendarbtn);
+        body.add(rankingbtn);
         this.add(previus);
-        this.add(managementbtn, gbc);
-        this.add(calendarbtn, gbc);
-        this.add(rankingbtn, gbc);
-        this.setVisible(true);
+        this.add(body, gbc);
         
         System.out.println(sport);
     }

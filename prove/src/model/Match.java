@@ -10,8 +10,7 @@ import java.util.Date;
  *
  * @author giadatrevisani
  */
-
-/*
+/**
  * Nella classe Match sono presenti come parametri i nomi delle 
  * due squadre (casa e ospite) che giocheranno la partita, la data, 
  * il risultato che ha ottenuto la squadra che gioca in casa e 
@@ -28,7 +27,7 @@ public class Match{
     private int guestResult;
     private boolean played;
     
-    /*
+    /**
      * Quando viene chiamato il costruttore, la partita può essere già stata
      * giocata oppure no. Si prevede che, nel caso in cui la partita non sia 
      * stata giocata, il punteggio delle due squadre passato per paramentro 

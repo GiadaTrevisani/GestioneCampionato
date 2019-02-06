@@ -8,11 +8,10 @@ package model;
 import java.util.ArrayList;
 import java.util.Date;
 /**
- *
  * @author giadatrevisani
  */
 
-/*
+/**
  * La classe Calendar avrà come parametri un array di partite (grandezza?)
  * e l'anno del campionato.
  */
