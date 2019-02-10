@@ -30,7 +30,7 @@ public class Prove {
         Team m = new Team("mondial","carpi",2);
         System.out.println(m.getName() + " " + m.getCity() + " " + m.getLogo());
         Team re = new Team("everton", "reggio", 3);
-        Team bo = new Team("Vooleyar", "argelato", 4);
+        Team bo = new Team("VoolleyAr", "argelato", 4);
         
         //inserimento di un match già giocato
         //creiamo una data 
@@ -55,6 +55,7 @@ public class Prove {
         System.out.println("punti ospite: " + partita_three.getPointsGuest());
         System.out.println("data: " + partita_three.getDay());
         
+        ArrayList<Match> games = new ArrayList();
         ArrayList<Team> teams = new ArrayList();
         teams.add(sv);
         teams.add(m);
@@ -63,6 +64,12 @@ public class Prove {
         for (int i = 0; i < teams.size(); i++) {
         System.out.println("\nSquadra casa: " + teams.get(i).getName());
         }
+        
+        Calendar calendario = new Calendar(2019);
+        calendario.AlgoritmoDiBerger(teams);
+        
+        
+        
     }
     
 }

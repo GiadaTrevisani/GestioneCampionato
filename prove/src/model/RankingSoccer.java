@@ -13,8 +13,12 @@ import java.util.ArrayList;
  */
 public class RankingSoccer extends Ranking{
 
-    public RankingSoccer(ArrayList<Team> teams, Team team) {
-        super(teams,  team);
+    public RankingSoccer(ArrayList<Team> teams) {
+        super(teams);
+    }
+    
+    public RankingSoccer(){
+        super();
     }
 
     @Override

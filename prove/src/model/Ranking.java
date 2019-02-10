@@ -16,20 +16,34 @@ import org.json.simple.JSONObject;
  */
 public abstract class Ranking {
     private ArrayList<Team> teams;
-    private final Team team;
     private static final String filePath = "prove/JSONExample.json";
     
-    public Ranking(ArrayList<Team> teams, Team team){
-        this.team = team;
+    public Ranking(ArrayList<Team> teams){
         this.teams = teams;   
     }
-    
+   
+    public Ranking(){
+        teams = new ArrayList<Team>();
+    }
     public ArrayList<Team> getTeams(){
         return teams;
     }
     
     public void setTeams(ArrayList<Team> teams){
             this.teams = teams;
+    }
+    
+    /**
+     * questo metodo aggiunge un team all'array di squadre.
+     * (quando aggiungo una squadra uso questo metodo )
+     */
+    public void addTeam(Team newTeam){
+        teams.add(newTeam);
+    }
+
+    public void addTeam(String name, String city,int logo){
+	Team newTeam = new Team(name, city, logo);
+        this.addTeam(newTeam);
     }
     
     /**
@@ -77,18 +91,6 @@ public abstract class Ranking {
     
     public void setAllTeam(ArrayList<Team> teams){
         this.teams = teams;
-    }
-    
-    
-    /**
-     * questo metodo aggiunge un team all'array di squadre.
-     * (quando aggiungo una squadra uso questo metodo )
-     */
-    public void addTeam(String name, String city,int logo){
-        this.team.name = name;
-        this.team.city = city;
-        this.team.logo = logo;
-        teams.add( team);
     }
     
     public abstract int getWinForTeam(String teamName, ArrayList<Match> games);

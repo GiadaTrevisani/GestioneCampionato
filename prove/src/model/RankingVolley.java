@@ -13,10 +13,13 @@ import java.util.ArrayList;
  */
 public class RankingVolley extends Ranking{
 
-    public RankingVolley(ArrayList<Team> teams, Team team) {
-        super(teams, team);
+    public RankingVolley(ArrayList<Team> teams) {
+        super(teams);
     } 
     
+    public RankingVolley(){
+        super();
+    }
     /**
      * algoritmo non troppo efficente perchè guardo nella stessa partita
      * se la squadra è quella di casa, se corrisponde guardo anche quella 

@@ -23,6 +23,11 @@ public class Calendar {
         this.year = year;
     }
     
+    public Calendar(int year){
+        this.year = year;
+        games = new ArrayList<Match>();
+    }
+    
     public ArrayList<Match> getGames(){
         return games;      
     }
@@ -41,12 +46,10 @@ public class Calendar {
 
     public ArrayList getGamesForDate(int day){
         ArrayList<Match> p;
-        p = new ArrayList();
-        int j = 0;
+        p = new ArrayList<Match>();
         for (int i = 0; i < games.size(); i++) {
             if(day == games.get(i).getDay()){
-               p.set(j, games.get(i));
-               j++;
+               p.add(games.get(i));
             }
         }
         
@@ -55,16 +58,13 @@ public class Calendar {
     
     public ArrayList<Match> getGamesForTeam(String teamName){
         ArrayList<Match> p;
-        p = new ArrayList();
-        int j = 0;
+        p = new ArrayList<Match>();
         for (int i = 0; i < games.size(); i++) {
             if(teamName.equals(games.get(i).getHomeTeam().getName())){
-               p.set(j, games.get(i));
-               j++;
+               p.add(games.get(i));
             }
             if(teamName.equals(games.get(i).getGuestTeam().getName())){
-                p.set(j, games.get(i));
-               j++;
+                p.add(games.get(i));
             }
         }  
         return p;
@@ -72,24 +72,26 @@ public class Calendar {
     
     public ArrayList<Match> getPlayedGames(Boolean is_played){
         ArrayList<Match> p;
-        p = new ArrayList();
-        int j = 0;
+        p = new ArrayList<Match>();
         for (int i = 0; i < games.size(); i++) {
             if(is_played == games.get(i).getPlayed()){
-               p.set(j, games.get(i));
-               j++;
+               p.add(games.get(i));
             }
         }  
         return p;
     }
     
+    /**
+     * aggiungo stampa algpritmo di berger per stampare in modo bello tutte 
+     * le mie partite di un calendario.
+     */
+    
   /**
    * Algoritmo per la creazione del calendario di uno sport
    * @param squadre 
    */  
-public ArrayList<Match> AlgoritmoDiBerger(ArrayList<Team> teams){
- 
-    ArrayList<Match> games = new ArrayList();
+public void AlgoritmoDiBerger(ArrayList<Team> teams){
+    games = new ArrayList<Match>();
     int number_teams = teams.size();
     int days = number_teams - 1;
  
@@ -141,7 +143,6 @@ public ArrayList<Match> AlgoritmoDiBerger(ArrayList<Team> teams){
         // ripristina l'elemento fisso
         home[0] = pivot ;
     } 
-        return games;
 }
  
  private Team[] shiftLeft(Team[] data, Team add) {
