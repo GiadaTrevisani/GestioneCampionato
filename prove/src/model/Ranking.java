@@ -17,25 +17,15 @@ import org.json.simple.JSONObject;
 public abstract class Ranking {
     private ArrayList<Team> teams;
     private final Team team;
-    private Ranking ranking;
     private static final String filePath = "prove/JSONExample.json";
     
-    public Ranking(ArrayList<Team> teams, Ranking ranking, Team team){
+    public Ranking(ArrayList<Team> teams, Team team){
         this.team = team;
-        this.teams = teams;
-        this.ranking = ranking;    
-    }
-    
-    public Ranking getRanking(){
-        return ranking;
+        this.teams = teams;   
     }
     
     public ArrayList<Team> getTeams(){
         return teams;
-    }
-    
-    public void setRanking(Ranking ranking){
-        this.ranking = ranking;
     }
     
     public void setTeams(ArrayList<Team> teams){

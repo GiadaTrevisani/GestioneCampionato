@@ -13,8 +13,8 @@ import java.util.ArrayList;
  */
 public class RankingVolley extends Ranking{
 
-    public RankingVolley(ArrayList<Team> teams, Ranking ranking, Team team) {
-        super(teams, ranking, team);
+    public RankingVolley(ArrayList<Team> teams, Team team) {
+        super(teams, team);
     } 
     
     /**

@@ -13,8 +13,8 @@ import java.util.ArrayList;
  */
 public class RankingBasket extends Ranking{
 
-    public RankingBasket(ArrayList<Team> teams, Ranking ranking, Team team) {
-        super(teams, ranking, team);
+    public RankingBasket(ArrayList<Team> teams, Team team) {
+        super(teams, team);
     }
 
     @Override

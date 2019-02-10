@@ -22,24 +22,41 @@ public class Match{
     
     private Team homeTeam;
     private Team guestTeam;
-    private Date data;
     private int homeResult;
+    private int day;
     private int guestResult;
     private boolean played;
     
+   
     /**
-     * Quando viene chiamato il costruttore, la partita può essere già stata
-     * giocata oppure no. Si prevede che, nel caso in cui la partita non sia 
-     * stata giocata, il punteggio delle due squadre passato per paramentro 
-     * sia uguale a 0 e che il parametro giocata sia settato a false.
+     * se la partita è già stata giocata chiamo il primo costrutore.
+     * @param homeTeam indica la squadra che gioca in casa
+     * @param guestTeam indica la squadra che gioca fuori casa 
+     * @param homeResult indica il numero di punti accumulato dalla squadra di casa.
+     * Nel caso in cui la partita non si fosse ancora giocata chiamo il secondo
+     * costruttore e gli attribuirò un punteggio negativo.
+     * @param data indica la data in cui si è svolta o si dovrà svolgere la partita.
+     * @param played indica se la pratita è stata giocata o no.
      */
-    public Match(Team homeTeam, Team guestTeam, int homeResult, int guestResult, Date data, boolean played){
+    public Match(Team homeTeam, Team guestTeam, int homeResult, int guestResult, int day){
         this.homeTeam = homeTeam;
         this.guestTeam = guestTeam;
-        this.data = data;
+        this.day = day;
         this.homeResult = homeResult;
         this.guestResult = guestResult;
-        this.played = played;
+        this.played = true;
+    }
+    /**
+     * se la partita non è ancora stata svolta, allora attribuirò un punteggio 
+     * negativo al punteggio di ogni squadra e played a false.
+     */
+    public Match(Team homeTeam, Team guestTeam, int day){
+        this.homeTeam = homeTeam;
+        this.guestTeam = guestTeam;
+        this.day = day;
+        this.homeResult = -1;
+        this.guestResult = -1;
+        this.played = false;
     }
     
     public Team getHomeTeam(){
@@ -58,8 +75,8 @@ public class Match{
         return this.guestResult;
     }
     
-    public Date getData(){
-        return this.data;
+    public int getDay(){
+        return this.day;
     }
     
     public boolean getPlayed(){
@@ -82,8 +99,8 @@ public class Match{
         this.guestResult = guestResult;
     }
     
-    public void setData(Date data){
-        this.data = data;
+    public void setDay(int day){
+        this.day = day;
     }
     
     public void setPlayed(boolean played){
