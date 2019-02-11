@@ -5,8 +5,6 @@
  */
 package model;
 
-import java.util.ArrayList;
-
 /**
  *
  * @author giadatrevisani
@@ -22,15 +20,15 @@ import java.util.ArrayList;
 public class Team {
     String name;
     String city;
-    int logo; 
+    String logo; 
     
     /**
      * Costruttore che crea una squadra.
      * @param name indica il nome della squadra.
      * @param city indica la città della squadra.
-     * @param logo indica il logo della squadra.
+     * @param logo indica il file path dell'immagine del logo della squadra.
      */
-    public Team(String name, String city, int logo){
+    public Team(String name, String city, String logo){
         this.name = name;
         this.city = city;
         this.logo = logo; 
@@ -54,9 +52,9 @@ public class Team {
     
     /**
      * Metodo per visualizzare il logo della squadra fuori dalla classe Team.
-     * @return il logo della squadra.
+     * @return il file path del logo della squadra.
      */
-    public int getLogo(){
+    public String getLogo(){
         return logo;
     }
     
@@ -70,7 +68,7 @@ public class Team {
     
     /**
      * Metodo per settare il nome della città passato come parametro.
-     * @param name nome della città.
+     * @param city indica il nome della città della squadra.
      */
     public void setCity(String city){
         this.city = city;
@@ -78,9 +76,9 @@ public class Team {
     
     /**
      * Metodo per settare il logo della squadra passato come parametro.
-     * @param name logo della squadra.
+     * @param logo indica il file path del logo della squadra.
      */
-    public void setLogo(int logo){
+    public void setLogo(String logo){
         this.logo = logo;
     }
   

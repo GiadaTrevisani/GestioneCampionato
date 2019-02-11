@@ -6,7 +6,6 @@
 package prove;
 
 import java.util.ArrayList;
-import model.Match;
 import model.Team;
 import model.Calendar;
 
@@ -28,10 +27,10 @@ public class Prove {
         //creiamo 4 squadre, le inseriamo in un array di squadre e lo passiamo alla 
         //funzione Algoritmo di berger che dovrà creare un calendario di 
         //partite. E poi attraverso la funzione stampaClendario lo stamperemo.
-        Team sv = new Team("sv150", "soliera", 1);
-        Team m = new Team("mondial","carpi",2);
-        Team re = new Team("everton", "reggio", 3);
-        Team bo = new Team("VoolleyAr", "argelato", 4);
+        Team sv = new Team("sv150", "soliera", "GestioneCampionato/prove/img_logo");
+        Team m = new Team("mondial","carpi","GestioneCampionato/prove/img_logo");
+        Team re = new Team("everton", "reggio", "GestioneCampionato/prove/img_logo");
+        Team bo = new Team("VoolleyAr", "argelato", "GestioneCampionato/prove/img_logo");
         
         
         ArrayList<Team> teams = new ArrayList();
@@ -44,7 +43,7 @@ public class Prove {
         Calendar calendario = new Calendar(2019);
         calendario.AlgoritmoDiBerger(teams);
         
-        calendario.printCalendar(calendario);
+        calendario.printCalendar();
         
     }
     

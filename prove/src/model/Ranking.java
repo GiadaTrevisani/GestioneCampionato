@@ -83,7 +83,8 @@ public abstract class Ranking {
     
     /**
      * questo metodo aggiunge un team all'array di squadre.
-     * (quando aggiungo una squadra uso questo metodo )
+     * (quando aggiungo una squadra uso questo metodo).
+     * @param newTeam indica una squadra.
      */
     public void addTeam(Team newTeam){
         teams.add(newTeam);
@@ -93,9 +94,9 @@ public abstract class Ranking {
      * Metodo che aggiunge un team all'ArrayList di squadre.
      * @param name indica il nome della squadra.
      * @param city indica il nome della città.
-     * @param logo indica il logo della squadra.
+     * @param logo indica il file path del logo della squadra.
      */
-    public void addTeam(String name, String city,int logo){
+    public void addTeam(String name, String city,String logo){
 	Team newTeam = new Team(name, city, logo);
         this.addTeam(newTeam);
     }
@@ -108,6 +109,7 @@ public abstract class Ranking {
     * (es. images/solierav.jpg)
     * Per creare questo file mi affiderò alle librerie di Java
     * riportate all'inizio del file.
+    * @throws java.io.FileNotFoundException
     */
     public void saveTeams() throws FileNotFoundException{
         JSONObject jo = new JSONObject();   

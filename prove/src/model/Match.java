@@ -4,8 +4,6 @@
  * and open the template in the editor.
  */
 package model;
-
-import java.util.Date;
 /**
  *
  * @author giadatrevisani
@@ -35,8 +33,10 @@ public class Match{
      * @param homeResult indica il numero di punti accumulato dalla squadra di casa.
      * Nel caso in cui la partita non si fosse ancora giocata chiamo il secondo
      * costruttore e gli attribuirò un punteggio negativo.
-     * @param data indica la data in cui si è svolta o si dovrà svolgere la partita.
-     * @param played indica se la pratita è stata giocata o no.
+     * @param guestResult indica il numero di punti accumulato dalla squadra ospite.
+     * Nel caso in cui la partita non si fosse ancora giocata chiamo il secondo
+     * costruttore e gli attribuirò un punteggio negativo. 
+     * @param day indica la giornata.
      */
     public Match(Team homeTeam, Team guestTeam, int homeResult, int guestResult, int day){
         this.homeTeam = homeTeam;
@@ -49,6 +49,9 @@ public class Match{
     /**
      * se la partita non è ancora stata svolta, allora attribuirò un punteggio 
      * negativo al punteggio di ogni squadra e played a false.
+     * @param homeTeam indica il nome della squadra di casa.
+     * @param guestTeam indica il nome della squadra ospite.
+     * @param day indica la giornata.
      */
     public Match(Team homeTeam, Team guestTeam, int day){
         this.homeTeam = homeTeam;
@@ -117,7 +120,7 @@ public class Match{
     
     /**
      * Metodo che setta il nome della squadra ospite passandolo come parametro.
-     * @param homeTeam nome della squadra ospite.
+     * @param guestTeam indica il nome della squadra ospite.
      */
     public void setGuestTeam(Team guestTeam){
         this.guestTeam = guestTeam;
@@ -133,7 +136,7 @@ public class Match{
     
     /**
      * Metodo che setta i punti accumulati dalla squadra ospite passandolo come parametro.
-     * @param homeResult intero con il numero dei punti della squadra ospite.
+     * @param guestResult indica il punteggio della squadra ospite.
      */
     public void setGuestPoints(int guestResult){
         this.guestResult = guestResult;
