@@ -59,50 +59,99 @@ public class Match{
         this.played = false;
     }
     
+    /**
+     * Metodo per visualizzare la squadra di casa fuori dalla classe.
+     * @return il nome della squadra di casa .
+     */
     public Team getHomeTeam(){
         return this.homeTeam;
     }
     
+    /**
+     * Metodo per visualizzare la squadra in trasferta fuori dalla classe.
+     * @return il nome della squadra ospite .
+     */
     public Team getGuestTeam(){
         return this.guestTeam;
     }
     
+    /**
+     * Metodo per visualizzare i punti della squadra di casa fuori dalla classe.
+     * @return numero di punti della squadra di casa.
+     */
     public int getPointsHome(){
         return this.homeResult;
     }
     
+    /**
+     * Metodo per visualizzare i punti della squadra ospite fuori dalla classe.
+     * @return numero di punti della squadra ospite.
+     */
     public int getPointsGuest(){
         return this.guestResult;
     }
     
+    /**
+     * Metodo che ritorna la giornata di un determinato macth fuori dalla classe.
+     * @return numero della giornata.
+     */
     public int getDay(){
         return this.day;
     }
     
+    /**
+     * Metodo per vedere se la partita è stata giocata fuori dalla classe Match.
+     * @return un booleano che sarà true se la partita è stata giocatam false altrimenti.
+     */
     public boolean getPlayed(){
         return this.played;
     }
     
+    /**
+     * Metodo che setta il nome della squadra di casa passandolo come parametro.
+     * @param homeTeam nome della squadra di casa.
+     */
     public void setHomeTeam(Team homeTeam){
         this.homeTeam = homeTeam;
     }
     
+    /**
+     * Metodo che setta il nome della squadra ospite passandolo come parametro.
+     * @param homeTeam nome della squadra ospite.
+     */
     public void setGuestTeam(Team guestTeam){
         this.guestTeam = guestTeam;
     }
     
+    /**
+     * Metodo che setta i punti accumulati dalla squadra di casa passandolo come parametro.
+     * @param homeResult intero con il numero dei punti della squadra di casa.
+     */
     public void setHomePoints(int homeResult){
         this.homeResult = homeResult;
     }
     
+    /**
+     * Metodo che setta i punti accumulati dalla squadra ospite passandolo come parametro.
+     * @param homeResult intero con il numero dei punti della squadra ospite.
+     */
     public void setGuestPoints(int guestResult){
         this.guestResult = guestResult;
     }
     
+    /**
+     * Metodo che setta la giornata di un match passandola come parametro.
+     * @param day intero che indica la giornata.
+     */
     public void setDay(int day){
         this.day = day;
     }
     
+    /**
+     * Metodo che setta se la partita è stata giocata o meno, passando un booleano
+     * come parametro
+     * @param played 
+     */
     public void setPlayed(boolean played){
         this.played = played;
     }

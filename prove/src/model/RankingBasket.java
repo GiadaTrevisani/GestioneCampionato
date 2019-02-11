@@ -13,16 +13,30 @@ import java.util.ArrayList;
  */
 public class RankingBasket extends Ranking{
 
-    public RankingBasket(ArrayList<Team> teams) {
+    public RankingBasket(Calendar calendar){
+        super(calendar);
+    }
+
+    public RankingBasket(ArrayList<Team> teams, Calendar calendar){
+        super(teams, calendar);
+    }
+
+    public RankingBasket(ArrayList<Team> teams){
         super(teams);
     }
-    
+
     public RankingBasket(){
         super();
     }
 
+    /**
+     * Metodo per il calcolo delle partite vinte per una squadra passata come parametro.
+     * @param teamName nome della squadra.
+     * @return intero con il numero delle parite vinte.
+     */
     @Override
-    public int getWinForTeam(String teamName, ArrayList<Match> games) {
+    public int getWinForTeam(String teamName){
+        ArrayList<Match> games = this.calendar.getGames();
         int partiteVinte = 0;
         for (int i = 0; i < games.size(); i++) {
             if(teamName.equals(games.get(i).getHomeTeam().getName())){
@@ -39,8 +53,14 @@ public class RankingBasket extends Ranking{
         return partiteVinte;
     }
     
+    /**
+     *  Metodo che calcola il numero delle partite perse della squadra passata come parametro.
+     * @param teamName nome della squadra.
+     * @return intero con il numero delle partite perse.
+     */
     @Override
-    public int getLooseForTeam(String teamName, ArrayList<Match> games) {
+    public int getLooseForTeam(String teamName){
+        ArrayList<Match> games = this.calendar.getGames();
         int partitePerse = 0;
         for (int i = 0; i < games.size(); i++) {
             if(teamName.equals(games.get(i).getHomeTeam().getName())){
@@ -58,9 +78,15 @@ public class RankingBasket extends Ranking{
         return partitePerse;
     }
 
+    /**
+     * Metodo per il calcolo dei punti tolalizzati dalla squadra passata come parametro.
+     * @param teamName nome della squadra.
+     * @return intero con il numero totale dei punti della squdra.
+     */
     @Override
-    public int getpointsForTeam(String teamName,ArrayList<Match> games) {
-         int totalePunti = 0;
+    public int getpointsForTeam(String teamName){
+        ArrayList<Match> games = this.calendar.getGames();
+        int totalePunti = 0;
         for (int i = 0; i < games.size(); i++) {
             if(teamName.equals(games.get(i).getHomeTeam().getName())){
                 /**

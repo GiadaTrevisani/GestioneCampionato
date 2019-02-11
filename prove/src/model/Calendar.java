@@ -18,32 +18,62 @@ public class Calendar {
     private ArrayList<Match> games;
     private int year;
     
+    /**
+     * Primo costruttore che prende in ingresso:
+     * @param games che indica l'Arrayist di tipo Match che saranno inseriti
+     * nell'ArrayList nuovo.
+     * @param year che indica l'anno in cui si svolge il campionato.
+     */
     public Calendar(ArrayList<Match> games, int year){
         this.games = games;
         this.year = year;
     }
     
+    /**
+     * Secondo costruttore che prende in ingresso:
+     * @param year indica l'anno in cui si svolge il campionato.
+     */
     public Calendar(int year){
         this.year = year;
         games = new ArrayList<Match>();
     }
     
+    /**
+     * @return Metodo che ritorna i match nell'ArrayList di partite.
+     */
     public ArrayList<Match> getGames(){
         return games;      
     }
     
+    /**
+     * @return Metodo che ritorna l'anno in cui si svolge il campionato 
+     */
     public int getYear(){
         return year;
     }
     
+    /**
+     * Metodo che setta l'ArrayList di partite che vengono passate in input
+     * @param games ArrayList di partite 
+     */
     public void setGames(ArrayList<Match> games){
         this.games = games; 
     }
     
+    /**
+     * Metodo che setta l'anno del campionato che si vuole creare
+     * @param year intero che indica l'anno
+     */
     public void setYear(int year){
         this.year = year;
     }
-
+    
+    /**
+     * Metodo che torna un array di partite che si svolgono nella stessa giornata
+     * @param day viene passato in ingresso al metodo che servirà per fare 
+     * un controllo delle partite inserite nell'ArrayList games.
+     * @return ArrayList con le partite che si volgono nella stessa giornata.
+     */
     public ArrayList getGamesForDate(int day){
         ArrayList<Match> p;
         p = new ArrayList<Match>();
@@ -56,6 +86,12 @@ public class Calendar {
         return p;
     }  
     
+    /**
+     * Metodo che prende in ingresso il nome della squadra e ritorna tutte 
+     * le partite che quella squadra deve giocare.
+     * @param teamName stringa con il nome della squadra da cercare.
+     * @return ArrayList delle partite che la squadra deve giocare.
+     */
     public ArrayList<Match> getGamesForTeam(String teamName){
         ArrayList<Match> p;
         p = new ArrayList<Match>();
@@ -70,6 +106,12 @@ public class Calendar {
         return p;
     }
     
+    /**
+     * Metodo che prende in ingresso un booleano e trona tutte e partite che 
+     * sono state giocate o che non sono state giocate.
+     * @param is_played booleano per vedere le partite giocate e non giocate.
+     * @return un array di partite giocate o non giocate.
+     */
     public ArrayList<Match> getPlayedGames(Boolean is_played){
         ArrayList<Match> p;
         p = new ArrayList<Match>();
@@ -84,14 +126,24 @@ public class Calendar {
     /**
      * aggiungo stampa algpritmo di berger per stampare in modo bello tutte 
      * le mie partite di un calendario.
+     * @param calendar viene passato alla funzione che stamperà il calendario
+     * con le giornate, squadra di casa e squadra fuori casa.
      */
+    public void printCalendar(Calendar calendar){
+        System.out.println("Anno: " + calendar.getYear());
+        for (int i = 0; i < getGames().size(); i++) {
+            System.out.print(calendar.getGames().get(i).getDay());
+            System.out.print(calendar.getGames().get(i).getHomeTeam() + " - ");
+            System.out.print(calendar.getGames().get(i).getGuestTeam());
+        }
+    }
     
   /**
    * Algoritmo per la creazione del calendario di uno sport
-   * @param squadre 
+   * @param teams indica l'ArrayList di squadre che vengono passate alla funzione 
    */  
 public void AlgoritmoDiBerger(ArrayList<Team> teams){
-    games = new ArrayList<Match>();
+    games = new ArrayList();
     int number_teams = teams.size();
     int days = number_teams - 1;
  

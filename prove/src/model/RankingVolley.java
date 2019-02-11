@@ -13,20 +13,30 @@ import java.util.ArrayList;
  */
 public class RankingVolley extends Ranking{
 
-    public RankingVolley(ArrayList<Team> teams) {
+    public RankingVolley(Calendar calendar){
+        super(calendar);
+    }
+
+    public RankingVolley(ArrayList<Team> teams, Calendar calendar){
+        super(teams, calendar);
+    }
+
+    public RankingVolley(ArrayList<Team> teams){
         super(teams);
-    } 
-    
+    }
+
     public RankingVolley(){
         super();
     }
+    
     /**
-     * algoritmo non troppo efficente perchè guardo nella stessa partita
-     * se la squadra è quella di casa, se corrisponde guardo anche quella 
-     * fuori casa e quindi l'algoritmo non è perfetto
+     * Metodo per il calcolo delle partite vinte per una squadra passata come parametro.
+     * @param TeamName nome della squadra.
+     * @return intero con il numero delle parite vinte.
      */
     @Override
-    public int getWinForTeam(String TeamName, ArrayList<Match> games){
+    public int getWinForTeam(String TeamName){
+        ArrayList<Match> games = this.calendar.getGames();
         int partiteVinte = 0;
         for (int i = 0; i < games.size(); i++) {
             if(TeamName.equals(games.get(i).getHomeTeam().getName())){
@@ -63,8 +73,14 @@ public class RankingVolley extends Ranking{
         return partiteVinte;
     }
 
+    /**
+     * Metodo che calcola il numero delle partite perse della squadra passata come parametro.
+     * @param TeamName nome della squadra.
+     * @return intero con il numero di partite perse della squadra.
+     */
     @Override
-    public int getLooseForTeam(String TeamName, ArrayList<Match> games) {
+    public int getLooseForTeam(String TeamName) {
+        ArrayList<Match> games = this.calendar.getGames();
         int partitePerse = 0;
         for (int i = 0; i < games.size(); i++) {
             if(TeamName.equals(games.get(i).getHomeTeam().getName())){
@@ -100,8 +116,14 @@ public class RankingVolley extends Ranking{
         return partitePerse;
     }
 
+    /**
+     * Metodo per il calcolo dei punti tolalizzati dalla squadra passata come parametro.
+     * @param TeamName nome della squadra.
+     * @return intero con il numero dei punti totalizzati dalla squadra.
+     */
     @Override
-    public int getpointsForTeam(String TeamName, ArrayList<Match> games) {
+    public int getpointsForTeam(String TeamName) {
+        ArrayList<Match> games = this.calendar.getGames();
         int totalePunti = 0;
         for (int i = 0; i < games.size(); i++) {
             if(TeamName.equals(games.get(i).getHomeTeam().getName())){

@@ -13,16 +13,30 @@ import java.util.ArrayList;
  */
 public class RankingSoccer extends Ranking{
 
-    public RankingSoccer(ArrayList<Team> teams) {
+    public RankingSoccer(Calendar calendar){
+        super(calendar);
+    }
+
+    public RankingSoccer(ArrayList<Team> teams, Calendar calendar){
+        super(teams, calendar);
+    }
+
+    public RankingSoccer(ArrayList<Team> teams){
         super(teams);
     }
-    
+
     public RankingSoccer(){
         super();
     }
 
+    /**
+     * Metodo per il calcolo delle partite vinte per una squadra passata come parametro.
+     * @param TeamName nome della squada.
+     * @return intero con il nomero delle partite vente dalla squadra.
+     */
     @Override
-    public int getWinForTeam(String TeamName, ArrayList<Match> games) {
+    public int getWinForTeam(String TeamName) {
+        ArrayList<Match> games = this.calendar.getGames();
         int partiteVinte = 0;
         for (int i = 0; i < games.size(); i++) {
             if(TeamName.equals(games.get(i).getHomeTeam().getName())){
@@ -39,8 +53,14 @@ public class RankingSoccer extends Ranking{
         return partiteVinte;
     }
 
+    /**
+     * Metodo che calcola il numero delle partite perse della squadra passata come parametro.
+     * @param TeamName nome della squadra.
+     * @return intero con il numero delle partite perse dalla squadra.
+     */
     @Override
-    public int getLooseForTeam(String TeamName, ArrayList<Match> games) {
+    public int getLooseForTeam(String TeamName) {
+        ArrayList<Match> games = this.calendar.getGames();
         int partitePerse = 0;
         for (int i = 0; i < games.size(); i++) {
             if(TeamName.equals(games.get(i).getHomeTeam().getName())){
@@ -58,8 +78,14 @@ public class RankingSoccer extends Ranking{
         return partitePerse;
     }
 
+    /**
+     * Metodo per il calcolo dei punti tolalizzati dalla squadra passata come parametro.
+     * @param TeamName nome della squadra.
+     * @return intero con il numero dei punti totalizzati dalla squadra.
+     */
     @Override
-    public int getpointsForTeam(String TeamName, ArrayList<Match> games) {
+    public int getpointsForTeam(String TeamName){
+        ArrayList<Match> games = this.calendar.getGames();
          int totalePunti = 0;
         for (int i = 0; i < games.size(); i++) {
             if(TeamName.equals(games.get(i).getHomeTeam().getName())){
@@ -125,7 +151,13 @@ public class RankingSoccer extends Ranking{
     }
     
 
-   public int getPareggiateForSqadra(String TeamName, ArrayList<Match> games){
+    /**
+     * Metodo per il calcolo delle partite pareggiate dalla squadra passata come parametro.
+     * @param TeamName nome della squadra.
+     * @return intero con il numero delle partite pareggiate della squadra.
+     */
+   public int getPareggiateForSqadra(String TeamName){
+       ArrayList<Match> games = this.calendar.getGames();
        int partitePareggiate = 0;
        for (int i = 0; i < games.size(); i++) {
            if(TeamName.equals(games.get(i).getHomeTeam().getName())){
