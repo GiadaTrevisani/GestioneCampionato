@@ -4,6 +4,10 @@
  * and open the template in the editor.
  */
 package model;
+
+import java.util.ArrayList;
+import org.json.simple.JSONObject;
+
 /**
  *
  * @author giadatrevisani
@@ -142,6 +146,12 @@ public class Match{
         this.guestResult = guestResult;
     }
     
+    public void resetResults(){
+        this.homeResult = -1;
+        this.guestResult = -1;
+        this.played = false;
+    }
+    
     /**
      * Metodo che setta la giornata di un match passandola come parametro.
      * @param day intero che indica la giornata.
@@ -157,6 +167,52 @@ public class Match{
      */
     public void setPlayed(boolean played){
         this.played = played;
+    }
+    
+    public JSONObject toJSONObject(){
+        JSONObject jo = new JSONObject();
+        jo.put("HomeTeam", getHomeTeam().getName());
+        jo.put("GuestTeam", getGuestTeam().getName());
+        jo.put("HomeResutl", getPointsHome());
+        jo.put("GuestResult", getPointsGuest());
+        jo.put("Day", getDay());
+        jo.put("Played", getPlayed());
+        
+        return jo;
+    }
+    
+    /**
+     * Metodo statico per creare un match da un JsonObject.
+     * @param jo indica il JsonObject.
+     * @param teams indica la lista delle squadre presenti.
+     * @return il match creato.
+     * @throws Exception 
+     */
+    public static Match fromJSONObject(JSONObject jo, ArrayList<Team> teams) throws Exception{
+        String homeTeam = (String) jo.get("HomeTeam");
+        String guestTeam = (String) jo.get("GuestTeam");
+        int homeResult = (int) jo.get("HomeResutl");
+        int guestResult = (int) jo.get("GuestResult");
+        int day = (int) jo.get("Day");
+        boolean played = (boolean) jo.get("Played");
+        int indexHome = -1;
+        int indexGuest = -1;
+        for (int i = 0; i < teams.size(); i++) {
+            if(teams.get(i).getName().equals(homeTeam)){
+                indexHome = i;
+            }
+            if(teams.get(i).getName().equals(guestTeam)){
+                indexGuest = i;
+            }
+        }
+        
+        if(indexHome ==-1 || indexGuest == -1){
+            System.out.println("Una delle squadre nel match non esiste");
+            throw new Exception("Una delle squadre nel match non esiste");
+        } 
+        Match nm = new Match(teams.get(indexHome), teams.get(indexGuest), homeResult, guestResult, day);
+        nm.setPlayed(played);
+        return nm;
     }
     
 }

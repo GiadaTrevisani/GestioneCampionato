@@ -5,7 +5,15 @@
  */
 package model;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONArray;
+import org.json.simple.parser.ParseException;
 /**
  * @author giadatrevisani
  */
@@ -17,6 +25,7 @@ import java.util.ArrayList;
 public class Calendar {
     private ArrayList<Match> games;
     private int year;
+    private static final String filePath = "prove/";
     
     /**
      * Primo costruttore che prende in ingresso:
@@ -67,6 +76,54 @@ public class Calendar {
     public void setYear(int year){
         this.year = year;
     }
+    
+     /**
+     * Metodo che crea un file JSon per il salvataggio del calendario su file.
+     */
+    public void saveCalendar() throws FileNotFoundException{
+        PrintWriter pw = new PrintWriter(filePath + "calendar.json"); 
+        JSONObject jo = new JSONObject();
+        jo.put("Year", year);
+        JSONArray ja = new JSONArray();
+        
+        for (int i = 0; i < games.size(); i++) {
+            ja.add(games.get(i).toJSONObject());
+        }
+        
+        jo.put("Games", ja);
+        
+        pw.write(jo.toJSONString());
+        pw.flush();
+        pw.close();
+        
+    }
+    
+    /**
+     * Metodo per caricare il calendario da un salvataggio Json.
+     */
+    public void takeFromFile(ArrayList<Team> teams){
+       games = new ArrayList<Match>();
+       Object obj;
+       try {
+            obj = new JSONParser().parse(new FileReader(filePath + "calendar.json"));
+        } catch (IOException | ParseException ex) {
+            System.out.println("Il file salvatagio non esiste per i match");
+            return ;
+        }
+       JSONObject jo = (JSONObject) obj;
+       
+       this.year = (int) jo.get("Year");
+       JSONArray ja = (JSONArray) jo.get("Games");
+       
+       try{
+        for (int i = 0; i < ja.size(); i++) {
+            games.add(Match.fromJSONObject((JSONObject) ja.get(i), teams));
+        }
+       } catch(Exception e) {
+           System.out.println("il calendario caricato non corrisponde ai team presenti");
+       }
+    }
+    
     
     /**
      * Metodo che torna un array di partite che si svolgono nella stessa giornata
@@ -120,6 +177,15 @@ public class Calendar {
     }
     
     /**
+     * Metodo per resettare i risultati di tutte le partite.
+     */
+    public void deleteResults(){
+        for (int i = 0; i < games.size(); i++) {
+            games.get(i).resetResults();
+        }
+    }
+    
+    /**
      * aggiungo stampa algpritmo di berger per stampare in modo bello tutte 
      * le mie partite di un calendario.
      */
@@ -140,7 +206,7 @@ public class Calendar {
 	    games = new ArrayList<Match>(); // reset dell'array games (vuoto)
 	    int number_teams = teams.size();
 
-	    Team jolly = new Team("Jolly", "Jolly", "GestioneSquadre/prove/img_logo");
+	    Team jolly = new Team("Jolly", "Jolly", "GestioneSquadre/prove/img_logo/Carpi.png");
 
 	    if (number_teams%2 != 0) {
 	    	//Fai qualcosa quando le squadre sono dispari

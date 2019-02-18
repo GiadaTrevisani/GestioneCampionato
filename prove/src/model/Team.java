@@ -5,6 +5,8 @@
  */
 package model;
 
+import org.json.simple.JSONObject;
+
 /**
  *
  * @author giadatrevisani
@@ -81,6 +83,24 @@ public class Team {
     public void setLogo(String logo){
         this.logo = logo;
     }
-  
+    
+    public JSONObject toJSONObject(){
+        JSONObject jo = new JSONObject();
+        jo.put("Name" , getName());
+        jo.put("City", getCity());
+        jo.put("Logo", getLogo());
+        
+        return jo;
+    }
+    
+    public static Team fromJSONObject(JSONObject jo){
+        String teamName = (String) jo.get("Name"); 
+        String teamCity = (String) jo.get("City"); 
+        String teamLogo = (String) jo.get("Logo");
+
+        Team nt = new Team(teamName, teamCity, teamLogo);
+        return nt;
+    }
+    
 }
 

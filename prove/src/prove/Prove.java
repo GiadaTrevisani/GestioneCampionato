@@ -5,9 +5,12 @@
  */
 package prove;
 
+import controller.MainFrame;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import model.Team;
 import model.Calendar;
+import model.RankingVolley;
 
 /**
  *
@@ -18,10 +21,12 @@ public class Prove {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException, Exception{
         //MainFrame mainframe = new MainFrame("Gestione campionati");
         //mainframe.setVisible(true);
         System.out.println("Gestione campionati avviato");
+        MainFrame main =new MainFrame("GestioneCampionato");
+        main.setVisible(true);
         
         //proviamo l'algoritmo di berger 
         //creiamo 4 squadre, le inseriamo in un array di squadre e lo passiamo alla 
@@ -44,6 +49,18 @@ public class Prove {
         calendario.AlgoritmoDiBerger(teams);
         
         calendario.printCalendar();
+        
+        RankingVolley classifica = new RankingVolley(/*teams, */calendario);
+        
+        //classifica.saveTeams();
+        classifica.takeFromFile();
+        
+        for (int i = 0; i < classifica.getTeam().size(); i++) {
+            System.out.println(classifica.getTeam().get(i).getName());
+            System.out.println(classifica.getTeam().get(i).getCity());
+            System.out.println(classifica.getTeam().get(i).getLogo());
+        }
+        
         
     }
     

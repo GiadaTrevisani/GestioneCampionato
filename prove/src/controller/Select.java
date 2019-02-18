@@ -9,9 +9,11 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 /**
  *
@@ -26,16 +28,17 @@ public class Select extends JPanel{
     private final JPanel previus;
     private final JPanel body;
     private final String sport;
+    private final MainFrame father;
     //private final BoxLayout prev;
     
      
-    public Select(String sport){
+    public Select(String sport, MainFrame father){
         this.sport = sport;
+        this.father = father;
         managementbtn = new JButton("Gestione Squadre");
         calendarbtn = new JButton("Calendario");
         rankingbtn = new JButton("Classifica");
         prevpage = new JButton("<---");
-        //prev = new BoxLayout(prev, );
         previus = new JPanel();
         body = new JPanel();
         vertical = Box.createHorizontalBox();
@@ -49,6 +52,14 @@ public class Select extends JPanel{
         managementbtn.setPreferredSize(new Dimension(150, 150));
         calendarbtn.setPreferredSize(new Dimension(150, 150));
         rankingbtn.setPreferredSize(new Dimension(150, 150));
+        
+        prevpage.addActionListener((ActionEvent e) -> {
+           //MainFrame main = new MainFrame("GestioneCampionato");
+           this.setVisible(false);
+           father.setVisible(true);
+           this.add(father, SwingConstants.CENTER);
+       });
+        
         this.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         previus.add(prevpage, BorderLayout.PAGE_START);
@@ -60,5 +71,4 @@ public class Select extends JPanel{
         
         System.out.println(sport);
     }
-
 }

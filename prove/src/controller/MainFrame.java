@@ -51,21 +51,21 @@ public class MainFrame extends JFrame{
        basketbtn.setPreferredSize(new Dimension(150, 150));
        
        soccerbtn.addActionListener((ActionEvent e) -> {
-           Select select = new Select("calcio");
+           Select select = new Select("calcio", this);
            whichsports.setVisible(false);
            select.setVisible(true);
            this.add(select, SwingConstants.CENTER);
        });
        
        volleybtn.addActionListener((ActionEvent e) -> {
-           Select select = new Select("volley");
+           Select select = new Select("volley", this);
            whichsports.setVisible(false);
            select.setVisible(true);
            this.add(select, SwingConstants.CENTER);
        });
        
        basketbtn.addActionListener((ActionEvent e) -> {
-           Select select = new Select("basket");
+           Select select = new Select("basket", this);
            whichsports.setVisible(false);
            select.setVisible(true);
            this.add(select, SwingConstants.CENTER);
@@ -77,7 +77,6 @@ public class MainFrame extends JFrame{
        whichsports.add(volleybtn, gbc);
        whichsports.add(basketbtn, gbc);
        whichsports.setVisible(true);
-       this.add(whichsports, SwingConstants.CENTER);
-       
+       this.add(whichsports, SwingConstants.CENTER);      
     }
 }
