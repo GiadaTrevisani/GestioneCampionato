@@ -41,7 +41,7 @@ public class MainFrame extends JFrame{
     
     private void createGUI(){
        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-       this.setMinimumSize(new Dimension(300, 300));;
+       this.setMinimumSize(new Dimension(600, 400));;
        this.setSize(800, 600);
        this.addWindowListener(new CloseWindow(this));
        soccerbtn.setPreferredSize(new Dimension(150, 150));

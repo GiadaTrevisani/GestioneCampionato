@@ -7,11 +7,8 @@ package view_controller;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -45,8 +42,6 @@ public class Select extends JPanel{
     }
     
     private void creaGui(){
-        this.setMinimumSize(new Dimension(300, 300));
-        this.setSize(800, 600);
         prevpage.setPreferredSize(new Dimension(90, 23));
         managementbtn.setPreferredSize(new Dimension(150, 150));
         calendarbtn.setPreferredSize(new Dimension(150, 150));

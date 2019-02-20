@@ -21,14 +21,17 @@ import model.Team;
  */
 public class ManagementTeams extends javax.swing.JFrame {
 
-    DefaultTableModel model;
-    Ranking rank;
+    private final DefaultTableModel model;
+    private Ranking rank;
+    private boolean openNewTeam, openViewUpdate;
     
     
     
     public ManagementTeams(String sport){
         initComponents();
         model = (DefaultTableModel) viewTeams.getModel();
+        openNewTeam = false;
+        openViewUpdate = false;
         
         if(sport.equals("volley")){
             rank = new RankingVolley();
@@ -41,9 +44,9 @@ public class ManagementTeams extends javax.swing.JFrame {
         if(sport.equals("basket")){
             rank = new RankingBasket();
         }
-        rank.addTeam("sv150", "soliera", "imggsf");
-        rank.addTeam("everton", "reggio emilia", "hiodww");
-        rank.addTeam("libertas", "fiorano", "hoiia");
+        rank.addTeam("sv150", "soliera", "Soliera.jpg");
+        rank.addTeam("everton", "reggio emilia", "Modena.jpg");
+        rank.addTeam("libertas", "fiorano", "Libertas.png");
         rank.addTeam("beta", "magreta", "cguidshs");
         rank.addTeam("alpha", "beta", "cguidshs");
         rank.addTeam("hsi", "soliera", "ehwewo");
@@ -74,7 +77,7 @@ public class ManagementTeams extends javax.swing.JFrame {
     }
     
     private void creaGui() {
-       this.setMinimumSize(new Dimension(300, 300));;
+       this.setMinimumSize(new Dimension(700, 500));
        this.setSize(800, 600); 
     }
     
@@ -103,6 +106,8 @@ public class ManagementTeams extends javax.swing.JFrame {
         cercabtn = new javax.swing.JButton();
         finebtn = new javax.swing.JButton();
         viewbtn = new javax.swing.JButton();
+
+        setMaximumSize(new java.awt.Dimension(0, 0));
 
         searchTeams.setToolTipText("");
         searchTeams.addActionListener(new java.awt.event.ActionListener() {
@@ -164,7 +169,8 @@ public class ManagementTeams extends javax.swing.JFrame {
             }
         });
 
-        finebtn.setText("fine");
+        finebtn.setBackground(new java.awt.Color(255, 0, 0));
+        finebtn.setText("x");
         finebtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 finebtnActionPerformed(evt);
@@ -172,6 +178,11 @@ public class ManagementTeams extends javax.swing.JFrame {
         });
 
         viewbtn.setText("<html><p style = \"text-align: center\">Visualizza<br>Modifica</p></html>");
+        viewbtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewbtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -181,7 +192,7 @@ public class ManagementTeams extends javax.swing.JFrame {
                 .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 493, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(18, 18, 18)
@@ -194,10 +205,10 @@ public class ManagementTeams extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(searchTeams, javax.swing.GroupLayout.PREFERRED_SIZE, 322, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(finebtn, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(cercabtn)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(finebtn)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(newbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(23, 23, 23))
         );
@@ -225,10 +236,34 @@ public class ManagementTeams extends javax.swing.JFrame {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Questo metodo crea un nuovo oggetto Team vuoto e lo passa alla classe NewTeam
+     * dove sarà inserita la nuova squadra.
+     * @param evt 
+     */
     private void newbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newbtnActionPerformed
-       
+        if(openNewTeam == false){    
+            openNewTeam = true;
+            Team nt = new Team("", "", "");
+            NewTeam newTeam;
+            
+            newTeam = new NewTeam(nt);
+            newTeam.setVisible(true);
+            newTeam.addWindowListener(new java.awt.event.WindowAdapter() {
+                @Override
+                public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                    openNewTeam = false;
+                }
+            });
+            
+        }
     }//GEN-LAST:event_newbtnActionPerformed
 
+    /**
+     * Questo metodo prende i teams presenti nel file JSON teams.json e li salva
+     * nell'array teams presenti nell'oggetto rank.
+     * @param evt 
+     */
     private void takeTeamsbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_takeTeamsbtnActionPerformed
         rank.takeFromFile();
         printTable();
@@ -238,6 +273,11 @@ public class ManagementTeams extends javax.swing.JFrame {
     
     }//GEN-LAST:event_searchTeamsActionPerformed
 
+    /**
+     * Questo metodo salva i teams presenti nell'array teams dell'oggetto rank
+     * nel file JSON teams.json
+     * @param evt 
+     */
     private void saveTeamsbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveTeamsbtnActionPerformed
         try {
             rank.saveTeams();
@@ -251,8 +291,12 @@ public class ManagementTeams extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_searchTeamsKeyReleased
 
+    /**
+     * Questo metodo cerca la squadra inserita nella TextField searchTeam e visualizza
+     * il/i risultati nella tabella.
+     * @param evt 
+     */
     private void cercabtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cercabtnActionPerformed
-        
         int j = 0;
         model.setRowCount(0);
         ArrayList<Team> teams = new ArrayList<Team>();
@@ -266,9 +310,40 @@ public class ManagementTeams extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_cercabtnActionPerformed
 
+    /**
+     * Questo metodo ripristina la tabella iniziale dopo che ho cercato una squadra.
+    */
     private void finebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_finebtnActionPerformed
+        searchTeams.setText("");
         printTable();
     }//GEN-LAST:event_finebtnActionPerformed
+
+    /**
+     * Questo metodo chiama una nuova finestra dove verrà visualizzato il team che si è cliccato nella tabella.
+     * Cliccando sul bottone Modifica Visualizza è possibile anche modificare la squadra che si è cliccata nella tabella.
+     * @param evt 
+     */
+    private void viewbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewbtnActionPerformed
+        if(openViewUpdate == false){ 
+            openViewUpdate = true;
+            int selectedRowIndex = viewTeams.getSelectedRow();
+            Team view_update;
+            view_update = new Team(viewTeams.getModel().getValueAt(selectedRowIndex, 0).toString(), viewTeams.getModel().getValueAt(selectedRowIndex, 1).toString(), viewTeams.getModel().getValueAt(selectedRowIndex, 2).toString());
+            NewTeam newTeam;
+
+            newTeam = new NewTeam(view_update);
+            newTeam.setVisible(true);
+            newTeam.addWindowListener(new java.awt.event.WindowAdapter() {
+                @Override
+                public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                    openViewUpdate = false;
+                }
+            });
+        }
+        
+        
+        
+    }//GEN-LAST:event_viewbtnActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
