@@ -5,7 +5,7 @@
  */
 package prove;
 
-import controller.MainFrame;
+import view_controller.MainFrame;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import model.Team;
@@ -25,14 +25,13 @@ public class Prove {
         //MainFrame mainframe = new MainFrame("Gestione campionati");
         //mainframe.setVisible(true);
         System.out.println("Gestione campionati avviato");
-        MainFrame main =new MainFrame("GestioneCampionato");
-        main.setVisible(true);
+        
         
         //proviamo l'algoritmo di berger 
         //creiamo 4 squadre, le inseriamo in un array di squadre e lo passiamo alla 
         //funzione Algoritmo di berger che dovrà creare un calendario di 
         //partite. E poi attraverso la funzione stampaClendario lo stamperemo.
-        Team sv = new Team("sv150", "soliera", "GestioneCampionato/prove/img_logo");
+        Team sv = new Team("cacca", "caccalandia", "GestioneCampionato/prove/img_logo");
         Team m = new Team("mondial","carpi","GestioneCampionato/prove/img_logo");
         Team re = new Team("everton", "reggio", "GestioneCampionato/prove/img_logo");
         Team bo = new Team("VoolleyAr", "argelato", "GestioneCampionato/prove/img_logo");
@@ -48,20 +47,21 @@ public class Prove {
         Calendar calendario = new Calendar(2019);
         calendario.AlgoritmoDiBerger(teams);
         
-        calendario.printCalendar();
+        //calendario.printCalendar();
         
         RankingVolley classifica = new RankingVolley(/*teams, */calendario);
         
-        //classifica.saveTeams();
-        classifica.takeFromFile();
-        
+        classifica.saveTeams();
+        //classifica.takeFromFile();
+        /*
         for (int i = 0; i < classifica.getTeam().size(); i++) {
             System.out.println(classifica.getTeam().get(i).getName());
             System.out.println(classifica.getTeam().get(i).getCity());
             System.out.println(classifica.getTeam().get(i).getLogo());
         }
-        
-        
+        */
+        MainFrame main =new MainFrame("GestioneCampionato");
+        main.setVisible(true);
     }
     
 }

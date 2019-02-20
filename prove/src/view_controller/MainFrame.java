@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller;
+package view_controller;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -43,29 +43,27 @@ public class MainFrame extends JFrame{
        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
        this.setMinimumSize(new Dimension(300, 300));;
        this.setSize(800, 600);
-       //se voglio mettere che quando clicco x mi chieda se sono sicura
-       //creo il listeners qua sotto
-       //this.addWindowListener(new FrameClosingListener(this));
+       this.addWindowListener(new CloseWindow(this));
        soccerbtn.setPreferredSize(new Dimension(150, 150));
        volleybtn.setPreferredSize(new Dimension(150, 150));
        basketbtn.setPreferredSize(new Dimension(150, 150));
        
        soccerbtn.addActionListener((ActionEvent e) -> {
-           Select select = new Select("calcio", this);
+           Select select = new Select("calcio", whichsports);
            whichsports.setVisible(false);
            select.setVisible(true);
            this.add(select, SwingConstants.CENTER);
        });
        
        volleybtn.addActionListener((ActionEvent e) -> {
-           Select select = new Select("volley", this);
+           Select select = new Select("volley", whichsports);
            whichsports.setVisible(false);
            select.setVisible(true);
            this.add(select, SwingConstants.CENTER);
        });
        
        basketbtn.addActionListener((ActionEvent e) -> {
-           Select select = new Select("basket", this);
+           Select select = new Select("basket", whichsports);
            whichsports.setVisible(false);
            select.setVisible(true);
            this.add(select, SwingConstants.CENTER);

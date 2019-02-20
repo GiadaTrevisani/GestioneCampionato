@@ -3,17 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller;
+package view_controller;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
 
 /**
  *
@@ -26,22 +27,20 @@ public class Select extends JPanel{
     private final JButton rankingbtn;
     private final JButton prevpage;
     private final JPanel previus;
-    private final JPanel body;
     private final String sport;
-    private final MainFrame father;
-    //private final BoxLayout prev;
+    private final JPanel father;
+    private boolean openmanagement;
     
      
-    public Select(String sport, MainFrame father){
+    public Select(String sport, JPanel father){
         this.sport = sport;
         this.father = father;
+        openmanagement = false;
         managementbtn = new JButton("Gestione Squadre");
         calendarbtn = new JButton("Calendario");
         rankingbtn = new JButton("Classifica");
         prevpage = new JButton("<---");
         previus = new JPanel();
-        body = new JPanel();
-        vertical = Box.createHorizontalBox();
         this.creaGui();
     }
     
@@ -52,23 +51,34 @@ public class Select extends JPanel{
         managementbtn.setPreferredSize(new Dimension(150, 150));
         calendarbtn.setPreferredSize(new Dimension(150, 150));
         rankingbtn.setPreferredSize(new Dimension(150, 150));
-        
+
         prevpage.addActionListener((ActionEvent e) -> {
-           //MainFrame main = new MainFrame("GestioneCampionato");
            this.setVisible(false);
            father.setVisible(true);
-           this.add(father, SwingConstants.CENTER);
-       });
-        
+        });
+
+        managementbtn.addActionListener((ActionEvent e) -> {
+            if(openmanagement == false){
+                openmanagement = true;
+                ManagementTeams management;
+                management = new ManagementTeams(sport);
+                management.setVisible(true);
+                management.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                        openmanagement = false;
+                    }
+                });
+            }
+        });
+
         this.setLayout(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
         previus.add(prevpage, BorderLayout.PAGE_START);
-        body.add(managementbtn);
-        body.add(calendarbtn);
-        body.add(rankingbtn);
         this.add(previus);
-        this.add(body, gbc);
-        
+        this.add(managementbtn);
+        this.add(calendarbtn);
+        this.add(rankingbtn);
+
         System.out.println(sport);
     }
 }

@@ -9,8 +9,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter; 
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONArray;
@@ -21,7 +19,6 @@ import org.json.simple.parser.ParseException;
  */
 public abstract class Ranking {
     protected ArrayList<Team> teams;
-    private static final String filePath = "prove/";
     protected Calendar calendar;
     
     /**
@@ -81,7 +78,7 @@ public abstract class Ranking {
      */
     public void deleteTeam(String name){
         for (int i = 0; i < teams.size(); i++) {
-            if(teams.get(i).getName() == name){
+            if(teams.get(i).getName().equals(name)){
                 teams.remove(i);
             }
         }
@@ -140,8 +137,8 @@ public abstract class Ranking {
     * @throws java.io.FileNotFoundException
     */
     public void saveTeams() throws FileNotFoundException{
-        // writing JSON to file:"JSONExample.json" in cwd 
-        PrintWriter pw = new PrintWriter(filePath + "teams.json"); 
+        // writing JSON to file:"teams.json" in cwd 
+        PrintWriter pw = new PrintWriter("teams.json"); 
         JSONArray ja = new JSONArray();
         for (int i = 0; i < teams.size(); i++) { 
             ja.add(teams.get(i).toJSONObject());
@@ -157,10 +154,10 @@ public abstract class Ranking {
      */
     public void takeFromFile() {
         teams = new ArrayList<Team>();
-        // parsing file "JSONExample.json" 
+        // parsing file "teams.json" 
         Object obj;          
         try {
-            obj = new JSONParser().parse(new FileReader(filePath + "teams.json"));
+            obj = new JSONParser().parse(new FileReader("teams.json"));
         } catch (IOException | ParseException ex) {
             System.out.println("Il file salvatagio non esiste per i team");
             return ;
@@ -172,10 +169,6 @@ public abstract class Ranking {
             JSONObject jo = (JSONObject) ja.get(i);
             addTeam(Team.fromJSONObject(jo));
 
-            /*System.out.println(teamName); 
-            System.out.println(teamCity); 
-            System.out.println(teamLogo);
-            */
         }
     
     }
