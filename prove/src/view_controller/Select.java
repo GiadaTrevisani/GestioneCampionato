@@ -12,12 +12,17 @@ import java.awt.event.ActionEvent;
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import model.Ranking;
+import model.RankingBasket;
+import model.RankingSoccer;
+import model.RankingVolley;
 
 /**
  *
  * @author giadatrevisani
  */
 public class Select extends JPanel{
+    private Ranking rank;
     Box vertical;
     private final JButton managementbtn;
     private final JButton calendarbtn;
@@ -30,6 +35,17 @@ public class Select extends JPanel{
     
      
     public Select(String sport, JPanel father){
+        if(sport.equals("volley")){
+            rank = new RankingVolley();
+        }
+        
+        if(sport.equals("calcio")){
+            rank = new RankingSoccer();
+        }
+        
+        if(sport.equals("basket")){
+            rank = new RankingBasket();
+        }
         this.sport = sport;
         this.father = father;
         openmanagement = false;
@@ -56,7 +72,7 @@ public class Select extends JPanel{
             if(openmanagement == false){
                 openmanagement = true;
                 ManagementTeams management;
-                management = new ManagementTeams(sport);
+                management = new ManagementTeams(rank);
                 management.setVisible(true);
                 management.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override

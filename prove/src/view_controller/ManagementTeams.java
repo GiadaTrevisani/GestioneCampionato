@@ -10,9 +10,6 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 import model.Ranking;
-import model.RankingBasket;
-import model.RankingSoccer;
-import model.RankingVolley;
 import model.Team;
 
 /**
@@ -20,30 +17,21 @@ import model.Team;
  * @author giadatrevisani
  */
 public class ManagementTeams extends javax.swing.JFrame {
-
+    Ranking rank;
     private final DefaultTableModel model;
-    private Ranking rank;
+    
     private boolean openNewTeam, openViewUpdate;
     
     
     
-    public ManagementTeams(String sport){
+    public ManagementTeams(Ranking rank){
+        this.rank = rank;
         initComponents();
         model = (DefaultTableModel) viewTeams.getModel();
         openNewTeam = false;
         openViewUpdate = false;
         
-        if(sport.equals("volley")){
-            rank = new RankingVolley();
-        }
         
-        if(sport.equals("calcio")){
-            rank = new RankingSoccer();
-        }
-        
-        if(sport.equals("basket")){
-            rank = new RankingBasket();
-        }
         rank.addTeam("sv150", "soliera", "Soliera.jpg");
         rank.addTeam("everton", "reggio emilia", "Modena.jpg");
         rank.addTeam("libertas", "fiorano", "Libertas.png");
@@ -242,12 +230,12 @@ public class ManagementTeams extends javax.swing.JFrame {
      * @param evt 
      */
     private void newbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newbtnActionPerformed
-        if(openNewTeam == false){    
+        if(openNewTeam == false){ 
             openNewTeam = true;
             Team nt = new Team("", "", "");
             NewTeam newTeam;
             
-            newTeam = new NewTeam(nt);
+            newTeam = new NewTeam(nt, rank);
             newTeam.setVisible(true);
             newTeam.addWindowListener(new java.awt.event.WindowAdapter() {
                 @Override
@@ -331,7 +319,7 @@ public class ManagementTeams extends javax.swing.JFrame {
             view_update = new Team(viewTeams.getModel().getValueAt(selectedRowIndex, 0).toString(), viewTeams.getModel().getValueAt(selectedRowIndex, 1).toString(), viewTeams.getModel().getValueAt(selectedRowIndex, 2).toString());
             NewTeam newTeam;
 
-            newTeam = new NewTeam(view_update);
+            newTeam = new NewTeam(view_update, rank);
             newTeam.setVisible(true);
             newTeam.addWindowListener(new java.awt.event.WindowAdapter() {
                 @Override

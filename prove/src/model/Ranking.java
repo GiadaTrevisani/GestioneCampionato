@@ -107,12 +107,13 @@ public abstract class Ranking {
      */
     public void addTeam(Team newTeam){
         for (int i = 0; i < teams.size(); i++) {
-            if(newTeam.getName().equals(teams.get(i).getName())){
-                System.out.println("Squadra con questo nome già esistente");
+            if(newTeam.getName().equals(teams.get(i).getName()) || newTeam.getName().equals("") || newTeam.getCity().equals("")){
+                System.out.println("Squadra con questo nome già esistente o aggiunta squadra senza un campo");
                 return ;
             }     
         }
         teams.add(newTeam);
+        System.out.println("Squadra inserita");
     }
 
     /**
@@ -124,6 +125,20 @@ public abstract class Ranking {
     public void addTeam(String name, String city,String logo){
 	Team newTeam = new Team(name, city, logo);
         this.addTeam(newTeam);
+    }
+    
+    
+    public void updateTeam(String name, String city, String logo, int index){
+        for (int i = 0; i < teams.size(); i++) {
+            if(teams.get(i).getName().equals(name)){
+                System.out.println("Esiste già un'altra squadra con quel nome");
+                return ;
+            }
+        }
+        teams.get(index).setName(name);
+        teams.get(index).setCity(city);
+        teams.get(index).setLogo(logo);
+        System.out.println("Squadra aggiornata");
     }
     
     /**

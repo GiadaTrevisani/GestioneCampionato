@@ -6,14 +6,11 @@
 package view_controller;
 
 import java.awt.Dimension;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import javafx.stage.FileChooser;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
-import javax.swing.JFileChooser;
-import javax.swing.filechooser.FileNameExtensionFilter;
+import model.Ranking;
 import model.Team;
 
 /**
@@ -21,12 +18,18 @@ import model.Team;
  * @author giadatrevisani
  */
 public class NewTeam extends javax.swing.JFrame {
-    private Team team;
-    String filePath = "img_logo/";
+    private final Ranking rank;
+    private final Team team;
+    private final String filePath = "img_logo/";
     /**
-     * Creates new form newTeam
+     * Il cotruttore dlla calsse NewTeam prende in ingresso il team che si vuole
+     * aggiungere o aggiornare e l'oggetto di tipo Ranking dove andremo a salvare
+     * le squadre da aggiungere o da aggiornare attraverso il bottone btnNew.
+     * Ci sarà anche un bottone per cercare il logo della squadra tra quelli
+     * presenti nella directory img_logo.
      */
-    public NewTeam(Team team){
+    public NewTeam(Team team, Ranking rank){
+        this.rank = rank;
         this.team = team;
         initComponents();
         
@@ -150,12 +153,47 @@ public class NewTeam extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+    * Inizialmente controlleremo se nel team passato il nome della squadra è
+    * una stringa vuota, allora vuol dire che l'utente ha cliccato su nuova squadra.
+    * Quindi andrò a verificare che i campi di testo txtName e txtCity siano riempiti,
+    * in caso contrario il programma stamperà un messaggio.
+    * A questo punto, se non è una squadra nuova allora sarà una squadra che voglio
+    * aggiornare, quindi per prima cosa guarderò se effettivamente i capi text sono
+    * stati cambiati oppure no (in quest'ultimo caso stamperò un messaggio). Come 
+    * seconda cosa aggiornerò la squadra.
+     * @param evt 
+     */
     private void btnNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewActionPerformed
+        if(team.getName() == ""){
+            if(txtName.getText().equals("") || txtCity.getText().equals("")){
+                System.out.println("Uno dei campi è vuoto");
+            } else {
+                rank.addTeam(txtName.getText(), txtCity.getText(), lblimg.getText());
+                System.out.println("Inserisco");
+            }
+        } else {
+            if(txtName.getText().equals(team.getName()) && txtCity.getText().equals(team.getCity()) && lblimg.getText().equals(team.getLogo())){
+                System.out.println("La squadra non è stata modificata");
+            } else {
+                for (int i = 0; i < rank.getTeam().size(); i++) {
+                    if(rank.getTeam().get(i).equals(team)){
+                        rank.getTeam().get(i).setName(txtName.getText());
+                        rank.getTeam().get(i).setCity(txtCity.getText());
+                        rank.getTeam().get(i).setLogo(lblimg.getText());
+                        System.out.println("Squadra aggiornata");
+                    }
+                }
+                
+            }
+        }
         
     }//GEN-LAST:event_btnNewActionPerformed
 
     private void btnFindLogoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFindLogoActionPerformed
-      
+        AddLogo addLogo = new AddLogo(this);
+        addLogo.setVisible(true);
+        
     }//GEN-LAST:event_btnFindLogoActionPerformed
 
 
