@@ -10,6 +10,9 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import model.Ranking;
 import model.Team;
 
@@ -19,6 +22,7 @@ import model.Team;
  */
 public class NewTeam extends javax.swing.JFrame {
     private final Ranking rank;
+    boolean openmanagement = false;
     private final Team team;
     private final String filePath = "img_logo/";
     /**
@@ -47,7 +51,12 @@ public class NewTeam extends javax.swing.JFrame {
         txtName.setText(team.getName());
         txtCity.setText(team.getCity());
         try{
-        lblimg.setIcon(new ImageIcon(ImageIO.read(new File(filePath + team.getLogo()))));
+            if(team.getLogo().equals("")){
+                String defaultImgPath = "Soliera.jpg";
+                 lblimg.setIcon(new ImageIcon(ImageIO.read(new File(filePath + defaultImgPath))));   
+            } else {
+                 lblimg.setIcon(new ImageIcon(ImageIO.read(new File(filePath + team.getLogo()))));
+            }
         } catch (IOException ex){
             System.out.println("immagine non esistente");
         }
@@ -165,7 +174,7 @@ public class NewTeam extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewActionPerformed
-        if(team.getName() == ""){
+        if(team.getName().equals("")){
             if(txtName.getText().equals("") || txtCity.getText().equals("")){
                 System.out.println("Uno dei campi è vuoto");
             } else {
@@ -191,9 +200,27 @@ public class NewTeam extends javax.swing.JFrame {
     }//GEN-LAST:event_btnNewActionPerformed
 
     private void btnFindLogoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFindLogoActionPerformed
-        AddLogo addLogo = new AddLogo(this);
-        addLogo.setVisible(true);
+        String imgPath;
+        imgPath = "";
+     
+        JFileChooser fc = new JFileChooser();
+        File file = null;
+        fc.setFileFilter(new FileNameExtensionFilter("Only image extension filter", "jpg", "jpeg", "png"));
+        int res = fc.showOpenDialog(this);
+        if(res == JFileChooser.APPROVE_OPTION)
+            file = fc.getSelectedFile();
         
+        if(file!=null){
+            imgPath = file.toString();
+            System.out.println(imgPath);
+            try{
+                lblimg.setIcon(new ImageIcon(ImageIO.read(new File(imgPath))));
+            } catch (IOException ex){
+                System.out.println("immagine non esistente");
+            }
+        }else{
+            System.err.println("Errore nel caricamento del file!");
+        }
     }//GEN-LAST:event_btnFindLogoActionPerformed
 
 
