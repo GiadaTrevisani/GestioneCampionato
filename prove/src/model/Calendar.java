@@ -25,7 +25,6 @@ import org.json.simple.parser.ParseException;
 public class Calendar {
     private ArrayList<Match> games;
     private int year;
-    private static final String filePath = "prove/";
     
     /**
      * Primo costruttore che prende in ingresso:
@@ -42,8 +41,8 @@ public class Calendar {
      * Secondo costruttore che prende in ingresso:
      * @param year indica l'anno in cui si svolge il campionato.
      */
-    public Calendar(int year){
-        this.year = year;
+    public Calendar(){
+        this.year = 0;
         games = new ArrayList<Match>();
     }
     
@@ -81,7 +80,7 @@ public class Calendar {
      * Metodo che crea un file JSon per il salvataggio del calendario su file.
      */
     public void saveCalendar() throws FileNotFoundException{
-        PrintWriter pw = new PrintWriter(filePath + "calendar.json"); 
+        PrintWriter pw = new PrintWriter("calendar.json"); 
         JSONObject jo = new JSONObject();
         jo.put("Year", year);
         JSONArray ja = new JSONArray();
@@ -105,7 +104,7 @@ public class Calendar {
        games = new ArrayList<Match>();
        Object obj;
        try {
-            obj = new JSONParser().parse(new FileReader(filePath + "calendar.json"));
+            obj = new JSONParser().parse(new FileReader("calendar.json"));
         } catch (IOException | ParseException ex) {
             System.out.println("Il file salvatagio non esiste per i match");
             return ;

@@ -44,7 +44,8 @@ public class Prove {
         teams.add(bo);
         System.out.println("Stampa calendario");
         
-        Calendar calendario = new Calendar(2019);
+        Calendar calendario = new Calendar();
+        calendario.setYear(2019);
         calendario.AlgoritmoDiBerger(teams);
         
         //calendario.printCalendar();

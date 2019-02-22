@@ -12,6 +12,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import model.Calendar;
 import model.Ranking;
 import model.RankingBasket;
 import model.RankingSoccer;
@@ -23,6 +24,7 @@ import model.RankingVolley;
  */
 public class Select extends JPanel{
     private Ranking rank;
+    private Calendar cal;
     Box vertical;
     private final JButton managementbtn;
     private final JButton calendarbtn;
@@ -32,6 +34,7 @@ public class Select extends JPanel{
     private final String sport;
     private final JPanel father;
     private boolean openmanagement;
+    private boolean opencalendar;
     
      
     public Select(String sport, JPanel father){
@@ -46,9 +49,12 @@ public class Select extends JPanel{
         if(sport.equals("basket")){
             rank = new RankingBasket();
         }
+        
+        cal = new Calendar();
         this.sport = sport;
         this.father = father;
         openmanagement = false;
+        opencalendar = false;
         managementbtn = new JButton("Gestione Squadre");
         calendarbtn = new JButton("Calendario");
         rankingbtn = new JButton("Classifica");
@@ -78,6 +84,21 @@ public class Select extends JPanel{
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent windowEvent) {
                         openmanagement = false;
+                    }
+                });
+            }
+        });
+        
+        calendarbtn.addActionListener((ActionEvent e) -> {
+            if(opencalendar == false){
+                opencalendar = true;
+                ViewCalendar calendar;
+                calendar = new ViewCalendar(cal, rank);
+                calendar.setVisible(true);
+                calendar.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                        opencalendar = false;
                     }
                 });
             }

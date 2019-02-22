@@ -48,7 +48,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="finebtn" min="-2" pref="20" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="cercabtn" min="-2" max="-2" attributes="0"/>
+                      <Component id="searchbtn" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                       <Component id="newbtn" min="-2" pref="134" max="-2" attributes="0"/>
                   </Group>
@@ -64,7 +64,7 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="searchTeams" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                   <Component id="newbtn" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
-                  <Component id="cercabtn" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="searchbtn" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="finebtn" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <Group type="103" groupAlignment="1" max="-2" attributes="0">
@@ -142,12 +142,12 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="saveTeamsbtnActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="cercabtn">
+    <Component class="javax.swing.JButton" name="searchbtn">
       <Properties>
         <Property name="text" type="java.lang.String" value="cerca"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cercabtnActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="searchbtnActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="finebtn">

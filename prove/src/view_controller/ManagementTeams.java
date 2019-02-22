@@ -91,7 +91,7 @@ public class ManagementTeams extends javax.swing.JFrame {
         viewTeams = new javax.swing.JTable();
         takeTeamsbtn = new javax.swing.JButton();
         saveTeamsbtn = new javax.swing.JButton();
-        cercabtn = new javax.swing.JButton();
+        searchbtn = new javax.swing.JButton();
         finebtn = new javax.swing.JButton();
         viewbtn = new javax.swing.JButton();
 
@@ -150,10 +150,10 @@ public class ManagementTeams extends javax.swing.JFrame {
             }
         });
 
-        cercabtn.setText("cerca");
-        cercabtn.addActionListener(new java.awt.event.ActionListener() {
+        searchbtn.setText("cerca");
+        searchbtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cercabtnActionPerformed(evt);
+                searchbtnActionPerformed(evt);
             }
         });
 
@@ -195,7 +195,7 @@ public class ManagementTeams extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(finebtn, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(cercabtn)
+                        .addComponent(searchbtn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(newbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(23, 23, 23))
@@ -207,7 +207,7 @@ public class ManagementTeams extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(searchTeams, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(newbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cercabtn)
+                    .addComponent(searchbtn)
                     .addComponent(finebtn))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(layout.createSequentialGroup()
@@ -243,7 +243,6 @@ public class ManagementTeams extends javax.swing.JFrame {
                     openNewTeam = false;
                 }
             });
-            
         }
     }//GEN-LAST:event_newbtnActionPerformed
 
@@ -284,19 +283,17 @@ public class ManagementTeams extends javax.swing.JFrame {
      * il/i risultati nella tabella.
      * @param evt 
      */
-    private void cercabtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cercabtnActionPerformed
+    private void searchbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchbtnActionPerformed
         int j = 0;
         model.setRowCount(0);
-        ArrayList<Team> teams = new ArrayList<Team>();
         for (int i = 0; i < rank.getTeam().size(); i++) {
-            if(//model.getValueAt(i, 2).toString().equals(searchTeams.getText()) || model.getValueAt(i, 1).toString().equals(searchTeams.getText()))  {  
-                rank.getTeam().get(i).getName().equals(searchTeams.getText()) || rank.getTeam().get(i).getCity().equals(searchTeams.getText())){
+            if(rank.getTeam().get(i).getName().equals(searchTeams.getText()) || rank.getTeam().get(i).getCity().equals(searchTeams.getText())){
                 
                 model.insertRow(j, new Object[]{rank.getTeam().get(i).getName(), rank.getTeam().get(i).getCity(), rank.getTeam().get(i).getLogo()} );
                 j++;
             }
         }
-    }//GEN-LAST:event_cercabtnActionPerformed
+    }//GEN-LAST:event_searchbtnActionPerformed
 
     /**
      * Questo metodo ripristina la tabella iniziale dopo che ho cercato una squadra.
@@ -328,19 +325,16 @@ public class ManagementTeams extends javax.swing.JFrame {
                 }
             });
         }
-        
-        
-        
     }//GEN-LAST:event_viewbtnActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton cercabtn;
     private javax.swing.JButton finebtn;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton newbtn;
     private javax.swing.JButton saveTeamsbtn;
     private javax.swing.JTextField searchTeams;
+    private javax.swing.JButton searchbtn;
     private javax.swing.JButton takeTeamsbtn;
     private javax.swing.JTable viewTeams;
     private javax.swing.JButton viewbtn;

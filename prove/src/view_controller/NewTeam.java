@@ -10,7 +10,6 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import model.Ranking;
@@ -21,6 +20,7 @@ import model.Team;
  * @author giadatrevisani
  */
 public class NewTeam extends javax.swing.JFrame {
+    String imgPath;
     private final Ranking rank;
     boolean openmanagement = false;
     private final Team team;
@@ -33,6 +33,7 @@ public class NewTeam extends javax.swing.JFrame {
      * presenti nella directory img_logo.
      */
     public NewTeam(Team team, Ranking rank){
+        this.imgPath = "Soliera.jpg";
         this.rank = rank;
         this.team = team;
         initComponents();
@@ -52,8 +53,7 @@ public class NewTeam extends javax.swing.JFrame {
         txtCity.setText(team.getCity());
         try{
             if(team.getLogo().equals("")){
-                String defaultImgPath = "Soliera.jpg";
-                 lblimg.setIcon(new ImageIcon(ImageIO.read(new File(filePath + defaultImgPath))));   
+                 lblimg.setIcon(new ImageIcon(ImageIO.read(new File(filePath + imgPath))));   
             } else {
                  lblimg.setIcon(new ImageIcon(ImageIO.read(new File(filePath + team.getLogo()))));
             }
@@ -97,6 +97,11 @@ public class NewTeam extends javax.swing.JFrame {
         });
 
         deletebtn.setText("Elimina");
+        deletebtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deletebtnActionPerformed(evt);
+            }
+        });
 
         btnFindLogo.setText("...");
         btnFindLogo.addActionListener(new java.awt.event.ActionListener() {
@@ -178,7 +183,7 @@ public class NewTeam extends javax.swing.JFrame {
             if(txtName.getText().equals("") || txtCity.getText().equals("")){
                 System.out.println("Uno dei campi è vuoto");
             } else {
-                rank.addTeam(txtName.getText(), txtCity.getText(), lblimg.getText());
+                rank.addTeam(txtName.getText(), txtCity.getText(), imgPath);
                 System.out.println("Inserisco");
             }
         } else {
@@ -186,23 +191,18 @@ public class NewTeam extends javax.swing.JFrame {
                 System.out.println("La squadra non è stata modificata");
             } else {
                 for (int i = 0; i < rank.getTeam().size(); i++) {
-                    if(rank.getTeam().get(i).equals(team)){
+                    if(rank.getTeam().get(i).getName().equals(team.getName())){
                         rank.getTeam().get(i).setName(txtName.getText());
                         rank.getTeam().get(i).setCity(txtCity.getText());
-                        rank.getTeam().get(i).setLogo(lblimg.getText());
-                        System.out.println("Squadra aggiornata");
+                        rank.getTeam().get(i).setLogo(imgPath);
+                        System.out.println("Squadra modificata correttamente");
                     }
                 }
-                
-            }
+            }  
         }
-        
     }//GEN-LAST:event_btnNewActionPerformed
 
     private void btnFindLogoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFindLogoActionPerformed
-        String imgPath;
-        imgPath = "";
-     
         JFileChooser fc = new JFileChooser();
         File file = null;
         fc.setFileFilter(new FileNameExtensionFilter("Only image extension filter", "jpg", "jpeg", "png"));
@@ -212,7 +212,6 @@ public class NewTeam extends javax.swing.JFrame {
         
         if(file!=null){
             imgPath = file.toString();
-            System.out.println(imgPath);
             try{
                 lblimg.setIcon(new ImageIcon(ImageIO.read(new File(imgPath))));
             } catch (IOException ex){
@@ -222,6 +221,29 @@ public class NewTeam extends javax.swing.JFrame {
             System.err.println("Errore nel caricamento del file!");
         }
     }//GEN-LAST:event_btnFindLogoActionPerformed
+
+    private void deletebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deletebtnActionPerformed
+        //elina cose ci servono alcuni accorgimenti
+        //se il team passato è vuoto vuol dire che non volevo eliminare 
+        //se un campo è vuoto allora nada 
+        //se non lo trovo non esiste
+        if(team.getName().equals("")){
+            //in questo caso volevo solo aggiungere una squaadra
+            System.out.println("Errore: si sta eliminando una squadra che si vuole inserire");
+        } else{
+            if(txtName.getText().equals("") || txtCity.getText().equals("")){
+                System.out.println("Uno dei campi è vuoto");
+            } else {
+                for (int i = 0; i < rank.getTeam().size(); i++) {
+                    if(rank.getTeam().get(i).getName().equals(team.getName())){
+                        rank.getTeam().remove(rank.getTeam().get(i));
+                        System.out.println("Squadra eliminata correttamente");
+                    }
+                }
+            }
+        }
+        
+    }//GEN-LAST:event_deletebtnActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

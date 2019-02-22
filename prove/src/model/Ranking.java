@@ -48,7 +48,7 @@ public abstract class Ranking {
      */
     public Ranking(ArrayList<Team> teams){
         this.teams = teams;
-        calendar = new Calendar(-1);
+        calendar = new Calendar();
     }
 
     /**
@@ -56,7 +56,7 @@ public abstract class Ranking {
      */
     public Ranking(){
         teams = new ArrayList<Team>();
-        calendar = new Calendar(-1);
+        calendar = new Calendar();
     }
     
     public ArrayList<Team> getTeam(){
