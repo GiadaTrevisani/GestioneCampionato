@@ -158,6 +158,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;p style = &quot;text-align: center&quot;&gt;Modifica&lt;br&gt;Visualizza&lt;/p&gt;&lt;/html&gt;"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="viewbtnActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="printbtn">
       <Properties>

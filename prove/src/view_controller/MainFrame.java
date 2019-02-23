@@ -43,7 +43,6 @@ public class MainFrame extends JFrame{
        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
        this.setMinimumSize(new Dimension(600, 400));;
        this.setSize(800, 600);
-       this.addWindowListener(new CloseWindow(this));
        soccerbtn.setPreferredSize(new Dimension(150, 150));
        volleybtn.setPreferredSize(new Dimension(150, 150));
        basketbtn.setPreferredSize(new Dimension(150, 150));

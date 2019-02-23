@@ -7,7 +7,6 @@ package view_controller;
 
 import java.awt.Dimension;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 import model.Ranking;
 import model.Team;
@@ -30,36 +29,7 @@ public class ManagementTeams extends javax.swing.JFrame {
         model = (DefaultTableModel) viewTeams.getModel();
         openNewTeam = false;
         openViewUpdate = false;
-        
-        
-        rank.addTeam("sv150", "soliera", "Soliera.jpg");
-        rank.addTeam("everton", "reggio emilia", "Modena.jpg");
-        rank.addTeam("libertas", "fiorano", "Libertas.png");
-        rank.addTeam("beta", "magreta", "cguidshs");
-        rank.addTeam("alpha", "beta", "cguidshs");
-        rank.addTeam("hsi", "soliera", "ehwewo");
-        rank.addTeam("dbqhkdkq", "dbwjk", "bdjqk");
-        rank.addTeam("asopaè", "soliera", "ckpdsa");
-        rank.addTeam("shaksol", "soliera", "sapqm");
-        rank.addTeam("tati", "soliera", "slaovs");
-        rank.addTeam("dnkla", "eiiwa", "sndls");
-        rank.addTeam("sqoausu", "sjwiqoabt", "aqde i");
-        rank.addTeam("ql1p3udn", "slwpqle", "xlxsps,sx");
-        rank.addTeam("aòspd 3", "dmspa", "xmosapa");
-        rank.addTeam("jspx ps", "anozap", "sakopad");
-        rank.addTeam("skaè'xkols", "2ko2p3nde", "jqopsjqw");
-        rank.addTeam("whqioqd", "dwiqoa", "dwjqopdq");
-        rank.addTeam("wqpidxpo", "3ipoe3r3", "dsjqopq");
-        rank.addTeam("xcjsi", "ewi0ew", "weopq");
-        rank.addTeam("si'osap", "dsjio", "dnsksa");
-        rank.addTeam("dkpsa", "sajpsa", "ewjopf");
-        rank.addTeam("dièasa", "magcnsreta", "cguiddcshs");
-        rank.addTeam("bestdad", "masadgdrfcedvta", "cgvdsvusidvsshs");
-        rank.addTeam("besta", "magareta", "cguidsbgdhs");
-        rank.addTeam("qddcxds", "magrcascaeta", "cguidshs");
-        rank.addTeam("dqwdq", "magretdqdqa", "cguidshs");
-        rank.addTeam("dsdsawq", "magradceta", "cguidshs");
-        rank.addTeam("baedtwa", "madasgreddta", "adscwv");
+       
         printTable();
         this.creaGui();
     }
@@ -67,6 +37,7 @@ public class ManagementTeams extends javax.swing.JFrame {
     private void creaGui() {
        this.setMinimumSize(new Dimension(700, 500));
        this.setSize(800, 600); 
+       this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
     
     private void printTable(){
@@ -244,6 +215,7 @@ public class ManagementTeams extends javax.swing.JFrame {
                 }
             });
         }
+        printTable();
     }//GEN-LAST:event_newbtnActionPerformed
 
     /**

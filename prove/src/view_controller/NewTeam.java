@@ -20,9 +20,8 @@ import model.Team;
  * @author giadatrevisani
  */
 public class NewTeam extends javax.swing.JFrame {
-    String imgPath;
+    private String imgPath;
     private final Ranking rank;
-    boolean openmanagement = false;
     private final Team team;
     private final String filePath = "img_logo/";
     /**
@@ -45,6 +44,7 @@ public class NewTeam extends javax.swing.JFrame {
     private void creaGui(){
         this.setMinimumSize(new Dimension(700, 500));
         this.setSize(800, 600); 
+        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         
     }
     
@@ -183,8 +183,8 @@ public class NewTeam extends javax.swing.JFrame {
             if(txtName.getText().equals("") || txtCity.getText().equals("")){
                 System.out.println("Uno dei campi è vuoto");
             } else {
-                rank.addTeam(txtName.getText(), txtCity.getText(), imgPath);
                 System.out.println("Inserisco");
+                rank.addTeam(txtName.getText(), txtCity.getText(), imgPath);
             }
         } else {
             if(txtName.getText().equals(team.getName()) && txtCity.getText().equals(team.getCity()) && lblimg.getText().equals(team.getLogo())){

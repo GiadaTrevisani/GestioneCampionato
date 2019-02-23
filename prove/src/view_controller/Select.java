@@ -68,6 +68,7 @@ public class Select extends JPanel{
         managementbtn.setPreferredSize(new Dimension(150, 150));
         calendarbtn.setPreferredSize(new Dimension(150, 150));
         rankingbtn.setPreferredSize(new Dimension(150, 150));
+        
 
         prevpage.addActionListener((ActionEvent e) -> {
            this.setVisible(false);

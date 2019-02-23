@@ -6,7 +6,6 @@
 package view_controller;
 
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 import model.Calendar;
 import model.Match;
@@ -17,16 +16,19 @@ import model.Ranking;
  * @author giadatrevisani
  */
 public class ViewCalendar extends javax.swing.JFrame {
-    Ranking rank;
-    Calendar calendario;
+    private Ranking rank;
+    private Calendar calendario;
     private final DefaultTableModel model;
+    private boolean openViewUpdate;
     
     public ViewCalendar(Calendar calendario, Ranking rank){
+        openViewUpdate = false;
         this.rank = rank;
         this.calendario = calendario;
         initComponents();
         model = (DefaultTableModel) viewCalendar.getModel();
         
+        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         calendario.setYear(2018);
         calendario.AlgoritmoDiBerger(rank.getTeam());
         printTable();
@@ -115,6 +117,11 @@ public class ViewCalendar extends javax.swing.JFrame {
         });
 
         viewbtn.setText("<html><p style = \"text-align: center\">Modifica<br>Visualizza</p></html>");
+        viewbtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewbtnActionPerformed(evt);
+            }
+        });
 
         printbtn.setText("Stampa");
 
@@ -197,6 +204,7 @@ public class ViewCalendar extends javax.swing.JFrame {
     private void saveCalendarbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveCalendarbtnActionPerformed
         try {
             calendario.saveCalendar();
+            System.out.println("Salvato su file");
         } catch (FileNotFoundException ex) {
             System.out.println("SAlvataggio non avvenuto");
         }
@@ -206,6 +214,28 @@ public class ViewCalendar extends javax.swing.JFrame {
         calendario.deleteResults();
         printTable();
     }//GEN-LAST:event_deletebtnActionPerformed
+
+    private void viewbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewbtnActionPerformed
+        if(openViewUpdate == false){ 
+            openViewUpdate = true;
+            int selectedRowIndex = viewCalendar.getSelectedRow();
+            Match view_update;
+            //devo creare un match solo con le cose che ho nella tabella... problema!!!
+            /*
+            view_update = new Match(viewCalendar.getModel().getValueAt(selectedRowIndex, 0), viewCalendar.getModel().getValueAt(selectedRowIndex, 1).toString(), viewCalendar.getModel().getValueAt(selectedRowIndex, 2).toString(), viewCalendar.getModel().getValueAt(selectedRowIndex, 3).toString(), viewCalendar.getModel().getValueAt(selectedRowIndex, 4), viewCalendar.getModel().getValueAt(selectedRowIndex, 5), viewCalendar.getModel().getValueAt(selectedRowIndex, 6));
+            ViewMatch viewMatch;
+
+            viewMatch = new ViewMatch(view_update, calendario);
+            viewMatch.setVisible(true);
+            viewMatch.addWindowListener(new java.awt.event.WindowAdapter() {
+                @Override
+                public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                    openViewUpdate = false;
+                }
+            });
+            */
+        }
+    }//GEN-LAST:event_viewbtnActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

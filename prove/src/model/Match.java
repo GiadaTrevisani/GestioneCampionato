@@ -191,7 +191,7 @@ public class Match{
     public static Match fromJSONObject(JSONObject jo, ArrayList<Team> teams) throws Exception{
         String homeTeam = (String) jo.get("HomeTeam");
         String guestTeam = (String) jo.get("GuestTeam");
-        int homeResult = (int) jo.get("HomeResutl");
+        int homeResult =  (int) jo.get("HomeResutl");
         int guestResult = (int) jo.get("GuestResult");
         int day = (int) jo.get("Day");
         boolean played = (boolean) jo.get("Played");
