@@ -5,6 +5,7 @@
  */
 package view_controller;
 
+import com.sun.xml.internal.fastinfoset.tools.PrintTable;
 import java.awt.Dimension;
 import java.io.File;
 import java.io.IOException;
@@ -179,6 +180,7 @@ public class NewTeam extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewActionPerformed
+        //Stampa all fine la tabella 
         if(team.getName().equals("")){
             if(txtName.getText().equals("") || txtCity.getText().equals("")){
                 System.out.println("Uno dei campi è vuoto");
@@ -223,16 +225,13 @@ public class NewTeam extends javax.swing.JFrame {
     }//GEN-LAST:event_btnFindLogoActionPerformed
 
     private void deletebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deletebtnActionPerformed
-        //elina cose ci servono alcuni accorgimenti
-        //se il team passato è vuoto vuol dire che non volevo eliminare 
-        //se un campo è vuoto allora nada 
-        //se non lo trovo non esiste
+        //stampa alla fine 
         if(team.getName().equals("")){
             //in questo caso volevo solo aggiungere una squaadra
-            System.out.println("Errore: si sta eliminando una squadra che si vuole inserire");
+            System.err.println("Errore: si sta eliminando una squadra che si vuole inserire");
         } else{
             if(txtName.getText().equals("") || txtCity.getText().equals("")){
-                System.out.println("Uno dei campi è vuoto");
+                System.err.println("Uno dei campi è vuoto");
             } else {
                 for (int i = 0; i < rank.getTeam().size(); i++) {
                     if(rank.getTeam().get(i).getName().equals(team.getName())){

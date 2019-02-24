@@ -40,7 +40,7 @@ public class ManagementTeams extends javax.swing.JFrame {
        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
     
-    private void printTable(){
+    public void printTable(){
         model.setRowCount(0);
         for (int i = 0; i < rank.getTeam().size(); i++) {
             model.insertRow(i, new Object[]{rank.getTeam().get(i).getName(), rank.getTeam().get(i).getCity(), rank.getTeam().get(i).getLogo()} );
@@ -215,7 +215,6 @@ public class ManagementTeams extends javax.swing.JFrame {
                 }
             });
         }
-        printTable();
     }//GEN-LAST:event_newbtnActionPerformed
 
     /**
