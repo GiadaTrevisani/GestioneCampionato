@@ -7,9 +7,12 @@ package view_controller;
 
 import java.awt.Dimension;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Ranking;
 import model.Team;
+import org.json.simple.parser.ParseException;
 
 /**
  *
@@ -42,8 +45,8 @@ public class ManagementTeams extends javax.swing.JFrame {
     
     public void printTable(){
         model.setRowCount(0);
-        for (int i = 0; i < rank.getTeam().size(); i++) {
-            model.insertRow(i, new Object[]{rank.getTeam().get(i).getName(), rank.getTeam().get(i).getCity(), rank.getTeam().get(i).getLogo()} );
+        for (int i = 0; i < rank.getTeams().size(); i++) {
+            model.insertRow(i, new Object[]{rank.getTeams().get(i).getName(), rank.getTeams().get(i).getCity(), rank.getTeams().get(i).getLogo()} );
         }
     }
 
@@ -206,7 +209,7 @@ public class ManagementTeams extends javax.swing.JFrame {
             Team nt = new Team("", "", "");
             NewTeam newTeam;
             
-            newTeam = new NewTeam(nt, rank);
+            newTeam = new NewTeam(nt, rank, this);
             newTeam.setVisible(true);
             newTeam.addWindowListener(new java.awt.event.WindowAdapter() {
                 @Override
@@ -223,7 +226,14 @@ public class ManagementTeams extends javax.swing.JFrame {
      * @param evt 
      */
     private void takeTeamsbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_takeTeamsbtnActionPerformed
-        rank.takeFromFile();
+        System.out.println("Carico squadre da file");
+        try {
+            rank.takeFromFile();
+            JOptionPane.showMessageDialog(null, "Squadre caricate con successo");
+        } catch (IOException | ParseException ex) {
+            JOptionPane.showMessageDialog(null, "Squadre non caricate: file mancante oppure non corrretto");
+        }
+        
         printTable();
     }//GEN-LAST:event_takeTeamsbtnActionPerformed
 
@@ -239,8 +249,10 @@ public class ManagementTeams extends javax.swing.JFrame {
     private void saveTeamsbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveTeamsbtnActionPerformed
         try {
             rank.saveTeams();
+            JOptionPane.showMessageDialog(null, "Squadre salvate correttamente");
         } catch (FileNotFoundException ex) {
             System.out.println("SAlvataggio non avvenuto");
+            JOptionPane.showMessageDialog(null, "Salvataggio non avvenuto");
         }
         
     }//GEN-LAST:event_saveTeamsbtnActionPerformed
@@ -257,10 +269,10 @@ public class ManagementTeams extends javax.swing.JFrame {
     private void searchbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchbtnActionPerformed
         int j = 0;
         model.setRowCount(0);
-        for (int i = 0; i < rank.getTeam().size(); i++) {
-            if(rank.getTeam().get(i).getName().equals(searchTeams.getText()) || rank.getTeam().get(i).getCity().equals(searchTeams.getText())){
+        for (int i = 0; i < rank.getTeams().size(); i++) {
+            if(rank.getTeams().get(i).getName().equals(searchTeams.getText()) || rank.getTeams().get(i).getCity().equals(searchTeams.getText())){
                 
-                model.insertRow(j, new Object[]{rank.getTeam().get(i).getName(), rank.getTeam().get(i).getCity(), rank.getTeam().get(i).getLogo()} );
+                model.insertRow(j, new Object[]{rank.getTeams().get(i).getName(), rank.getTeams().get(i).getCity(), rank.getTeams().get(i).getLogo()} );
                 j++;
             }
         }
@@ -284,10 +296,16 @@ public class ManagementTeams extends javax.swing.JFrame {
             openViewUpdate = true;
             int selectedRowIndex = viewTeams.getSelectedRow();
             Team view_update;
-            view_update = new Team(viewTeams.getModel().getValueAt(selectedRowIndex, 0).toString(), viewTeams.getModel().getValueAt(selectedRowIndex, 1).toString(), viewTeams.getModel().getValueAt(selectedRowIndex, 2).toString());
+            try {
+                //view_update = new Team(viewTeams.getModel().getValueAt(selectedRowIndex, 0).toString(), viewTeams.getModel().getValueAt(selectedRowIndex, 1).toString(), viewTeams.getModel().getValueAt(selectedRowIndex, 2).toString());
+                view_update = rank.getTeamforName(viewTeams.getModel().getValueAt(selectedRowIndex, 0).toString());
+            } catch (Exception ex) {
+                System.out.println("Errore, la squadra presente nella tabella non è presente nella lista dei teams");
+                return ;
+            }
             NewTeam newTeam;
 
-            newTeam = new NewTeam(view_update, rank);
+            newTeam = new NewTeam(view_update, rank, this);
             newTeam.setVisible(true);
             newTeam.addWindowListener(new java.awt.event.WindowAdapter() {
                 @Override

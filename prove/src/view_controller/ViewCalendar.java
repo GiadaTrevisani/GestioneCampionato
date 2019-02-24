@@ -30,7 +30,7 @@ public class ViewCalendar extends javax.swing.JFrame {
         
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         calendario.setYear(2018);
-        calendario.AlgoritmoDiBerger(rank.getTeam());
+        calendario.AlgoritmoDiBerger(rank.getTeams());
         printTable();
     }
     
@@ -221,6 +221,10 @@ public class ViewCalendar extends javax.swing.JFrame {
             int selectedRowIndex = viewCalendar.getSelectedRow();
             Match view_update;
             //devo creare un match solo con le cose che ho nella tabella... problema!!!
+            //ma prima cerco il match con i campi che ho nella tabella 
+            for (int i = 0; i < calendario.getGames().size(); i++) {
+                
+            }
             /*
             view_update = new Match(viewCalendar.getModel().getValueAt(selectedRowIndex, 0), viewCalendar.getModel().getValueAt(selectedRowIndex, 1).toString(), viewCalendar.getModel().getValueAt(selectedRowIndex, 2).toString(), viewCalendar.getModel().getValueAt(selectedRowIndex, 3).toString(), viewCalendar.getModel().getValueAt(selectedRowIndex, 4), viewCalendar.getModel().getValueAt(selectedRowIndex, 5), viewCalendar.getModel().getValueAt(selectedRowIndex, 6));
             ViewMatch viewMatch;

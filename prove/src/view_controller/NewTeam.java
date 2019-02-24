@@ -5,13 +5,14 @@
  */
 package view_controller;
 
-import com.sun.xml.internal.fastinfoset.tools.PrintTable;
 import java.awt.Dimension;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import model.Ranking;
 import model.Team;
@@ -25,17 +26,21 @@ public class NewTeam extends javax.swing.JFrame {
     private final Ranking rank;
     private final Team team;
     private final String filePath = "img_logo/";
+    private final ManagementTeams father;
     /**
      * Il cotruttore dlla calsse NewTeam prende in ingresso il team che si vuole
      * aggiungere o aggiornare e l'oggetto di tipo Ranking dove andremo a salvare
-     * le squadre da aggiungere o da aggiornare attraverso il bottone btnNew.
-     * Ci sarà anche un bottone per cercare il logo della squadra tra quelli
-     * presenti nella directory img_logo.
+     * le squadre da aggiungere o da aggiornare attraverso il bottone btnNew.Ci sarà anche un bottone per cercare il logo della squadra tra quelli
+ presenti nella directory img_logo.
+     * @param team
+     * @param rank
+     * @param father
      */
-    public NewTeam(Team team, Ranking rank){
+    public NewTeam(Team team, Ranking rank, ManagementTeams father){
         this.imgPath = "Soliera.jpg";
         this.rank = rank;
         this.team = team;
+        this.father = father;
         initComponents();
         
         printTeam();
@@ -183,25 +188,49 @@ public class NewTeam extends javax.swing.JFrame {
         //Stampa all fine la tabella 
         if(team.getName().equals("")){
             if(txtName.getText().equals("") || txtCity.getText().equals("")){
+                //Notifica di quello che è successo
                 System.out.println("Uno dei campi è vuoto");
+                JOptionPane.showMessageDialog(null, "Uno dei campi è vuoto");
             } else {
                 System.out.println("Inserisco");
-                rank.addTeam(txtName.getText(), txtCity.getText(), imgPath);
+                team.setName(txtName.getText());
+                team.setCity(txtCity.getText());
+                team.setLogo(imgPath);
+                rank.addTeam(team);
+                //Notifica di quello che è successo
+                System.out.println("Squadra inserita correttamente");
+                JOptionPane.showMessageDialog(null, "Squadra inserita correttamente");
             }
         } else {
+            if(txtName.getText().equals("") || txtCity.getText().equals("")){
+                //Notifica di quello che è successo
+                System.out.println("Uno dei campi è vuoto");
+                JOptionPane.showMessageDialog(null, "Uno dei campi è vuoto");
+                return ;
+            }
             if(txtName.getText().equals(team.getName()) && txtCity.getText().equals(team.getCity()) && lblimg.getText().equals(team.getLogo())){
+                //Notifica di quello che è successo
                 System.out.println("La squadra non è stata modificata");
+                JOptionPane.showMessageDialog(null, "La squadra non è stata modificata, nessun cambiamento.");
             } else {
-                for (int i = 0; i < rank.getTeam().size(); i++) {
-                    if(rank.getTeam().get(i).getName().equals(team.getName())){
-                        rank.getTeam().get(i).setName(txtName.getText());
-                        rank.getTeam().get(i).setCity(txtCity.getText());
-                        rank.getTeam().get(i).setLogo(imgPath);
-                        System.out.println("Squadra modificata correttamente");
-                    }
+                if(!txtName.getText().equals("") && (txtName.getText().equals(team.getName()) || !rank.isTeamforName(txtName.getText()))){
+                    team.setName(txtName.getText());
+                    team.setCity(txtCity.getText());
+                    team.setLogo(imgPath);
+                    //Notifica di quello che è successo
+                    System.out.println("Squadra modificata correttamente");
+                    JOptionPane.showMessageDialog(null, "Squadra modificata correttamente");
+                } else {
+                    //Notifica di quello che è successo
+                    System.out.println("La squadra non è stata modificata");
+                    System.out.println("Il nome è vuoto oppure esiste già una squadra con quel nome");
+                    JOptionPane.showMessageDialog(null, "La squadra non è stata modificata: Il nome è vuoto oppure esiste già una squadra con quel nome");
                 }
             }  
         }
+        
+        //aggiorno la tabella nella finestra padre (vista delle squadre)
+        father.printTable();
     }//GEN-LAST:event_btnNewActionPerformed
 
     private void btnFindLogoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFindLogoActionPerformed
@@ -225,23 +254,18 @@ public class NewTeam extends javax.swing.JFrame {
     }//GEN-LAST:event_btnFindLogoActionPerformed
 
     private void deletebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deletebtnActionPerformed
-        //stampa alla fine 
-        if(team.getName().equals("")){
-            //in questo caso volevo solo aggiungere una squaadra
-            System.err.println("Errore: si sta eliminando una squadra che si vuole inserire");
-        } else{
-            if(txtName.getText().equals("") || txtCity.getText().equals("")){
-                System.err.println("Uno dei campi è vuoto");
-            } else {
-                for (int i = 0; i < rank.getTeam().size(); i++) {
-                    if(rank.getTeam().get(i).getName().equals(team.getName())){
-                        rank.getTeam().remove(rank.getTeam().get(i));
-                        System.out.println("Squadra eliminata correttamente");
-                    }
-                }
-            }
-        }
+        //Elimino il team con il metodo della classe ranking
+        rank.deleteTeam(team);
         
+        //Notifica di quello che è successo
+        System.out.println("Squadra eliminata");
+        JOptionPane.showMessageDialog(null, "Squadra eliminata correttamente");
+        
+        //aggiorno la tabella nella finestra padre (vista delle squadre)
+        father.printTable();
+        
+        //chiudo la finestra, tanto la squadra è stata eliminata, sia che questa fosse nuova o da modificare
+        this.dispose();
     }//GEN-LAST:event_deletebtnActionPerformed
 
 

@@ -59,7 +59,7 @@ public abstract class Ranking {
         calendar = new Calendar();
     }
     
-    public ArrayList<Team> getTeam(){
+    public ArrayList<Team> getTeams(){
         return teams;
     }
     
@@ -82,6 +82,43 @@ public abstract class Ranking {
                 teams.remove(i);
             }
         }
+    }
+    
+    /**
+     * Metodo che serve per eliminare una squadra dall'array delle squadre dato
+     * un nome.
+     * @param name indica i nome della squadra. 
+     */
+    public void deleteTeam(Team t){
+        for (int i = 0; i < teams.size(); i++) {
+            if(teams.get(i) == t){
+                teams.remove(i);
+            }
+        }
+    }
+    
+    public Team getTeamforName(String name) throws Exception {
+        for (Team t : teams) {
+            if(t.getName().equals(name)){
+                return t;
+            }
+        }
+        throw new Exception();
+    }
+    
+    /**
+     * Metodo che guarda se il team passato come parametro esiste 
+     * nell'array di teams con quel nome o no.
+     * @param name indica il nome della squadra.
+     * @return 
+     */
+    public boolean isTeamforName(String name){
+        for (Team t : teams) {
+            if(t.getName().equals(name)){
+                return true;
+            }
+        }
+        return false;
     }
     
     /**
@@ -167,25 +204,36 @@ public abstract class Ranking {
     /**
      * Metodo per caricare le squadre da un salvataggio Json.
      */
-    public void takeFromFile() {
+    public void takeFromFile() throws FileNotFoundException, IOException, ParseException {
         teams = new ArrayList<Team>();
         // parsing file "teams.json" 
-        Object obj;          
-        try {
-            obj = new JSONParser().parse(new FileReader("teams.json"));
-        } catch (IOException | ParseException ex) {
-            System.out.println("Il file salvatagio non esiste per i team");
-            return ;
-        }
+        Object obj = new JSONParser().parse(new FileReader("teams.json"));
         // typecasting obj to JSONObject 
         JSONArray ja = (JSONArray) obj;
           
         for (int i = 0; i < ja.size(); i++) {
             JSONObject jo = (JSONObject) ja.get(i);
             addTeam(Team.fromJSONObject(jo));
-
         }
+    }
     
+    /**
+     * Metodo per il calcolo del numero delle partite giocate di una squadra 
+     * passata come parametro.
+     * @param teamName nome della squadra;
+     * @return intero con il numero di partite che la squadra ha giocato.
+     */
+    public int getPlayedForTeam(String teamName){
+        int played = 0;
+        for(int i = 0; i < calendar.getGames().size(); i++){
+            if(teamName.equals(calendar.getGames().get(i).getHomeTeam().getName()) || teamName.equals(calendar.getGames().get(i).getGuestTeam().getName())){
+                if(calendar.getGames().get(i).getPlayed() == true){
+                    played++;
+                }
+                
+            }
+        }
+        return played;
     }
     
     /**
