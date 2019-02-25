@@ -75,6 +75,8 @@ public final class ViewRanking extends JFrame{
     }
     
     public void creaGui(){
+       table.add(viewRanking);
+       this.add(table);
        this.setTitle(sport);
        this.setMinimumSize(new Dimension(700, 500));
        this.setSize(800, 600); 
