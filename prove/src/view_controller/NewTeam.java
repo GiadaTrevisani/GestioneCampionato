@@ -11,7 +11,6 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import model.Ranking;
@@ -64,7 +63,8 @@ public class NewTeam extends javax.swing.JFrame {
                  lblimg.setIcon(new ImageIcon(ImageIO.read(new File(filePath + team.getLogo()))));
             }
         } catch (IOException ex){
-            System.out.println("immagine non esistente");
+            System.out.println("Immagine non esistente");
+            JOptionPane.showMessageDialog(null, "Immagine non esistente");
         }
     }
 
@@ -246,10 +246,12 @@ public class NewTeam extends javax.swing.JFrame {
             try{
                 lblimg.setIcon(new ImageIcon(ImageIO.read(new File(imgPath))));
             } catch (IOException ex){
-                System.out.println("immagine non esistente");
+                System.out.println("Immagine non esistente");
+                JOptionPane.showMessageDialog(null, "Immagine non esistente");
             }
         }else{
             System.err.println("Errore nel caricamento del file!");
+            JOptionPane.showMessageDialog(null, "Errore nel caricamento del file");
         }
     }//GEN-LAST:event_btnFindLogoActionPerformed
 

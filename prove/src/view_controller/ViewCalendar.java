@@ -6,6 +6,7 @@
 package view_controller;
 
 import java.io.FileNotFoundException;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Calendar;
 import model.Match;
@@ -197,7 +198,7 @@ public class ViewCalendar extends javax.swing.JFrame {
     }//GEN-LAST:event_serachbtnActionPerformed
 
     private void takeCalendarbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_takeCalendarbtnActionPerformed
-        calendario.takeFromFile(rank.getTeam());
+        calendario.takeFromFile(rank.getTeams());
         printTable();
     }//GEN-LAST:event_takeCalendarbtnActionPerformed
 
@@ -205,8 +206,10 @@ public class ViewCalendar extends javax.swing.JFrame {
         try {
             calendario.saveCalendar();
             System.out.println("Salvato su file");
+            JOptionPane.showMessageDialog(null, "Salvato su file");
         } catch (FileNotFoundException ex) {
-            System.out.println("SAlvataggio non avvenuto");
+            System.out.println("Salvataggio non avvenuto");
+            JOptionPane.showMessageDialog(null, "Salvataggio non avvenuto");
         }
     }//GEN-LAST:event_saveCalendarbtnActionPerformed
 

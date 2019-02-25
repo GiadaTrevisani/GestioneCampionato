@@ -10,6 +10,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONArray;
@@ -107,6 +108,7 @@ public class Calendar {
             obj = new JSONParser().parse(new FileReader("calendar.json"));
         } catch (IOException | ParseException ex) {
             System.out.println("Il file salvatagio non esiste per i match");
+            JOptionPane.showMessageDialog(null, "Il file salvataggio non esiste per i match");
             return ;
         }
        JSONObject jo = (JSONObject) obj;
@@ -119,7 +121,8 @@ public class Calendar {
             games.add(Match.fromJSONObject((JSONObject) ja.get(i), teams));
         }
        } catch(Exception e) {
-           System.out.println("il calendario caricato non corrisponde ai team presenti");
+           System.out.println("Il calendario caricato non corrisponde ai team presenti");
+           JOptionPane.showMessageDialog(null, "Il calendario caricato non corrisponde ai team presenti");
        }
     }
     

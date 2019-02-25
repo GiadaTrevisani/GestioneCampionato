@@ -251,7 +251,7 @@ public class ManagementTeams extends javax.swing.JFrame {
             rank.saveTeams();
             JOptionPane.showMessageDialog(null, "Squadre salvate correttamente");
         } catch (FileNotFoundException ex) {
-            System.out.println("SAlvataggio non avvenuto");
+            System.out.println("Salvataggio non avvenuto");
             JOptionPane.showMessageDialog(null, "Salvataggio non avvenuto");
         }
         
@@ -301,6 +301,7 @@ public class ManagementTeams extends javax.swing.JFrame {
                 view_update = rank.getTeamforName(viewTeams.getModel().getValueAt(selectedRowIndex, 0).toString());
             } catch (Exception ex) {
                 System.out.println("Errore, la squadra presente nella tabella non è presente nella lista dei teams");
+                JOptionPane.showMessageDialog(null, "Errore, la squadra presente nella tabella non è presente nella lista dei teams");
                 return ;
             }
             NewTeam newTeam;

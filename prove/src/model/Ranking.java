@@ -9,6 +9,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter; 
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONArray;
@@ -146,6 +147,7 @@ public abstract class Ranking {
         for (int i = 0; i < teams.size(); i++) {
             if(newTeam.getName().equals(teams.get(i).getName()) || newTeam.getName().equals("") || newTeam.getCity().equals("")){
                 System.out.println("Squadra con questo nome già esistente o aggiunta squadra senza un campo");
+                JOptionPane.showMessageDialog(null, "Squadra con questo nome già esistente o aggiunta squadra senza campo");
                 return ;
             }     
         }
@@ -169,6 +171,7 @@ public abstract class Ranking {
         for (int i = 0; i < teams.size(); i++) {
             if(teams.get(i).getName().equals(name)){
                 System.out.println("Esiste già un'altra squadra con quel nome");
+                JOptionPane.showMessageDialog(null, "Esiste già un'altra squadra con quel nome");
                 return ;
             }
         }
@@ -176,6 +179,7 @@ public abstract class Ranking {
         teams.get(index).setCity(city);
         teams.get(index).setLogo(logo);
         System.out.println("Squadra aggiornata");
+        JOptionPane.showMessageDialog(null, "Squadra aggiornata");
     }
     
     /**

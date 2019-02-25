@@ -24,7 +24,7 @@ import model.RankingVolley;
  */
 public class Select extends JPanel{
     private Ranking rank;
-    private Calendar cal;
+    private final Calendar cal;
     Box vertical;
     private final JButton managementbtn;
     private final JButton calendarbtn;

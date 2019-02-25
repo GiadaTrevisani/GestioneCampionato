@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
 import model.Calendar;
 import model.Match;
@@ -40,6 +41,7 @@ public class ViewMatch extends javax.swing.JFrame {
             logoHomelbl.setIcon(new ImageIcon(ImageIO.read(new File(filePath + match.getHomeTeam().getLogo()))));
         } catch (IOException ex){
             System.out.println("immagine non esistente");
+            JOptionPane.showMessageDialog(null, "immagine non esistente");
         }
     }
     private void creaGui(){

@@ -6,6 +6,7 @@
 package model;
 
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import org.json.simple.JSONObject;
 
 /**
@@ -208,6 +209,7 @@ public class Match{
         
         if(indexHome ==-1 || indexGuest == -1){
             System.out.println("Una delle squadre nel match non esiste");
+            JOptionPane.showMessageDialog(null, "Una delle squadre nel match non esiste");
             throw new Exception("Una delle squadre nel match non esiste");
         } 
         Match nm = new Match(teams.get(indexHome), teams.get(indexGuest), homeResult, guestResult, day);
