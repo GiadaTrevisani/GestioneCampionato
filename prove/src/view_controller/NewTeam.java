@@ -21,6 +21,7 @@ import model.Team;
  * @author giadatrevisani
  */
 public class NewTeam extends javax.swing.JFrame {
+    private final String sport;
     private String imgPath;
     private final Ranking rank;
     private final Team team;
@@ -35,7 +36,8 @@ public class NewTeam extends javax.swing.JFrame {
      * @param rank
      * @param father
      */
-    public NewTeam(Team team, Ranking rank, ManagementTeams father){
+    public NewTeam(Team team, Ranking rank, ManagementTeams father, String sport){
+        this.sport = sport;
         this.imgPath = "Soliera.jpg";
         this.rank = rank;
         this.team = team;
@@ -47,10 +49,10 @@ public class NewTeam extends javax.swing.JFrame {
     }
     
     private void creaGui(){
+        this.setTitle(sport);
         this.setMinimumSize(new Dimension(700, 500));
         this.setSize(800, 600); 
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        
     }
     
     private void printTeam(){
@@ -185,7 +187,7 @@ public class NewTeam extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewActionPerformed
-        //Stampa all fine la tabella 
+        
         if(team.getName().equals("")){
             if(txtName.getText().equals("") || txtCity.getText().equals("")){
                 //Notifica di quello che è successo

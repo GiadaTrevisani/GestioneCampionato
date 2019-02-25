@@ -39,14 +39,16 @@ public class RankingBasket extends Ranking{
         ArrayList<Match> games = this.calendar.getGames();
         int partiteVinte = 0;
         for (int i = 0; i < games.size(); i++) {
-            if(teamName.equals(games.get(i).getHomeTeam().getName())){
-                if(games.get(i).getPointsHome() > games.get(i).getPointsGuest()){
-                   partiteVinte++;
+            if(games.get(i).getPlayed() == true){
+                if(teamName.equals(games.get(i).getHomeTeam().getName())){
+                    if(games.get(i).getPointsHome() > games.get(i).getPointsGuest()){
+                       partiteVinte++;
+                    }
                 }
-            }
-            if(teamName.equals(games.get(i).getGuestTeam().getName())){
-                if(games.get(i).getPointsGuest() > games.get(i).getPointsHome()){
-                   partiteVinte++;
+                if(teamName.equals(games.get(i).getGuestTeam().getName())){
+                    if(games.get(i).getPointsGuest() > games.get(i).getPointsHome()){
+                       partiteVinte++;
+                    }
                 }
             }
         }
@@ -63,17 +65,18 @@ public class RankingBasket extends Ranking{
         ArrayList<Match> games = this.calendar.getGames();
         int partitePerse = 0;
         for (int i = 0; i < games.size(); i++) {
-            if(teamName.equals(games.get(i).getHomeTeam().getName())){
-                if(games.get(i).getPointsHome() < games.get(i).getPointsGuest()){
-                   partitePerse++;
+            if(games.get(i).getPlayed() == true){
+                if(teamName.equals(games.get(i).getHomeTeam().getName())){
+                    if(games.get(i).getPointsHome() < games.get(i).getPointsGuest()){
+                       partitePerse++;
+                    }
+                }
+                if(teamName.equals(games.get(i).getGuestTeam().getName())){
+                    if(games.get(i).getPointsGuest() < games.get(i).getPointsHome()){
+                       partitePerse++;
+                    }
                 }
             }
-            if(teamName.equals(games.get(i).getGuestTeam().getName())){
-                if(games.get(i).getPointsGuest() < games.get(i).getPointsHome()){
-                   partitePerse++;
-                }
-            }
-            
         }
         return partitePerse;
     }
@@ -88,54 +91,55 @@ public class RankingBasket extends Ranking{
         ArrayList<Match> games = this.calendar.getGames();
         int totalePunti = 0;
         for (int i = 0; i < games.size(); i++) {
-            if(teamName.equals(games.get(i).getHomeTeam().getName())){
-                /**
-                 * se la condizione è vera vuol dire che la squadra in 
-                 * questione è quella che cerchiamo, guardiamo se ha vinto e
-                 * calcoliamo i punti da assegnare.
-                 */
-                if(games.get(i).getPointsHome() > games.get(i).getPointsGuest()){
+            if(games.get(i).getPlayed() == true){
+                if(teamName.equals(games.get(i).getHomeTeam().getName())){
                     /**
-                     * se la condizione è vera vuol dire che la squadra in
-                     * questione ha vinto il match.
-                    */
-                        totalePunti = totalePunti + 2;
+                     * se la condizione è vera vuol dire che la squadra in 
+                     * questione è quella che cerchiamo, guardiamo se ha vinto e
+                     * calcoliamo i punti da assegnare.
+                     */
+                    if(games.get(i).getPointsHome() > games.get(i).getPointsGuest()){
+                        /**
+                         * se la condizione è vera vuol dire che la squadra in
+                         * questione ha vinto il match.
+                        */
+                            totalePunti = totalePunti + 2;
+                        }
                     }
-                }
-                if(games.get(i).getPointsHome() < games.get(i).getPointsGuest()){
+                    if(games.get(i).getPointsHome() < games.get(i).getPointsGuest()){
+                        /**
+                         * oppure se i punti sono minori di quelli della squadra
+                         * allora la partita è persa, quindi non aggiungeremo
+                         * nessun punto
+                        */
+                            totalePunti = totalePunti +0;
+                    }
+
+                if(teamName.equals(games.get(i).getGuestTeam().getName())){
                     /**
-                     * oppure se i punti sono minori di quelli della squadra
-                     * allora la partita è persa, quindi non aggiungeremo
-                     * nessun punto
+                    * se la condizione è vera vuol dire che la squadra in 
+                    * questione è quella che cerchiamo, guardiamo se ha vinto e
+                    * calcoliamo i punti da assegnare.
                     */
-                        totalePunti = totalePunti +0;
-                }
-            
-            if(teamName.equals(games.get(i).getGuestTeam().getName())){
-                /**
-                * se la condizione è vera vuol dire che la squadra in 
-                * questione è quella che cerchiamo, guardiamo se ha vinto e
-                * calcoliamo i punti da assegnare.
-                */
-                if(games.get(i).getPointsGuest() > games.get(i).getPointsHome()){
-                    /**
-                     * se la condizione è vera vuol dire che la squadra in
-                     * questione ha vinto il match.
-                    */
-                        totalePunti = totalePunti + 2;
-                    
-                }
-                if(games.get(i).getPointsGuest() < games.get(i).getPointsHome()){
-                    /**
-                     * oppure se i punti sono minori di quelli della squadra
-                     * allora la partita è persa, quindi non aggiungeremo
-                     * nessun punto
-                    */
-                        totalePunti = totalePunti +0;
+                    if(games.get(i).getPointsGuest() > games.get(i).getPointsHome()){
+                        /**
+                         * se la condizione è vera vuol dire che la squadra in
+                         * questione ha vinto il match.
+                        */
+                            totalePunti = totalePunti + 2;
+
+                    }
+                    if(games.get(i).getPointsGuest() < games.get(i).getPointsHome()){
+                        /**
+                         * oppure se i punti sono minori di quelli della squadra
+                         * allora la partita è persa, quindi non aggiungeremo
+                         * nessun punto
+                        */
+                            totalePunti = totalePunti +0;
+                    }
                 }
             }
         }
         return totalePunti;  
     }
-    
 }

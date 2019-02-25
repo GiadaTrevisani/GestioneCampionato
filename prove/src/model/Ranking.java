@@ -211,7 +211,14 @@ public abstract class Ranking {
     public void takeFromFile() throws FileNotFoundException, IOException, ParseException {
         teams = new ArrayList<Team>();
         // parsing file "teams.json" 
-        Object obj = new JSONParser().parse(new FileReader("teams.json"));
+        Object obj;
+        try {
+            obj = new JSONParser().parse(new FileReader("teams.json"));
+        } catch (IOException | ParseException ex) {
+            System.out.println("Il file salvatagio non esiste per il calendario");
+            JOptionPane.showMessageDialog(null, "Il file salvataggio non esiste per il calendario");
+            return ;
+        }
         // typecasting obj to JSONObject 
         JSONArray ja = (JSONArray) obj;
           

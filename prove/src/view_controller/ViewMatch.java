@@ -20,36 +20,46 @@ import model.Match;
  * @author giadatrevisani
  */
 public class ViewMatch extends javax.swing.JFrame {
-
+    private final String sport;
     private final String filePath = "img_logo/";
-    private final Calendar cal;
+    private final String imgPath;
     private final Match match;
+    private final ViewCalendar father;
     
-    public ViewMatch(Match match, Calendar cal) {
-        this.cal = cal;
+    public ViewMatch(Match match, ViewCalendar father, String sport) {
+        this.sport = sport;
+        this.father = father;
         this.match = match;
+        imgPath = "Soliera.jpg";
         initComponents();
+        
         printMatch();
-        creaGui();
+        this.creaGui();
+    }
+    
+    private void creaGui(){
+        this.setTitle(sport);
+        this.setMinimumSize(new Dimension(800, 545));
+        this.setSize(800, 600); 
+        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE); 
     }
     
     private void printMatch(){
         nameHomelbl.setText(match.getHomeTeam().getName());
         cittaHomelbl.setText(match.getHomeTeam().getCity());
+        nameGuestlbl.setText(match.getGuestTeam().getName());
+        cittaGuestlbl.setText(match.getGuestTeam().getCity());
+        pointsHometxt.setText(String.valueOf(match.getPointsHome()));
+        pointsGuesttxt.setText(String.valueOf(match.getPointsGuest()));
         try{
-            
             logoHomelbl.setIcon(new ImageIcon(ImageIO.read(new File(filePath + match.getHomeTeam().getLogo()))));
+            logoHomelbl.setIcon(new ImageIcon(ImageIO.read(new File(filePath + match.getGuestTeam().getLogo()))));
         } catch (IOException ex){
             System.out.println("immagine non esistente");
             JOptionPane.showMessageDialog(null, "immagine non esistente");
         }
     }
-    private void creaGui(){
-        this.setMinimumSize(new Dimension(800, 545));
-        this.setSize(800, 600); 
-        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        
-    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -97,6 +107,11 @@ public class ViewMatch extends javax.swing.JFrame {
         jLabel11.setText("Punti Ospite: ");
 
         updatebtn.setText("Modifica");
+        updatebtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updatebtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -165,13 +180,9 @@ public class ViewMatch extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(pointsHometxt, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(pointsGuesttxt, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                    .addComponent(pointsHometxt, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pointsGuesttxt, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addComponent(updatebtn, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18))
@@ -179,6 +190,106 @@ public class ViewMatch extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    /**
+     * Metodo che va ad aggiornare i punti di un match. Per aggiornare abbiamo 
+     * bisogno di controllare alcune eccezioni:
+     * Per prima cosa verifichiamo che uno dei due campi punti casa o ospite non 
+     * siano vuoti.
+     * Come seconda cosa verifichiamo che sia stato effettuato un aggiornamento 
+     * guardando se i campi punti casa o ospite sono stati cambiati in
+     * @param evt 
+     */
+    private void updatebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updatebtnActionPerformed
+        if(pointsHometxt.getText().equals("") || pointsGuesttxt.getText().equals("")){
+            System.out.println("Uno dei campi è vuoto");
+            JOptionPane.showMessageDialog(null, "Uno dei campi è vuoto");
+        } else {
+            //campi non vuoti posso controllare le altre eccezioni
+            //se i due campi non sono stati aggiornati glielo diciamo 
+            if(pointsGuesttxt.equals(match.getPointsGuest()) && pointsHometxt.equals(match.getPointsHome())){
+                //i campi non sono stati aggiornati, notifica.
+                System.out.println("Il match non è stato modificato");
+                JOptionPane.showMessageDialog(null, "Il match non è stato modificato");
+            } else {
+                //controlliamo che i punti siamo stati modificati correttamente
+                switch (sport) {
+                    case "Soccer":{
+                        /**
+                         * Controlliamo che i punti assegnati al calcio siano 
+                         * conformi alla normativa sull'assegnamento del punteggio
+                         * nello sport. In questo caso, nello sport si possono
+                         * assegnare tutti i punti che uno vuole e anche pareggiare.
+                         */
+                        match.setPlayed(true);
+                        match.setGuestPoints(Integer.parseInt(pointsGuesttxt.getText()));
+                        match.setHomePoints(Integer.parseInt(pointsHometxt.getText()));
+                        System.out.println("Punteggio del match modificato");
+                        JOptionPane.showMessageDialog(null, "Punteggio del match modificato");
+
+                        break;
+                    }
+                    case "Basket":{
+                        /**
+                         * Nel caso del basket controlliamo solo che i due punteggi 
+                         * inseriti non siano uguali perchè in questo tipo di 
+                         * sport non è possibile pareggiare.
+                         * Dopo aver verificato che non sia stato inserito un 
+                         * pareggio, controllo il caso in cui si voglia azzerare
+                         * il punteggio.
+                         */
+                        if(Integer.parseInt(pointsGuesttxt.getText()) ==  Integer.parseInt(pointsHometxt.getText())){
+                            System.out.println("Nel basket non è possibile pareggiare");
+                            JOptionPane.showMessageDialog(null, "Nel basket non è possibile pareggiare");
+                        } else {
+                            match.setPlayed(true);
+                            match.setGuestPoints(Integer.parseInt(pointsGuesttxt.getText()));
+                            match.setHomePoints(Integer.parseInt(pointsHometxt.getText()));
+                            System.out.println("Punteggio del match modificato");
+                            JOptionPane.showMessageDialog(null, "Punteggio del match modificato");
+                        }
+                        break;
+                    }
+                    case "Volley":{
+                        /**
+                         * Nel caso della pallavolo controlliamo che una squadra 
+                         * abbia fatto 3 punti e l'altra tra 0 e 2. Come nel basket
+                         * anche nella pallavolo non si può pareggiare, quindi 
+                         * dovremo controllare anche questa possibilità.
+                         */
+                        if(Integer.parseInt(pointsGuesttxt.getText()) ==  Integer.parseInt(pointsHometxt.getText())){
+                            System.out.println("Nella pallavolo non è possibile pareggiare");
+                            JOptionPane.showMessageDialog(null, "Nella pallavolo non è possibile pareggiare");
+                        } else {
+                            if(Integer.parseInt(pointsGuesttxt.getText()) == 3 && Integer.parseInt(pointsHometxt.getText()) < 3 && Integer.parseInt(pointsHometxt.getText()) > 0){
+                                match.setPlayed(true);
+                                match.setGuestPoints(Integer.parseInt(pointsGuesttxt.getText()));
+                                match.setHomePoints(Integer.parseInt(pointsHometxt.getText()));
+                                System.out.println("Punteggio del match modificato");
+                                JOptionPane.showMessageDialog(null, "Punteggio del match modificato");
+                            } 
+                            if(Integer.parseInt(pointsHometxt.getText()) == 3 && Integer.parseInt(pointsGuesttxt.getText()) < 3 && Integer.parseInt(pointsGuesttxt.getText()) > 0){
+                                match.setPlayed(true);
+                                match.setGuestPoints(Integer.parseInt(pointsGuesttxt.getText()));
+                                match.setHomePoints(Integer.parseInt(pointsHometxt.getText()));
+                                System.out.println("Punteggio del match modificato");
+                                JOptionPane.showMessageDialog(null, "Punteggio del match modificato");
+                            } 
+                        }
+                        break;
+                    }
+                    default:{
+                        //sport non esiste non potrà mai capitare ma io ce lo metto
+                        System.out.println("Lo sport non esiste nel progetto");
+                        JOptionPane.showMessageDialog(null, "Lo sport non esiste nel progetto");
+                        break;
+                    }
+                }
+            }
+        }
+        //aggiorno la tabella nella finestra padre (vista delle squadre)
+        father.printTable();  
+    }//GEN-LAST:event_updatebtnActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel cittaGuestlbl;

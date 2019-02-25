@@ -35,18 +35,19 @@ public class Select extends JPanel{
     private final JPanel father;
     private boolean openmanagement;
     private boolean opencalendar;
+    private boolean openranking;
     
      
     public Select(String sport, JPanel father){
-        if(sport.equals("volley")){
+        if(sport.equals("Volley")){
             rank = new RankingVolley();
         }
         
-        if(sport.equals("calcio")){
+        if(sport.equals("Soccer")){
             rank = new RankingSoccer();
         }
         
-        if(sport.equals("basket")){
+        if(sport.equals("Basket")){
             rank = new RankingBasket();
         }
         
@@ -55,6 +56,7 @@ public class Select extends JPanel{
         this.father = father;
         openmanagement = false;
         opencalendar = false;
+        openranking = false;
         managementbtn = new JButton("Gestione Squadre");
         calendarbtn = new JButton("Calendario");
         rankingbtn = new JButton("Classifica");
@@ -79,7 +81,7 @@ public class Select extends JPanel{
             if(openmanagement == false){
                 openmanagement = true;
                 ManagementTeams management;
-                management = new ManagementTeams(rank);
+                management = new ManagementTeams(rank, sport);
                 management.setVisible(true);
                 management.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
@@ -91,10 +93,25 @@ public class Select extends JPanel{
         });
         
         calendarbtn.addActionListener((ActionEvent e) -> {
+            if(openranking == false){
+                openranking = true;
+                ViewRanking ranking;
+                ranking = new ViewRanking(rank, sport);
+                ranking.setVisible(true);
+                ranking.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                        openranking = false;
+                    }
+                });
+            }
+        });
+        
+        rankingbtn.addActionListener((ActionEvent e) -> {
             if(opencalendar == false){
                 opencalendar = true;
                 ViewCalendar calendar;
-                calendar = new ViewCalendar(cal, rank);
+                calendar = new ViewCalendar(rank, sport);
                 calendar.setVisible(true);
                 calendar.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override

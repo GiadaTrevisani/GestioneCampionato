@@ -62,8 +62,8 @@ public class Match{
         this.homeTeam = homeTeam;
         this.guestTeam = guestTeam;
         this.day = day;
-        this.homeResult = 0;
-        this.guestResult = 0;
+        this.homeResult = -1;
+        this.guestResult = -1;
         this.played = false;
     }
     
@@ -148,8 +148,8 @@ public class Match{
     }
     
     public void resetResults(){
-        this.homeResult = 0;
-        this.guestResult = 0;
+        this.homeResult = -1;
+        this.guestResult = -1;
         this.played = false;
     }
     

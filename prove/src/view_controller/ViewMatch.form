@@ -103,10 +103,8 @@
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="jLabel4" pref="41" max="32767" attributes="0"/>
                   <Component id="pointsHometxt" alignment="0" min="-2" pref="35" max="-2" attributes="0"/>
-                  <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                      <Component id="jLabel11" alignment="0" max="32767" attributes="0"/>
-                      <Component id="pointsGuesttxt" alignment="0" pref="35" max="32767" attributes="0"/>
-                  </Group>
+                  <Component id="jLabel11" alignment="0" max="32767" attributes="0"/>
+                  <Component id="pointsGuesttxt" alignment="0" pref="35" max="32767" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="updatebtn" min="-2" pref="62" max="-2" attributes="0"/>
@@ -176,6 +174,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Modifica"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="updatebtnActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

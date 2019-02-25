@@ -18,26 +18,37 @@ import org.json.simple.parser.ParseException;
  *
  * @author giadatrevisani
  */
-public class ManagementTeams extends javax.swing.JFrame {
-    Ranking rank;
+public final class ManagementTeams extends javax.swing.JFrame {
+    private final Ranking rank;
+    private final String sport;
     private final DefaultTableModel model;
-    
     private boolean openNewTeam, openViewUpdate;
     
     
     
-    public ManagementTeams(Ranking rank){
-        this.rank = rank;
+    public ManagementTeams(Ranking rank, String sport){
         initComponents();
         model = (DefaultTableModel) viewTeams.getModel();
         openNewTeam = false;
         openViewUpdate = false;
+        this.sport = sport;
+        this.rank = rank;
+        
+        rank.addTeam("mamma", "soliera", "cacca");
+        rank.addTeam("papà", "gallipoli", "cacchina");
+        rank.addTeam("io", "firenze", "caccola");
+        rank.addTeam("vale", "roma", "cacchetta");
+        rank.addTeam("luca", "bologna", "caccona");
+        rank.addTeam("nonna", "eggio", "caccarella");
+        rank.addTeam("nonno", "carpi", "caccuccia");
+        
        
         printTable();
         this.creaGui();
     }
     
     private void creaGui() {
+       this.setTitle(sport);
        this.setMinimumSize(new Dimension(700, 500));
        this.setSize(800, 600); 
        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -209,7 +220,7 @@ public class ManagementTeams extends javax.swing.JFrame {
             Team nt = new Team("", "", "");
             NewTeam newTeam;
             
-            newTeam = new NewTeam(nt, rank, this);
+            newTeam = new NewTeam(nt, rank, this, sport);
             newTeam.setVisible(true);
             newTeam.addWindowListener(new java.awt.event.WindowAdapter() {
                 @Override
@@ -297,7 +308,6 @@ public class ManagementTeams extends javax.swing.JFrame {
             int selectedRowIndex = viewTeams.getSelectedRow();
             Team view_update;
             try {
-                //view_update = new Team(viewTeams.getModel().getValueAt(selectedRowIndex, 0).toString(), viewTeams.getModel().getValueAt(selectedRowIndex, 1).toString(), viewTeams.getModel().getValueAt(selectedRowIndex, 2).toString());
                 view_update = rank.getTeamforName(viewTeams.getModel().getValueAt(selectedRowIndex, 0).toString());
             } catch (Exception ex) {
                 System.out.println("Errore, la squadra presente nella tabella non è presente nella lista dei teams");
@@ -306,7 +316,7 @@ public class ManagementTeams extends javax.swing.JFrame {
             }
             NewTeam newTeam;
 
-            newTeam = new NewTeam(view_update, rank, this);
+            newTeam = new NewTeam(view_update, rank, this, sport);
             newTeam.setVisible(true);
             newTeam.addWindowListener(new java.awt.event.WindowAdapter() {
                 @Override

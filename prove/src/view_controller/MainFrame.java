@@ -32,7 +32,7 @@ public class MainFrame extends JFrame{
     Box vertical;
     public MainFrame(String gestione_campionati) {
         whichsports = new JPanel();
-        soccerbtn = new JButton("Calcio");
+        soccerbtn = new JButton("Soccer");
         volleybtn = new JButton("Volley");
         basketbtn = new JButton("Basket");
         vertical = Box.createHorizontalBox();
