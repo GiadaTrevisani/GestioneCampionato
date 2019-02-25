@@ -80,6 +80,16 @@ public class RankingBasket extends Ranking{
         }
         return partitePerse;
     }
+    
+    /**
+     * Metodo per il calcolo delle partite pareggiate dalla squadra passata come parametro.
+     * @param TeamName nome della squadra.
+     * @return intero con il numero delle partite pareggiate della squadra.
+     */
+    @Override
+    public int getPareggiateForSqadra(String TeamName){
+        return 0;
+    }
 
     /**
      * Metodo per il calcolo dei punti tolalizzati dalla squadra passata come parametro.

@@ -10,7 +10,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import javax.swing.JOptionPane;
+//import javax.swing.JOptionPane;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONArray;
@@ -41,6 +41,14 @@ public class Calendar {
     /**
      * Secondo costruttore che prende in ingresso:
      * @param year indica l'anno in cui si svolge il campionato.
+     */
+    public Calendar(int year){
+        this.year = year;
+        games = new ArrayList<Match>();
+    }
+    
+    /**
+     * Terzo costruttore che non prende niente in ingresso.
      */
     public Calendar(){
         this.year = 0;
@@ -79,6 +87,7 @@ public class Calendar {
     
      /**
      * Metodo che crea un file JSon per il salvataggio del calendario su file.
+     * @throws java.io.FileNotFoundException
      */
     public void saveCalendar() throws FileNotFoundException{
         PrintWriter pw = new PrintWriter("calendar.json"); 
@@ -100,20 +109,16 @@ public class Calendar {
     
     /**
      * Metodo per caricare il calendario da un salvataggio Json.
+     * @param teams
+     * @throws java.io.FileNotFoundException
+     * @throws org.json.simple.parser.ParseException
      */
-    public void takeFromFile(ArrayList<Team> teams){
+    public void takeFromFile(ArrayList<Team> teams) throws FileNotFoundException, IOException, ParseException, Exception {
        games = new ArrayList<Match>();
-       Object obj;
-       try {
-            obj = new JSONParser().parse(new FileReader("calendar.json"));
-        } catch (IOException | ParseException ex) {
-            System.out.println("Il file salvatagio non esiste per i match");
-            JOptionPane.showMessageDialog(null, "Il file salvataggio non esiste per i match");
-            return ;
-        }
+       Object obj = new JSONParser().parse(new FileReader("calendar.json"));
        JSONObject jo = (JSONObject) obj;
        
-       this.year = (int) jo.get("Year");
+       this.year = new Long((long) jo.get("Year")).intValue();
        JSONArray ja = (JSONArray) jo.get("Games");
        
        try{
@@ -122,7 +127,8 @@ public class Calendar {
         }
        } catch(Exception e) {
            System.out.println("Il calendario caricato non corrisponde ai team presenti");
-           JOptionPane.showMessageDialog(null, "Il calendario caricato non corrisponde ai team presenti");
+           //JOptionPane.showMessageDialog(null, "Il calendario caricato non corrisponde ai team presenti");
+           throw new Exception("Il calendario caricato non corrisponde ai team presenti");
        }
     }
     

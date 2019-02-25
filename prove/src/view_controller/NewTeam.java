@@ -35,6 +35,7 @@ public class NewTeam extends javax.swing.JFrame {
      * @param team
      * @param rank
      * @param father
+     * @param sport
      */
     public NewTeam(Team team, Ranking rank, ManagementTeams father, String sport){
         this.sport = sport;
@@ -268,6 +269,7 @@ public class NewTeam extends javax.swing.JFrame {
         //aggiorno la tabella nella finestra padre (vista delle squadre)
         father.printTable();
         
+        father.setopenViewUpdate(false);
         //chiudo la finestra, tanto la squadra è stata eliminata, sia che questa fosse nuova o da modificare
         this.dispose();
     }//GEN-LAST:event_deletebtnActionPerformed

@@ -161,6 +161,7 @@ public class RankingSoccer extends Ranking{
      * @param TeamName nome della squadra.
      * @return intero con il numero delle partite pareggiate della squadra.
      */
+    @Override
    public int getPareggiateForSqadra(String TeamName){
        ArrayList<Match> games = this.calendar.getGames();
        int partitePareggiate = 0;

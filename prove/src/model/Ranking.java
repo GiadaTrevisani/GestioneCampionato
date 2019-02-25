@@ -9,7 +9,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter; 
 import java.util.ArrayList;
-import javax.swing.JOptionPane;
+// import javax.swing.JOptionPane;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONArray;
@@ -81,19 +81,21 @@ public abstract class Ranking {
         for (int i = 0; i < teams.size(); i++) {
             if(teams.get(i).getName().equals(name)){
                 teams.remove(i);
+                return ;
             }
         }
     }
     
     /**
      * Metodo che serve per eliminare una squadra dall'array delle squadre dato
-     * un nome.
-     * @param name indica i nome della squadra. 
+     * un nome. 
+     * @param t
      */
     public void deleteTeam(Team t){
         for (int i = 0; i < teams.size(); i++) {
             if(teams.get(i) == t){
                 teams.remove(i);
+                return ;
             }
         }
     }
@@ -147,10 +149,11 @@ public abstract class Ranking {
         for (int i = 0; i < teams.size(); i++) {
             if(newTeam.getName().equals(teams.get(i).getName()) || newTeam.getName().equals("") || newTeam.getCity().equals("")){
                 System.out.println("Squadra con questo nome già esistente o aggiunta squadra senza un campo");
-                JOptionPane.showMessageDialog(null, "Squadra con questo nome già esistente o aggiunta squadra senza campo");
+                // JOptionPane.showMessageDialog(null, "Squadra con questo nome già esistente o aggiunta squadra senza campo");
                 return ;
             }     
         }
+        
         teams.add(newTeam);
         System.out.println("Squadra inserita");
     }
@@ -171,7 +174,7 @@ public abstract class Ranking {
         for (int i = 0; i < teams.size(); i++) {
             if(teams.get(i).getName().equals(name)){
                 System.out.println("Esiste già un'altra squadra con quel nome");
-                JOptionPane.showMessageDialog(null, "Esiste già un'altra squadra con quel nome");
+                //JOptionPane.showMessageDialog(null, "Esiste già un'altra squadra con quel nome");
                 return ;
             }
         }
@@ -179,7 +182,7 @@ public abstract class Ranking {
         teams.get(index).setCity(city);
         teams.get(index).setLogo(logo);
         System.out.println("Squadra aggiornata");
-        JOptionPane.showMessageDialog(null, "Squadra aggiornata");
+        //JOptionPane.showMessageDialog(null, "Squadra aggiornata");
     }
     
     /**
@@ -192,7 +195,7 @@ public abstract class Ranking {
     * riportate all'inizio del file.
     * @throws java.io.FileNotFoundException
     */
-    public void saveTeams() throws FileNotFoundException{
+    public void saveTeams() throws FileNotFoundException {
         // writing JSON to file:"teams.json" in cwd 
         PrintWriter pw = new PrintWriter("teams.json"); 
         JSONArray ja = new JSONArray();
@@ -207,18 +210,13 @@ public abstract class Ranking {
     
     /**
      * Metodo per caricare le squadre da un salvataggio Json.
+     * @throws java.io.FileNotFoundException
+     * @throws org.json.simple.parser.ParseException
      */
     public void takeFromFile() throws FileNotFoundException, IOException, ParseException {
         teams = new ArrayList<Team>();
         // parsing file "teams.json" 
-        Object obj;
-        try {
-            obj = new JSONParser().parse(new FileReader("teams.json"));
-        } catch (IOException | ParseException ex) {
-            System.out.println("Il file salvatagio non esiste per il calendario");
-            JOptionPane.showMessageDialog(null, "Il file salvataggio non esiste per il calendario");
-            return ;
-        }
+        Object obj = new JSONParser().parse(new FileReader("teams.json"));
         // typecasting obj to JSONObject 
         JSONArray ja = (JSONArray) obj;
           
@@ -234,6 +232,7 @@ public abstract class Ranking {
      * @param teamName nome della squadra;
      * @return intero con il numero di partite che la squadra ha giocato.
      */
+    
     public int getPlayedForTeam(String teamName){
         int played = 0;
         for(int i = 0; i < calendar.getGames().size(); i++){
@@ -267,4 +266,11 @@ public abstract class Ranking {
      * @return intero con il numero dei punti totalizzati dalla squadra.
      */
     public abstract int getpointsForTeam(String teamName);
+    
+    /**
+     * Metodo per il calcolo delle partite pareggiate dalla squadra passata come parametro.
+     * @param TeamName nome della squadra.
+     * @return intero con il numero delle partite pareggiate della squadra.
+     */
+    public abstract int getPareggiateForSqadra(String TeamName);
 }

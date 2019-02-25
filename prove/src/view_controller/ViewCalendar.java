@@ -7,12 +7,14 @@ package view_controller;
 
 import java.awt.print.PrinterException;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import model.Match;
 import model.Ranking;
-import model.Team;
+import org.json.simple.parser.ParseException;
 
 /**
  *
@@ -24,6 +26,7 @@ public class ViewCalendar extends javax.swing.JFrame {
     private final DefaultTableModel model;
     private boolean openViewUpdate;
     private boolean openYear;
+    private ArrayList<Match> matchesModel;
     
     public ViewCalendar(Ranking rank, String sport){
         this.sport = sport;
@@ -32,20 +35,24 @@ public class ViewCalendar extends javax.swing.JFrame {
         this.rank = rank;
         initComponents();
         model = (DefaultTableModel) viewCalendar.getModel();
+        matchesModel = new ArrayList<Match>();
         
         this.setTitle(sport);
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        rank.getCalendar().setYear(2018);
+        //rank.getCalendar().setYear(2018);
+        printTable();
     }
     
     public void printTable(){
+        matchesModel = new ArrayList<Match>();
         model.setRowCount(0);
         for(int i = 0; i < rank.getCalendar().getGames().size(); i++){
             if(rank.getCalendar().getGames().get(i).getPlayed() == false){
-                model.insertRow(i, new Object[]{rank.getCalendar().getGames().get(i).getDay(), rank.getCalendar().getGames().get(i).getHomeTeam().getCity(), rank.getCalendar().getGames().get(i).getHomeTeam().getName(), rank.getCalendar().getGames().get(i).getGuestTeam().getName(), 0, 0});
+                model.insertRow(i, new Object[]{rank.getCalendar().getGames().get(i).getDay(), rank.getCalendar().getGames().get(i).getHomeTeam().getCity(), rank.getCalendar().getGames().get(i).getHomeTeam().getName(), rank.getCalendar().getGames().get(i).getGuestTeam().getName(), "-", "-", rank.getCalendar().getGames().get(i).getPlayed()});
             } else {
-                model.insertRow(i, new Object[]{rank.getCalendar().getGames().get(i).getDay(), rank.getCalendar().getGames().get(i).getHomeTeam().getCity(), rank.getCalendar().getGames().get(i).getHomeTeam().getName(), rank.getCalendar().getGames().get(i).getGuestTeam().getName(), rank.getCalendar().getGames().get(i).getPointsHome(), rank.getCalendar().getGames().get(i).getPointsGuest()});
+                model.insertRow(i, new Object[]{rank.getCalendar().getGames().get(i).getDay(), rank.getCalendar().getGames().get(i).getHomeTeam().getCity(), rank.getCalendar().getGames().get(i).getHomeTeam().getName(), rank.getCalendar().getGames().get(i).getGuestTeam().getName(), String.valueOf(rank.getCalendar().getGames().get(i).getPointsHome()), String.valueOf(rank.getCalendar().getGames().get(i).getPointsGuest()), rank.getCalendar().getGames().get(i).getPlayed()});
             }
+            matchesModel.add(rank.getCalendar().getGames().get(i));
         }
     }
 
@@ -223,15 +230,28 @@ public class ViewCalendar extends javax.swing.JFrame {
         model.setRowCount(0);
         for (int i = 0; i < rank.getCalendar().getGames().size(); i++) {
             if(rank.getCalendar().getGames().get(i).getHomeTeam().getName().equals(searchtxt.getText()) || rank.getCalendar().getGames().get(i).getGuestTeam().getName().equals(searchtxt.getText()) || searchtxt.equals(rank.getCalendar().getYear())){
-                model.insertRow(j, new Object[]{rank.getCalendar().getGames().get(i).getDay(), rank.getCalendar().getGames().get(i).getHomeTeam().getCity(),rank.getCalendar().getGames().get(i).getHomeTeam().getName(), rank.getCalendar().getGames().get(i).getGuestTeam().getName(), rank.getCalendar().getGames().get(i).getPointsHome(), rank.getCalendar().getGames().get(i).getPointsGuest(), rank.getCalendar().getGames().get(i).getPlayed()} );
+                if(rank.getCalendar().getGames().get(i).getPlayed() == false){
+                    model.insertRow(j, new Object[]{rank.getCalendar().getGames().get(i).getDay(), rank.getCalendar().getGames().get(i).getHomeTeam().getCity(), rank.getCalendar().getGames().get(i).getHomeTeam().getName(), rank.getCalendar().getGames().get(i).getGuestTeam().getName(), "-", "-", rank.getCalendar().getGames().get(i).getPlayed()});
+                } else {
+                    model.insertRow(j, new Object[]{rank.getCalendar().getGames().get(i).getDay(), rank.getCalendar().getGames().get(i).getHomeTeam().getCity(), rank.getCalendar().getGames().get(i).getHomeTeam().getName(), rank.getCalendar().getGames().get(i).getGuestTeam().getName(), String.valueOf(rank.getCalendar().getGames().get(i).getPointsHome()), String.valueOf(rank.getCalendar().getGames().get(i).getPointsGuest()), rank.getCalendar().getGames().get(i).getPlayed()});
+                }
+                matchesModel.add(rank.getCalendar().getGames().get(i));
                 j++;
             }
         }
     }//GEN-LAST:event_serachbtnActionPerformed
 
     private void takeCalendarbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_takeCalendarbtnActionPerformed
-        rank.getCalendar().takeFromFile(rank.getTeams());
-        printTable();
+        try {
+            rank.getCalendar().takeFromFile(rank.getTeams());
+            printTable();
+            insertYearlbl.setText(String.valueOf(rank.getCalendar().getYear()));
+            JOptionPane.showMessageDialog(null, "Calendario caricato con successo");
+        } catch (IOException | ParseException ex) {
+            JOptionPane.showMessageDialog(null, "Calendario non caricato: file mancante oppure non corrretto");
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Una delle squadre nel match non esiste");
+        }
     }//GEN-LAST:event_takeCalendarbtnActionPerformed
 
     private void saveCalendarbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveCalendarbtnActionPerformed
@@ -251,21 +271,16 @@ public class ViewCalendar extends javax.swing.JFrame {
     }//GEN-LAST:event_deletebtnActionPerformed
 
     private void viewbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewbtnActionPerformed
-        if(openYear == false){ 
-            openYear = true;
+        if(openViewUpdate == false){ 
+            openViewUpdate = true;
             int selectedRowIndex = viewCalendar.getSelectedRow();
-            Match view_update;
-            Team updateHome;
-            Team updateGuest;
-            try {
-                updateHome = rank.getTeamforName(viewCalendar.getModel().getValueAt(selectedRowIndex, 2).toString());
-                updateGuest = rank.getTeamforName(viewCalendar.getModel().getValueAt(selectedRowIndex, 3).toString());
-                view_update = new Match(updateHome, updateGuest, Integer.parseInt(viewCalendar.getModel().getValueAt(selectedRowIndex, 4).toString()), Integer.parseInt(viewCalendar.getModel().getValueAt(selectedRowIndex, 5).toString()), Integer.parseInt(viewCalendar.getModel().getValueAt(selectedRowIndex, 0).toString()) );
-            } catch (Exception ex) {
-                System.out.println("Errore, il match presente nella tabella non è presente nella lista dei match");
-                JOptionPane.showMessageDialog(null, "Errore, il match presente nella tabella non è presente nella lista dei match");
+            if(selectedRowIndex < 0){
+                System.out.println("Nessuna riga della tabella selezionata");
+                openViewUpdate = false;
                 return ;
             }
+            Match view_update = matchesModel.get(selectedRowIndex);
+            
             ViewMatch viewMatch;
             
             viewMatch= new ViewMatch(view_update, this, sport);
@@ -273,15 +288,15 @@ public class ViewCalendar extends javax.swing.JFrame {
             viewMatch.addWindowListener(new java.awt.event.WindowAdapter() {
                 @Override
                 public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-                    openYear = false;
+                    openViewUpdate = false;
                 }
             });
         }
     }//GEN-LAST:event_viewbtnActionPerformed
 
     private void createCalendarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createCalendarActionPerformed
-        if(openViewUpdate == false){ 
-            openViewUpdate = true;
+        if(openYear == false){ 
+            openYear = true;
             
             InsertYear insertYear;
             insertYear = new InsertYear(rank, sport, this);
@@ -289,9 +304,10 @@ public class ViewCalendar extends javax.swing.JFrame {
             insertYear.addWindowListener(new java.awt.event.WindowAdapter() {
                 @Override
                 public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-                    openViewUpdate = false;
+                    openYear = false;
                 }
             });
+            insertYear.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
             rank.getCalendar().AlgoritmoDiBerger(rank.getTeams());
             printTable();
         }

@@ -6,7 +6,7 @@
 package model;
 
 import java.util.ArrayList;
-import javax.swing.JOptionPane;
+// import javax.swing.JOptionPane;
 import org.json.simple.JSONObject;
 
 /**
@@ -189,12 +189,12 @@ public class Match{
      * @return il match creato.
      * @throws Exception 
      */
-    public static Match fromJSONObject(JSONObject jo, ArrayList<Team> teams) throws Exception{
+    public static Match fromJSONObject(JSONObject jo, ArrayList<Team> teams) throws Exception {
         String homeTeam = (String) jo.get("HomeTeam");
         String guestTeam = (String) jo.get("GuestTeam");
-        int homeResult =  (int) jo.get("HomeResutl");
-        int guestResult = (int) jo.get("GuestResult");
-        int day = (int) jo.get("Day");
+        int homeResult =  new Long((long) jo.get("HomeResutl")).intValue();
+        int guestResult = new Long((long) jo.get("GuestResult")).intValue();
+        int day = new Long((long) jo.get("Day")).intValue();
         boolean played = (boolean) jo.get("Played");
         int indexHome = -1;
         int indexGuest = -1;
@@ -209,7 +209,7 @@ public class Match{
         
         if(indexHome ==-1 || indexGuest == -1){
             System.out.println("Una delle squadre nel match non esiste");
-            JOptionPane.showMessageDialog(null, "Una delle squadre nel match non esiste");
+            // JOptionPane.showMessageDialog(null, "Una delle squadre nel match non esiste");
             throw new Exception("Una delle squadre nel match non esiste");
         } 
         Match nm = new Match(teams.get(indexHome), teams.get(indexGuest), homeResult, guestResult, day);

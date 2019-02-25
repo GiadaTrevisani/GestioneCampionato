@@ -8,6 +8,7 @@ package view_controller;
 import java.awt.Dimension;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Ranking;
@@ -23,7 +24,7 @@ public final class ManagementTeams extends javax.swing.JFrame {
     private final String sport;
     private final DefaultTableModel model;
     private boolean openNewTeam, openViewUpdate;
-    
+    private ArrayList<Team> teamsModel;
     
     
     public ManagementTeams(Ranking rank, String sport){
@@ -33,14 +34,15 @@ public final class ManagementTeams extends javax.swing.JFrame {
         openViewUpdate = false;
         this.sport = sport;
         this.rank = rank;
+        teamsModel = new ArrayList<Team>();
         
-        rank.addTeam("mamma", "soliera", "cacca");
-        rank.addTeam("papà", "gallipoli", "cacchina");
-        rank.addTeam("io", "firenze", "caccola");
-        rank.addTeam("vale", "roma", "cacchetta");
-        rank.addTeam("luca", "bologna", "caccona");
-        rank.addTeam("nonna", "eggio", "caccarella");
-        rank.addTeam("nonno", "carpi", "caccuccia");
+//        this.rank.addTeam("mamma", "soliera", "cacca");
+//        this.rank.addTeam("papà", "gallipoli", "cacchina");
+//        this.rank.addTeam("io", "firenze", "caccola");
+//        this.rank.addTeam("vale", "roma", "cacchetta");
+//        this.rank.addTeam("luca", "bologna", "caccona");
+//        this.rank.addTeam("nonna", "eggio", "caccarella");
+//        this.rank.addTeam("nonno", "carpi", "caccuccia");
         
        
         printTable();
@@ -55,9 +57,11 @@ public final class ManagementTeams extends javax.swing.JFrame {
     }
     
     public void printTable(){
+        teamsModel = new ArrayList<Team>();
         model.setRowCount(0);
         for (int i = 0; i < rank.getTeams().size(); i++) {
             model.insertRow(i, new Object[]{rank.getTeams().get(i).getName(), rank.getTeams().get(i).getCity(), rank.getTeams().get(i).getLogo()} );
+            teamsModel.add(rank.getTeams().get(i));
         }
     }
 
@@ -280,10 +284,11 @@ public final class ManagementTeams extends javax.swing.JFrame {
     private void searchbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchbtnActionPerformed
         int j = 0;
         model.setRowCount(0);
+        teamsModel = new ArrayList<Team>();
         for (int i = 0; i < rank.getTeams().size(); i++) {
-            if(rank.getTeams().get(i).getName().equals(searchTeams.getText()) || rank.getTeams().get(i).getCity().equals(searchTeams.getText())){
-                
+            if(rank.getTeams().get(i).getName().equals(searchTeams.getText()) || rank.getTeams().get(i).getCity().equals(searchTeams.getText())){ 
                 model.insertRow(j, new Object[]{rank.getTeams().get(i).getName(), rank.getTeams().get(i).getCity(), rank.getTeams().get(i).getLogo()} );
+                teamsModel.add(rank.getTeams().get(i));
                 j++;
             }
         }
@@ -306,14 +311,15 @@ public final class ManagementTeams extends javax.swing.JFrame {
         if(openViewUpdate == false){ 
             openViewUpdate = true;
             int selectedRowIndex = viewTeams.getSelectedRow();
-            Team view_update;
-            try {
-                view_update = rank.getTeamforName(viewTeams.getModel().getValueAt(selectedRowIndex, 0).toString());
-            } catch (Exception ex) {
-                System.out.println("Errore, la squadra presente nella tabella non è presente nella lista dei teams");
-                JOptionPane.showMessageDialog(null, "Errore, la squadra presente nella tabella non è presente nella lista dei teams");
+            
+            if(selectedRowIndex < 0){
+                System.out.println("Nessuna riga della tabella selezionata");
+                openViewUpdate = false;
                 return ;
             }
+            
+            Team view_update = teamsModel.get(selectedRowIndex);
+            
             NewTeam newTeam;
 
             newTeam = new NewTeam(view_update, rank, this, sport);
@@ -327,7 +333,10 @@ public final class ManagementTeams extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_viewbtnActionPerformed
 
-
+    public void setopenViewUpdate(boolean val){
+        openViewUpdate = val;
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton finebtn;
     private javax.swing.JScrollPane jScrollPane1;

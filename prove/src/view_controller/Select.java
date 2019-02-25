@@ -38,20 +38,21 @@ public class Select extends JPanel{
     private boolean openranking;
     
      
-    public Select(String sport, JPanel father){
+    public Select(String sport, JPanel father){      
+        cal = new Calendar(); // new Calendar(year);
+        
         if(sport.equals("Volley")){
-            rank = new RankingVolley();
+            rank = new RankingVolley(cal);
         }
         
         if(sport.equals("Soccer")){
-            rank = new RankingSoccer();
+            rank = new RankingSoccer(cal);
         }
         
         if(sport.equals("Basket")){
-            rank = new RankingBasket();
+            rank = new RankingBasket(cal);
         }
         
-        cal = new Calendar();
         this.sport = sport;
         this.father = father;
         openmanagement = false;
@@ -92,7 +93,7 @@ public class Select extends JPanel{
             }
         });
         
-        calendarbtn.addActionListener((ActionEvent e) -> {
+        rankingbtn.addActionListener((ActionEvent e) -> {
             if(openranking == false){
                 openranking = true;
                 ViewRanking ranking;
@@ -107,7 +108,7 @@ public class Select extends JPanel{
             }
         });
         
-        rankingbtn.addActionListener((ActionEvent e) -> {
+        calendarbtn.addActionListener((ActionEvent e) -> {
             if(opencalendar == false){
                 opencalendar = true;
                 ViewCalendar calendar;

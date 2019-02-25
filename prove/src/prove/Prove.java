@@ -6,7 +6,6 @@
 package prove;
 
 import view_controller.MainFrame;
-import java.io.FileNotFoundException;
 
 /**
  *
@@ -17,7 +16,7 @@ public class Prove {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws FileNotFoundException, Exception{
+    public static void main(String[] args){
         
         System.out.println("Gestione campionati avviato");
         

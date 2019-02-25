@@ -12,7 +12,6 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
-import model.Calendar;
 import model.Match;
 
 /**
@@ -49,8 +48,14 @@ public class ViewMatch extends javax.swing.JFrame {
         cittaHomelbl.setText(match.getHomeTeam().getCity());
         nameGuestlbl.setText(match.getGuestTeam().getName());
         cittaGuestlbl.setText(match.getGuestTeam().getCity());
-        pointsHometxt.setText(String.valueOf(match.getPointsHome()));
-        pointsGuesttxt.setText(String.valueOf(match.getPointsGuest()));
+        if(match.getPlayed()) {
+            pointsHometxt.setText(String.valueOf(match.getPointsHome()));
+            pointsGuesttxt.setText(String.valueOf(match.getPointsGuest()));
+        } else {
+            pointsHometxt.setText("-");
+            pointsGuesttxt.setText("-");
+        }
+        
         try{
             logoHomelbl.setIcon(new ImageIcon(ImageIO.read(new File(filePath + match.getHomeTeam().getLogo()))));
             logoHomelbl.setIcon(new ImageIcon(ImageIO.read(new File(filePath + match.getGuestTeam().getLogo()))));
@@ -201,7 +206,7 @@ public class ViewMatch extends javax.swing.JFrame {
      * @param evt 
      */
     private void updatebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updatebtnActionPerformed
-        if(pointsHometxt.getText().equals("") || pointsGuesttxt.getText().equals("")){
+        if(pointsHometxt.getText().equals("") || pointsGuesttxt.getText().equals("") || pointsHometxt.getText().equals("-") || pointsGuesttxt.getText().equals("-")){
             System.out.println("Uno dei campi è vuoto");
             JOptionPane.showMessageDialog(null, "Uno dei campi è vuoto");
         } else {
@@ -212,6 +217,24 @@ public class ViewMatch extends javax.swing.JFrame {
                 System.out.println("Il match non è stato modificato");
                 JOptionPane.showMessageDialog(null, "Il match non è stato modificato");
             } else {
+                // Leggo i numeri inseriti e verifico che siano sensati
+                int hp = -1;
+                int gp = -1;
+                try {
+                    hp = Integer.parseInt(pointsHometxt.getText());
+                    gp = Integer.parseInt(pointsGuesttxt.getText());
+                } catch (NumberFormatException e) {
+                    System.out.println("I punteggi inseriti non sono numeri validi");
+                    JOptionPane.showMessageDialog(null, "I punteggi inseriti non sono numeri validi");
+                    return ;
+                }
+                
+                if(hp < 0 || gp < 0){
+                    System.out.println("Punteggi negativi non sono validi");
+                    JOptionPane.showMessageDialog(null, "Punteggi negativi non sono validi");
+                    return ;
+                }
+                
                 //controlliamo che i punti siamo stati modificati correttamente
                 switch (sport) {
                     case "Soccer":{
@@ -221,9 +244,9 @@ public class ViewMatch extends javax.swing.JFrame {
                          * nello sport. In questo caso, nello sport si possono
                          * assegnare tutti i punti che uno vuole e anche pareggiare.
                          */
+                        match.setGuestPoints(gp);
+                        match.setHomePoints(hp);
                         match.setPlayed(true);
-                        match.setGuestPoints(Integer.parseInt(pointsGuesttxt.getText()));
-                        match.setHomePoints(Integer.parseInt(pointsHometxt.getText()));
                         System.out.println("Punteggio del match modificato");
                         JOptionPane.showMessageDialog(null, "Punteggio del match modificato");
 
@@ -238,13 +261,13 @@ public class ViewMatch extends javax.swing.JFrame {
                          * pareggio, controllo il caso in cui si voglia azzerare
                          * il punteggio.
                          */
-                        if(Integer.parseInt(pointsGuesttxt.getText()) ==  Integer.parseInt(pointsHometxt.getText())){
+                        if(gp ==  hp){
                             System.out.println("Nel basket non è possibile pareggiare");
                             JOptionPane.showMessageDialog(null, "Nel basket non è possibile pareggiare");
                         } else {
+                            match.setGuestPoints(gp);
+                            match.setHomePoints(hp);
                             match.setPlayed(true);
-                            match.setGuestPoints(Integer.parseInt(pointsGuesttxt.getText()));
-                            match.setHomePoints(Integer.parseInt(pointsHometxt.getText()));
                             System.out.println("Punteggio del match modificato");
                             JOptionPane.showMessageDialog(null, "Punteggio del match modificato");
                         }
@@ -257,21 +280,21 @@ public class ViewMatch extends javax.swing.JFrame {
                          * anche nella pallavolo non si può pareggiare, quindi 
                          * dovremo controllare anche questa possibilità.
                          */
-                        if(Integer.parseInt(pointsGuesttxt.getText()) ==  Integer.parseInt(pointsHometxt.getText())){
+                        if(gp ==  hp){
                             System.out.println("Nella pallavolo non è possibile pareggiare");
                             JOptionPane.showMessageDialog(null, "Nella pallavolo non è possibile pareggiare");
                         } else {
-                            if(Integer.parseInt(pointsGuesttxt.getText()) == 3 && Integer.parseInt(pointsHometxt.getText()) < 3 && Integer.parseInt(pointsHometxt.getText()) > 0){
+                            if(gp == 3 && hp < 3 && hp >= 0){
+                                match.setGuestPoints(gp);
+                                match.setHomePoints(hp);
                                 match.setPlayed(true);
-                                match.setGuestPoints(Integer.parseInt(pointsGuesttxt.getText()));
-                                match.setHomePoints(Integer.parseInt(pointsHometxt.getText()));
                                 System.out.println("Punteggio del match modificato");
                                 JOptionPane.showMessageDialog(null, "Punteggio del match modificato");
                             } 
-                            if(Integer.parseInt(pointsHometxt.getText()) == 3 && Integer.parseInt(pointsGuesttxt.getText()) < 3 && Integer.parseInt(pointsGuesttxt.getText()) > 0){
+                            if(hp == 3 && gp < 3 && gp >= 0){
+                                match.setGuestPoints(gp);
+                                match.setHomePoints(hp);
                                 match.setPlayed(true);
-                                match.setGuestPoints(Integer.parseInt(pointsGuesttxt.getText()));
-                                match.setHomePoints(Integer.parseInt(pointsHometxt.getText()));
                                 System.out.println("Punteggio del match modificato");
                                 JOptionPane.showMessageDialog(null, "Punteggio del match modificato");
                             } 

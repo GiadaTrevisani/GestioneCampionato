@@ -13,15 +13,15 @@ import model.Ranking;
  * @author giadatrevisani
  */
 public class InsertYear extends javax.swing.JFrame {
-    private ViewCalendar father;
+    private final ViewCalendar father;
     private final Ranking rank;
     
     public InsertYear(Ranking rank, String sport, ViewCalendar father) {
         this.father = father;
         this.rank = rank;
-        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.setTitle(sport);
         initComponents();
+        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
 
     /**

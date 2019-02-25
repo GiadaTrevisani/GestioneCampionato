@@ -41,28 +41,28 @@ public class MainFrame extends JFrame{
     
     private void createGUI(){
        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-       this.setMinimumSize(new Dimension(600, 400));;
+       this.setMinimumSize(new Dimension(600, 400));
        this.setSize(800, 600);
        soccerbtn.setPreferredSize(new Dimension(150, 150));
        volleybtn.setPreferredSize(new Dimension(150, 150));
        basketbtn.setPreferredSize(new Dimension(150, 150));
        
        soccerbtn.addActionListener((ActionEvent e) -> {
-           Select select = new Select("calcio", whichsports);
+           Select select = new Select("Soccer", whichsports);
            whichsports.setVisible(false);
            select.setVisible(true);
            this.add(select, SwingConstants.CENTER);
        });
        
        volleybtn.addActionListener((ActionEvent e) -> {
-           Select select = new Select("volley", whichsports);
+           Select select = new Select("Volley", whichsports);
            whichsports.setVisible(false);
            select.setVisible(true);
            this.add(select, SwingConstants.CENTER);
        });
        
        basketbtn.addActionListener((ActionEvent e) -> {
-           Select select = new Select("basket", whichsports);
+           Select select = new Select("Basket", whichsports);
            whichsports.setVisible(false);
            select.setVisible(true);
            this.add(select, SwingConstants.CENTER);
