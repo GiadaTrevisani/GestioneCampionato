@@ -91,6 +91,7 @@ public class InsertYear extends javax.swing.JFrame {
             rank.getCalendar().setYear(Integer.parseInt(yeartxt.getText()));
             father.insertYearlbl.setText(yeartxt.getText());
         }
+        
     }//GEN-LAST:event_yearbtnActionPerformed
 
 

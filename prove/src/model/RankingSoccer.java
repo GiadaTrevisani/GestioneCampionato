@@ -87,7 +87,7 @@ public class RankingSoccer extends Ranking{
      * @return intero con il numero dei punti totalizzati dalla squadra.
      */
     @Override
-    public int getpointsForTeam(String TeamName){
+    public int getPointsForTeam(String TeamName){
         ArrayList<Match> games = this.calendar.getGames();
          int totalePunti = 0;
         for (int i = 0; i < games.size(); i++) {
@@ -162,7 +162,7 @@ public class RankingSoccer extends Ranking{
      * @return intero con il numero delle partite pareggiate della squadra.
      */
     @Override
-   public int getPareggiateForSqadra(String TeamName){
+   public int getPareForTeam(String TeamName){
        ArrayList<Match> games = this.calendar.getGames();
        int partitePareggiate = 0;
        for (int i = 0; i < games.size(); i++) {

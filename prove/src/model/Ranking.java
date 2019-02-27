@@ -265,12 +265,12 @@ public abstract class Ranking {
      * @param teamName nome della squadra.
      * @return intero con il numero dei punti totalizzati dalla squadra.
      */
-    public abstract int getpointsForTeam(String teamName);
+    public abstract int getPointsForTeam(String teamName);
     
     /**
      * Metodo per il calcolo delle partite pareggiate dalla squadra passata come parametro.
      * @param TeamName nome della squadra.
      * @return intero con il numero delle partite pareggiate della squadra.
      */
-    public abstract int getPareggiateForSqadra(String TeamName);
+    public abstract int getPareForTeam(String TeamName);
 }

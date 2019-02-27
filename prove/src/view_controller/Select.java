@@ -93,6 +93,21 @@ public class Select extends JPanel{
             }
         });
         
+        calendarbtn.addActionListener((ActionEvent e) -> {
+            if(opencalendar == false){
+                opencalendar = true;
+                ViewCalendar calendar;
+                calendar = new ViewCalendar(rank, sport);
+                calendar.setVisible(true);
+                calendar.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                        opencalendar = false;
+                    }
+                });
+            }
+        });
+        
         rankingbtn.addActionListener((ActionEvent e) -> {
             if(openranking == false){
                 openranking = true;
@@ -108,20 +123,7 @@ public class Select extends JPanel{
             }
         });
         
-        calendarbtn.addActionListener((ActionEvent e) -> {
-            if(opencalendar == false){
-                opencalendar = true;
-                ViewCalendar calendar;
-                calendar = new ViewCalendar(rank, sport);
-                calendar.setVisible(true);
-                calendar.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-                        opencalendar = false;
-                    }
-                });
-            }
-        });
+        
 
         this.setLayout(new GridBagLayout());
         previus.add(prevpage, BorderLayout.PAGE_START);

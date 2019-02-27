@@ -87,7 +87,7 @@ public class RankingBasket extends Ranking{
      * @return intero con il numero delle partite pareggiate della squadra.
      */
     @Override
-    public int getPareggiateForSqadra(String TeamName){
+    public int getPareForTeam(String TeamName){
         return 0;
     }
 
@@ -97,7 +97,7 @@ public class RankingBasket extends Ranking{
      * @return intero con il numero totale dei punti della squdra.
      */
     @Override
-    public int getpointsForTeam(String teamName){
+    public int getPointsForTeam(String teamName){
         ArrayList<Match> games = this.calendar.getGames();
         int totalePunti = 0;
         for (int i = 0; i < games.size(); i++) {

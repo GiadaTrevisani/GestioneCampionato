@@ -39,7 +39,6 @@ public class ViewCalendar extends javax.swing.JFrame {
         
         this.setTitle(sport);
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        //rank.getCalendar().setYear(2018);
         printTable();
     }
     
@@ -229,7 +228,7 @@ public class ViewCalendar extends javax.swing.JFrame {
         int j = 0;
         model.setRowCount(0);
         for (int i = 0; i < rank.getCalendar().getGames().size(); i++) {
-            if(rank.getCalendar().getGames().get(i).getHomeTeam().getName().equals(searchtxt.getText()) || rank.getCalendar().getGames().get(i).getGuestTeam().getName().equals(searchtxt.getText()) || searchtxt.equals(rank.getCalendar().getYear())){
+            if(rank.getCalendar().getGames().get(i).getHomeTeam().getName().equals(searchtxt.getText()) || rank.getCalendar().getGames().get(i).getGuestTeam().getName().equals(searchtxt.getText()) || searchtxt.getText().equals(rank.getCalendar().getGames().get(i).getDay())){
                 if(rank.getCalendar().getGames().get(i).getPlayed() == false){
                     model.insertRow(j, new Object[]{rank.getCalendar().getGames().get(i).getDay(), rank.getCalendar().getGames().get(i).getHomeTeam().getCity(), rank.getCalendar().getGames().get(i).getHomeTeam().getName(), rank.getCalendar().getGames().get(i).getGuestTeam().getName(), "-", "-", rank.getCalendar().getGames().get(i).getPlayed()});
                 } else {
@@ -238,6 +237,7 @@ public class ViewCalendar extends javax.swing.JFrame {
                 matchesModel.add(rank.getCalendar().getGames().get(i));
                 j++;
             }
+            
         }
     }//GEN-LAST:event_serachbtnActionPerformed
 
