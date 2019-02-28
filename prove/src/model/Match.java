@@ -217,4 +217,8 @@ public class Match{
         return nm;
     }
     
+    public static Match swapHomeGuest(Match m, int n_matches){
+        return new Match(m.getGuestTeam(), m.getHomeTeam(), m.getDay() + n_matches);
+    }
+    
 }

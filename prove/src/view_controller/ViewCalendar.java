@@ -40,6 +40,8 @@ public class ViewCalendar extends javax.swing.JFrame {
         this.setTitle(sport);
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         printTable();
+        
+        viewCalendar.getTableHeader().setEnabled(false);
     }
     
     public void printTable(){

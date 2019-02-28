@@ -274,6 +274,12 @@ public class Calendar {
 
         // rimuovi se presente il team jolly
         teams.remove(jolly);
+        
+        //Crea il ritorno, fino a qui l'algoritmo ha creato l'andata
+        int num_games_andata = games.size();
+        for (int i = 0; i < num_games_andata; i++) {
+            games.add(Match.swapHomeGuest(games.get(i), days));
+        }
     }
 
     private Team[] shiftLeft(Team[] data, Team add) {

@@ -35,8 +35,21 @@ public final class ManagementTeams extends javax.swing.JFrame {
         this.sport = sport;
         this.rank = rank;
         teamsModel = new ArrayList<Team>();
+        
+//        this.rank.addTeam("mamma", "soliera", "cacca");
+//        this.rank.addTeam("papà", "gallipoli", "cacchina");
+//        this.rank.addTeam("io", "firenze", "caccola");
+//        this.rank.addTeam("vale", "roma", "cacchetta");
+//        this.rank.addTeam("luca", "bologna", "caccona");
+//        this.rank.addTeam("nonna", "eggio", "caccarella");
+//        this.rank.addTeam("nonno", "carpi", "caccuccia");
+        
+       
         printTable();
         this.creaGui();
+        
+        viewTeams.getTableHeader().setEnabled(false);
+
     }
     
     private void creaGui() {
