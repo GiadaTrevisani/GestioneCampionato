@@ -7,10 +7,7 @@ package view_controller;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-import javax.swing.GroupLayout;
-import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
-import model.Calendar;
 import model.Ranking;
 import model.Team;
 

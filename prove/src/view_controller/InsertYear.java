@@ -9,7 +9,10 @@ import javax.swing.JOptionPane;
 import model.Ranking;
 
 /**
- *
+ * Questa classe permette di inserire l'anno in cui si vuole creare il campionato.
+ * Inizialmente quando dalla classe Select viene cliccato il bottone "Calendario"
+ * si apre in automatico questo frame che chiede di inserire l'anno da assegnare 
+ * a quel campionato.
  * @author giadatrevisani
  */
 public class InsertYear extends javax.swing.JFrame {

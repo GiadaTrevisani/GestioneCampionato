@@ -6,8 +6,12 @@
 package view_controller;
 
 import java.awt.Dimension;
+import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -15,6 +19,7 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import model.Ranking;
 import model.Team;
+import prove.Prove;
 
 /**
  * Questo JFrame viene visualizzato quando l'utente clicca sul bottone "Nuovo" o
@@ -30,7 +35,7 @@ public class NewTeam extends javax.swing.JFrame {
     private String imgPath;
     private final Ranking rank;
     private final Team team;
-    private final String filePath = "img_logo/";
+    private String filePath;
     private final ManagementTeams father;
     /**
      * Il cotruttore dlla calsse NewTeam prende in ingresso il team che si vuole
@@ -51,8 +56,17 @@ public class NewTeam extends javax.swing.JFrame {
         this.father = father;
         initComponents();
         
-        printTeam();
+        try {
+            File p = new File(Prove.class.getProtectionDomain().getCodeSource().getLocation()
+                    .toURI());
+            String jarPath = p.getAbsolutePath();
+            filePath = jarPath.replace(p.getName(), "") + "img_logo/";
+        } catch (URISyntaxException ex) {
+            filePath =  "img_logo/";
+        }
+                
         this.creaGui();
+        printTeam();
     }
     
     private void creaGui(){
@@ -62,14 +76,22 @@ public class NewTeam extends javax.swing.JFrame {
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
     
+    /**
+     * Questo metodo mi permette di visualizzare la squadra che dovrò modificare 
+     * attraverso la stampa del nome, città e logo della squadra che sarà passata
+     * per viewTeam al momento in cui viene cliccato il bottone "visualizza
+     * Modifica". Invece se l'utente ha cliccato sul bottone "Nuova" allora le
+     * textfield saranno vuote e sarà possibile creare una nuova.
+     */
     private void printTeam(){
         txtName.setText(team.getName());
         txtCity.setText(team.getCity());
         try{
             if(team.getLogo().equals("")){
-                 lblimg.setIcon(new ImageIcon(ImageIO.read(new File(filePath + imgPath))));   
+                imgPath = filePath + imgPath;
+                lblimg.setIcon(new ImageIcon(ImageIO.read(new File(imgPath)).getScaledInstance(200, 200, Image.SCALE_SMOOTH)));   
             } else {
-                 lblimg.setIcon(new ImageIcon(ImageIO.read(new File(filePath + team.getLogo()))));
+                 lblimg.setIcon(new ImageIcon(ImageIO.read(new File(team.getLogo())).getScaledInstance(200, 200, Image.SCALE_SMOOTH)));
             }
         } catch (IOException ex){
             System.out.println("Immagine non esistente");
@@ -240,20 +262,34 @@ public class NewTeam extends javax.swing.JFrame {
         
         //aggiorno la tabella nella finestra padre (vista delle squadre)
         father.printTable();
+        father.setOpenNew(false);
+        father.setopenViewUpdate(false);
+        //chiudo la finestra, tanto la squadra è stata eliminata, sia che questa fosse nuova o da modificare
+        this.dispose();
     }//GEN-LAST:event_btnNewActionPerformed
 
+    /**
+     * Questo metodo permette di cercare il logo della squadra attraverso un
+     * JFileChooser, dove sarà possibile cercare il logo della squadra desiderata
+     * tra i file che si possiedono.
+     * @param evt 
+     */
     private void btnFindLogoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFindLogoActionPerformed
-        JFileChooser fc = new JFileChooser();
+        JFileChooser fc = new JFileChooser(new File(filePath));
         File file = null;
         fc.setFileFilter(new FileNameExtensionFilter("Only image extension filter", "jpg", "jpeg", "png"));
         int res = fc.showOpenDialog(this);
-        if(res == JFileChooser.APPROVE_OPTION)
+        if(res == JFileChooser.APPROVE_OPTION){
             file = fc.getSelectedFile();
+        } else {
+            return ;
+        }
         
         if(file!=null){
             imgPath = file.toString();
             try{
-                lblimg.setIcon(new ImageIcon(ImageIO.read(new File(imgPath))));
+                lblimg.setIcon(new ImageIcon(ImageIO.read(new File(imgPath)).getScaledInstance(200, 200,
+        Image.SCALE_SMOOTH)));
             } catch (IOException ex){
                 System.out.println("Immagine non esistente");
                 JOptionPane.showMessageDialog(null, "Immagine non esistente");
@@ -264,6 +300,13 @@ public class NewTeam extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnFindLogoActionPerformed
 
+    /**
+     * Questo metodo viene chiamato nel momento in cui l'utente clicca sul bottone
+     * "Elimina" usato per eliminare la squadra che l'utente ha selezionato nella
+     * classe ViewTeam. Finito di eliminare la squdra la finestra viene chiusa 
+     * automaticamente.
+     * @param evt 
+     */
     private void deletebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deletebtnActionPerformed
         //Elimino il team con il metodo della classe ranking
         rank.deleteTeam(team);

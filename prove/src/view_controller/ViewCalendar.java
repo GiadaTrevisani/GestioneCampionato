@@ -50,6 +50,13 @@ public class ViewCalendar extends javax.swing.JFrame {
     private ArrayList<Match> matchesModel;
     private final JFileChooser fc;
     
+    /**
+     * Costruttore che prende in ingresso un oggetto di tipo Ranking da cui 
+     * attinge ai dati per riempire la tabella e modificare i dati di calendario,
+     * e una stringa che definisce lo sport.
+     * @param rank oggetto di tipo Ranking.
+     * @param sport stringa che definisce lo sport.
+     */
     public ViewCalendar(Ranking rank, String sport){
         this.fc = new JFileChooser(new File("./"));
         this.sport = sport;
@@ -69,6 +76,10 @@ public class ViewCalendar extends javax.swing.JFrame {
         printTable();
     }
     
+    /**
+     * Metodo per impostare il colore di background diverso per le partite del 
+     * girone di ritorno.
+     */
     public void setTableBG(){
         int returnStart = rank.getCalendar().getNumDays()/2+1; // Calcolo il valore del primo giorno del ritorno
         
@@ -84,6 +95,10 @@ public class ViewCalendar extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * Metodo che stampa i valori inseriti nell'oggetto calendario dentro 
+     * la JTable viewCalendar.
+     */
     public void printTable(){
         setTableBG();
         
@@ -121,6 +136,7 @@ public class ViewCalendar extends javax.swing.JFrame {
         createCalendar = new javax.swing.JButton();
         yearlbl = new javax.swing.JLabel();
         insertYearlbl = new javax.swing.JLabel();
+        jProgressBar1 = new javax.swing.JProgressBar();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -184,7 +200,7 @@ public class ViewCalendar extends javax.swing.JFrame {
             }
         });
 
-        printbtn.setText("Stampa");
+        printbtn.setText("<html><p style = \"text-align: center\">Stampa<br></p></html>");
         printbtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 printbtnActionPerformed(evt);
@@ -200,6 +216,8 @@ public class ViewCalendar extends javax.swing.JFrame {
 
         yearlbl.setText("Anno: ");
 
+        jProgressBar1.setStringPainted(true);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -211,28 +229,31 @@ public class ViewCalendar extends javax.swing.JFrame {
                         .addComponent(yearlbl, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(insertYearlbl, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(searchtxt, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(finebtn, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(serachbtn)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(viewbtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(takeCalendarbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(27, 27, 27)
-                        .addComponent(saveCalendarbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
-                        .addComponent(deletebtn, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(27, 27, 27)
-                        .addComponent(printbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
-                        .addComponent(createCalendar, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
-                        .addGap(8, 8, 8)))
-                .addContainerGap())
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(searchtxt, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(finebtn, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(serachbtn)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(viewbtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                                    .addComponent(takeCalendarbtn, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE))
+                                .addGap(18, 18, 18)
+                                .addComponent(saveCalendarbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(deletebtn, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(createCalendar, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE)
+                                .addGap(18, 18, 18)
+                                .addComponent(printbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(10, 10, 10))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -244,32 +265,43 @@ public class ViewCalendar extends javax.swing.JFrame {
                         .addComponent(finebtn)
                         .addComponent(serachbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(viewbtn))
-                .addGap(24, 24, 24)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(yearlbl, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
-                    .addComponent(insertYearlbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(yearlbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(insertYearlbl, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(10, 10, 10)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(printbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(takeCalendarbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(saveCalendarbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(deletebtn)
-                    .addComponent(createCalendar)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(takeCalendarbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(saveCalendarbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(deletebtn, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(createCalendar, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(printbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Metodo chiamato quando il bottone "X" della finestra viene premuto, per 
+     * resettare il campo ricerca e mostrare di nuovo tutti i math.
+     * @param evt evento java.
+     */
     private void finebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_finebtnActionPerformed
         searchtxt.setText("");
         printTable();
     }//GEN-LAST:event_finebtnActionPerformed
 
+    /**
+     * Metodo chiamato quando il bottone "Cerca" viene cliccato e che scorre 
+     * tutti i match presenti e mostra nella tabella solo quelli il cui nome 
+     * o la giornata corrispondono al campo ricerca.
+     * @param evt evento java.
+     */
     private void serachbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_serachbtnActionPerformed
         setTableBG();
         int j = 0;
@@ -294,6 +326,12 @@ public class ViewCalendar extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_serachbtnActionPerformed
 
+    /**
+     * Metodo chiamato quando si clicca il bottone "Carica Campionato" che delega
+     * alla classe Calendario il caricamento del salvataggio utilizzndo la
+     * serializzazione.
+     * @param evt evento java.
+     */
     private void takeCalendarbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_takeCalendarbtnActionPerformed
         try {
             int returnVal = fc.showOpenDialog(null);
@@ -304,7 +342,7 @@ public class ViewCalendar extends javax.swing.JFrame {
                 return ;
             }
             
-            rank.getCalendar().takeFromFile(file.getAbsolutePath(), rank.getTeams());
+            rank.getCalendar().takeFromFile(file.getAbsolutePath(), rank.getTeams(), (i) -> jProgressBar1.setValue(i));
             printTable();
             insertYearlbl.setText(String.valueOf(rank.getCalendar().getYear()));
             JOptionPane.showMessageDialog(null, "Calendario caricato con successo");
@@ -315,6 +353,12 @@ public class ViewCalendar extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_takeCalendarbtnActionPerformed
 
+    /**
+     * Metodo chiamato quando si clicca il bottone "Salva Campionato" che delega
+     * alla classe Calendario il salvataggio delle informazioni utilizzando la
+     * serializzazione.
+     * @param evt evento java.
+     */
     private void saveCalendarbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveCalendarbtnActionPerformed
         try {
             int returnVal = fc.showSaveDialog(null);
@@ -335,11 +379,22 @@ public class ViewCalendar extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_saveCalendarbtnActionPerformed
 
+    /**
+     * Metodo chiamato quando si clicca sul bottone "Elimina" che delega alla 
+     * classe Calendario l'eliminazione di tutti i risultati di tutti i match.
+     * @param evt evento java.
+     */
     private void deletebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deletebtnActionPerformed
         rank.getCalendar().deleteResults();
         printTable();
     }//GEN-LAST:event_deletebtnActionPerformed
 
+    /**
+     * Metodo chiamato quando si clicca sul bottone "Visualizza Modifica" che 
+     * apre una nuova finestra dove è permesso all'utente di visualizzare o
+     * modificare il punteggio del match selezionato nella tabella.
+     * @param evt evento java.
+     */
     private void viewbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewbtnActionPerformed
         if(openViewUpdate == false){ 
             openViewUpdate = true;
@@ -364,6 +419,12 @@ public class ViewCalendar extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_viewbtnActionPerformed
 
+    /**
+     * Metodo chiamato quando si clicca sul bottone "Crea Calendario" che delega
+     * alla classe Calendario la creazione di un nuovo calendario attraverso
+     * la funzione AlgoritmoDiBerger.
+     * @param evt evento java.
+     */
     private void createCalendarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createCalendarActionPerformed
         if(openYear == false){ 
             openYear = true;
@@ -383,6 +444,11 @@ public class ViewCalendar extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_createCalendarActionPerformed
 
+    /**
+     * Moetodo chiamato quando viene cliccato il bottone "Stampa" utilizzato
+     * per stampare su stampante il calendario delle partite.
+     * @param evt evento java.
+     */
     private void printbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printbtnActionPerformed
         try{
             this.viewCalendar.print(JTable.PrintMode.FIT_WIDTH);
@@ -398,6 +464,7 @@ public class ViewCalendar extends javax.swing.JFrame {
     private javax.swing.JButton deletebtn;
     private javax.swing.JButton finebtn;
     public javax.swing.JLabel insertYearlbl;
+    private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton printbtn;
     private javax.swing.JButton saveCalendarbtn;
@@ -410,7 +477,10 @@ public class ViewCalendar extends javax.swing.JFrame {
 
     // Table renderers--------------------------------------------------------
     
-    // Inner class che mi serve per creare un renderer apposito che mostri una checkbox in base al valore booleano della cella
+    /**
+     * Inner class che mi serve per creare un renderer apposito che mostri una 
+     * checkbox in base al valore booleano della cella.
+     */
     public class CheckBoxRenderer extends JCheckBox implements TableCellRenderer {
         private final int returnStart;
         CheckBoxRenderer(int returnStart) {
@@ -438,6 +508,14 @@ public class ViewCalendar extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * Metodo che ritorna un DefaultTableCellRenderer per cambiare il colore di 
+     * background alla tabella per righe che mostrano le partite di ritorno in 
+     * base a un valore intero chiamato returnStart.
+     * @param returnStart valore intero che decide da quale giornata in poi è 
+     * il ritorno.
+     * @return un oggetto DefaultTableCellRenderer.
+     */
     private DefaultTableCellRenderer getCellRenderer(int returnStart){
         return new DefaultTableCellRenderer()
         {

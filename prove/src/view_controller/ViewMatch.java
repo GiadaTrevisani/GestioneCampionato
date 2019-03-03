@@ -6,6 +6,7 @@
 package view_controller;
 
 import java.awt.Dimension;
+import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
@@ -28,7 +29,6 @@ import model.Match;
  */
 public class ViewMatch extends javax.swing.JFrame {
     private final String sport;
-    private final String filePath = "img_logo/";
     private final String imgPath;
     private final Match match;
     private final ViewCalendar father;
@@ -65,8 +65,8 @@ public class ViewMatch extends javax.swing.JFrame {
         }
         
         try{
-            logoGuestlbl.setIcon(new ImageIcon(ImageIO.read(new File(filePath + match.getGuestTeam().getLogo()))));
-            logoHomelbl.setIcon(new ImageIcon(ImageIO.read(new File(filePath + match.getHomeTeam().getLogo()))));
+            logoGuestlbl.setIcon(new ImageIcon(ImageIO.read(new File(match.getGuestTeam().getLogo())).getScaledInstance(200, 200, Image.SCALE_SMOOTH)));
+            logoHomelbl.setIcon(new ImageIcon(ImageIO.read(new File(match.getHomeTeam().getLogo())).getScaledInstance(200, 200, Image.SCALE_SMOOTH)));
             
         } catch (IOException ex){
             System.out.println("immagine non esistente");

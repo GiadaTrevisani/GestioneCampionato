@@ -65,7 +65,7 @@ public final class ManagementTeams extends javax.swing.JFrame {
         teamsModel = new ArrayList<Team>();
         model.setRowCount(0);
         for (int i = 0; i < rank.getTeams().size(); i++) {
-            model.insertRow(i, new Object[]{rank.getTeams().get(i).getName(), rank.getTeams().get(i).getCity(), rank.getTeams().get(i).getLogo()} );
+            model.insertRow(i, new Object[]{rank.getTeams().get(i).getName(), rank.getTeams().get(i).getCity(), getImageName(rank.getTeams().get(i).getLogo())} );
             teamsModel.add(rank.getTeams().get(i));
         }
     }
@@ -311,7 +311,7 @@ public final class ManagementTeams extends javax.swing.JFrame {
         teamsModel = new ArrayList<Team>();
         for (int i = 0; i < rank.getTeams().size(); i++) {
             if(rank.getTeams().get(i).getName().equals(searchTeams.getText()) || rank.getTeams().get(i).getCity().equals(searchTeams.getText())){ 
-                model.insertRow(j, new Object[]{rank.getTeams().get(i).getName(), rank.getTeams().get(i).getCity(), rank.getTeams().get(i).getLogo()} );
+                model.insertRow(j, new Object[]{rank.getTeams().get(i).getName(), rank.getTeams().get(i).getCity(), getImageName(rank.getTeams().get(i).getLogo())} );
                 teamsModel.add(rank.getTeams().get(i));
                 j++;
             }
@@ -359,6 +359,14 @@ public final class ManagementTeams extends javax.swing.JFrame {
 
     public void setopenViewUpdate(boolean val){
         openViewUpdate = val;
+    }
+    
+    public void setOpenNew(boolean val){
+        openNewTeam = val;
+    }
+    
+    private String getImageName(String path){
+        return new File(path).getName();
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

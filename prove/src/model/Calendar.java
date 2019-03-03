@@ -10,6 +10,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.function.Consumer;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONArray;
@@ -114,23 +115,34 @@ public class Calendar {
      * @throws java.io.FileNotFoundException
      * @throws org.json.simple.parser.ParseException
      */
-    public void takeFromFile(String filePath, ArrayList<Team> teams) throws FileNotFoundException, IOException, ParseException, Exception {
-       games = new ArrayList<Match>();
-       Object obj = new JSONParser().parse(new FileReader(filePath));
-       JSONObject jo = (JSONObject) obj;
-       
-       this.year = new Long((long) jo.get("Year")).intValue();
-       JSONArray ja = (JSONArray) jo.get("Games");
-       
-       try{
-        for (int i = 0; i < ja.size(); i++) {
-            games.add(Match.fromJSONObject((JSONObject) ja.get(i), teams));
+    public void takeFromFile(String filePath, ArrayList<Team> teams, Consumer<Integer> callback) throws FileNotFoundException, IOException, ParseException, Exception {
+        games = new ArrayList<Match>();
+        Object obj = new JSONParser().parse(new FileReader(filePath));
+        JSONObject jo = (JSONObject) obj;
+
+        this.year = new Long((long) jo.get("Year")).intValue();
+        JSONArray ja = (JSONArray) jo.get("Games");
+        float total = ja.size();
+        try{
+            for (int i = 0; i < ja.size(); i++) {
+                int percent = (int) ((float)i/total * 100.0);
+                if(callback != null){
+                    callback.accept(percent);
+                }
+                games.add(Match.fromJSONObject((JSONObject) ja.get(i), teams));
+            }
+
+            if(callback != null){
+                callback.accept(100);
+            }
+        } catch(Exception e) {
+            if(callback != null){
+                callback.accept(0);
+            }
+            System.out.println("Il calendario caricato non corrisponde ai team presenti");
+            //JOptionPane.showMessageDialog(null, "Il calendario caricato non corrisponde ai team presenti");
+            throw new Exception("Il calendario caricato non corrisponde ai team presenti");
         }
-       } catch(Exception e) {
-           System.out.println("Il calendario caricato non corrisponde ai team presenti");
-           //JOptionPane.showMessageDialog(null, "Il calendario caricato non corrisponde ai team presenti");
-           throw new Exception("Il calendario caricato non corrisponde ai team presenti");
-       }
     }
     
     
