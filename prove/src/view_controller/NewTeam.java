@@ -17,7 +17,12 @@ import model.Ranking;
 import model.Team;
 
 /**
- *
+ * Questo JFrame viene visualizzato quando l'utente clicca sul bottone "Nuovo" o
+ * "Visualizza Modifica" dalla classe ManagementTeam e permette di aggiungere, 
+ * modificare o eliminare una squadra inserendo nei campi nome o città il nuovo
+ * nome o città della squadra, si ha anche la possibilità di cambiare logo.
+ * Se in una nuova squadra non si inserisce il logo ne viene assegnato uno di 
+ * default (Soliera.jpg).
  * @author giadatrevisani
  */
 public class NewTeam extends javax.swing.JFrame {
@@ -30,8 +35,9 @@ public class NewTeam extends javax.swing.JFrame {
     /**
      * Il cotruttore dlla calsse NewTeam prende in ingresso il team che si vuole
      * aggiungere o aggiornare e l'oggetto di tipo Ranking dove andremo a salvare
-     * le squadre da aggiungere o da aggiornare attraverso il bottone btnNew.Ci sarà anche un bottone per cercare il logo della squadra tra quelli
- presenti nella directory img_logo.
+     * le squadre da aggiungere o da aggiornare attraverso il bottone btnNew.
+     * Ci sarà anche un bottone per cercare il logo della squadra tra quelli
+     * presenti nella directory img_logo.
      * @param team
      * @param rank
      * @param father

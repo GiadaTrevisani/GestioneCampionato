@@ -101,6 +101,5 @@ public class Team {
         Team nt = new Team(teamName, teamCity, teamLogo);
         return nt;
     }
-    
 }
 

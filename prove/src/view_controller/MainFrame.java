@@ -13,15 +13,12 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-/**
- *
- * @author giadatrevisani
- */
 
 /**
  * Generazione del mainframe con interfaccia grafica.
- * Nel peimo frame si dovrà scegliere su quale sport si 
+ * Nel primo frame si dovrà scegliere su quale sport si 
  * vuole intervenire.
+ * @author giadatrevisani
  */
 public class MainFrame extends JFrame{
 

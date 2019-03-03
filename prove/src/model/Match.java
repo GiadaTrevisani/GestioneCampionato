@@ -147,6 +147,10 @@ public class Match{
         this.guestResult = guestResult;
     }
     
+    /**
+     * Metodo che cancella i rsultato di tutte le partite dell'arraymatch contenuto 
+     * nella classe calendar.
+     */
     public void resetResults(){
         this.homeResult = -1;
         this.guestResult = -1;
@@ -217,8 +221,8 @@ public class Match{
         return nm;
     }
     
-    public static Match swapHomeGuest(Match m, int n_matches){
-        return new Match(m.getGuestTeam(), m.getHomeTeam(), m.getDay() + n_matches);
+    public static Match swapHomeGuest(Match m, int n_days){
+        return new Match(m.getGuestTeam(), m.getHomeTeam(), m.getDay() + n_days);
     }
     
 }

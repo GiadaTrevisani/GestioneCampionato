@@ -106,7 +106,7 @@ public class RankingVolley extends Ranking{
                     * questione è quella che cerchiamo, guardiamo se ha vinto e
                     * calcoliamo i punti da assegnare.
                     */
-                    if(games.get(i).getPointsGuest() > games.get(i).getPointsHome() ){
+                    if(games.get(i).getPointsGuest() < games.get(i).getPointsHome() ){
                         /**
                          * se la condizione è vera, la squadra ha perso il match,
                          * quindi aggiungiamo una partita persa al totale delle 

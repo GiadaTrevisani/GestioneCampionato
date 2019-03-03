@@ -19,7 +19,10 @@ import model.RankingSoccer;
 import model.RankingVolley;
 
 /**
- *
+ * In questa classe viene creato un JPanel che permette di selezionare 
+ * la scelta su cosa lavorare, come la gestione delle squadre, il 
+ * calendario o visualizzare la classifica.
+ * 
  * @author giadatrevisani
  */
 public class Select extends JPanel{

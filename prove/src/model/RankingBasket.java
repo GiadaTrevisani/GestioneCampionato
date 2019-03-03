@@ -114,17 +114,8 @@ public class RankingBasket extends Ranking{
                          * questione ha vinto il match.
                         */
                             totalePunti = totalePunti + 2;
-                        }
                     }
-                    if(games.get(i).getPointsHome() < games.get(i).getPointsGuest()){
-                        /**
-                         * oppure se i punti sono minori di quelli della squadra
-                         * allora la partita è persa, quindi non aggiungeremo
-                         * nessun punto
-                        */
-                            totalePunti = totalePunti +0;
-                    }
-
+                }
                 if(teamName.equals(games.get(i).getGuestTeam().getName())){
                     /**
                     * se la condizione è vera vuol dire che la squadra in 
@@ -137,15 +128,6 @@ public class RankingBasket extends Ranking{
                          * questione ha vinto il match.
                         */
                             totalePunti = totalePunti + 2;
-
-                    }
-                    if(games.get(i).getPointsGuest() < games.get(i).getPointsHome()){
-                        /**
-                         * oppure se i punti sono minori di quelli della squadra
-                         * allora la partita è persa, quindi non aggiungeremo
-                         * nessun punto
-                        */
-                            totalePunti = totalePunti +0;
                     }
                 }
             }

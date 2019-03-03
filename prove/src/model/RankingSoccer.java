@@ -104,23 +104,16 @@ public class RankingSoccer extends Ranking{
                          * questione ha vinto il match.
                         */
                             totalePunti = totalePunti + 3;
-                        }
-                    } else if(games.get(i).getPointsHome() < games.get(i).getPointsGuest()){
+                    } 
+                    if(games.get(i).getPointsHome() == games.get(i).getPointsGuest()){
                         /**
                          * oppure se i punti sono minori di quelli della squadra
                          * allora la partita è persa, quindi non aggiungeremo
                          * nessun punto
                         */
-                            totalePunti = totalePunti +0;
-                    } else {
-                        /**
-                         * nel caso in cui nessuna delle due altre condizioni sia 
-                         * vera, allora vuol dire che le due squadre hanno 
-                         * pareggiato, si aggiungerà solo 1 punto.
-                        */
-                        totalePunti = totalePunti + 1;                  
+                            totalePunti = totalePunti +1;
                     }
-
+                } 
                 if(TeamName.equals(games.get(i).getGuestTeam().getName())){
                     /**
                     * se la condizione è vera vuol dire che la squadra in 
@@ -134,14 +127,9 @@ public class RankingSoccer extends Ranking{
                         */
                             totalePunti = totalePunti + 3;
 
-                    } else if(games.get(i).getPointsGuest() < games.get(i).getPointsHome()){
-                        /**
-                         * oppure se i punti sono minori di quelli della squadra
-                         * allora la partita è persa, quindi non aggiungeremo
-                         * nessun punto
-                        */
-                            totalePunti = totalePunti +0;
-                    } else {
+                    }
+                    if(games.get(i).getPointsGuest() == games.get(i).getPointsHome()){
+                        
                         /**
                          * nel caso in cui nessuna delle due altre condizioni sia 
                          * vera, allora vuol dire che le due squadre hanno 

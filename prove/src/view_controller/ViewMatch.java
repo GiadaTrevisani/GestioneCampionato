@@ -14,8 +14,16 @@ import javax.swing.JOptionPane;
 import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
 import model.Match;
 
+
 /**
- *
+ * Questo JFrame viene chiamato dalla classe ViewCalendar quando si vuole 
+ * visualizzare una partita o quando si vuole inserire o modificare 
+ * il risutato di una squadra. Nel frame vengono visualizzate i nomi, le 
+ * città e il logo delle due squadre e attraverso le textfield del risultato
+ * è possibile inserire i risultati che hanno ottenuto le due squadre.
+ * È previsto che l'inserimento del punteggio sia conforme alle regole dello 
+ * sport, nel caso in cui si inserisca un risultato non conforme alle norme 
+ * dello sport il match non viene modificato.
  * @author giadatrevisani
  */
 public class ViewMatch extends javax.swing.JFrame {
@@ -57,8 +65,9 @@ public class ViewMatch extends javax.swing.JFrame {
         }
         
         try{
+            logoGuestlbl.setIcon(new ImageIcon(ImageIO.read(new File(filePath + match.getGuestTeam().getLogo()))));
             logoHomelbl.setIcon(new ImageIcon(ImageIO.read(new File(filePath + match.getHomeTeam().getLogo()))));
-            logoHomelbl.setIcon(new ImageIcon(ImageIO.read(new File(filePath + match.getGuestTeam().getLogo()))));
+            
         } catch (IOException ex){
             System.out.println("immagine non esistente");
             JOptionPane.showMessageDialog(null, "immagine non esistente");
@@ -136,13 +145,13 @@ public class ViewMatch extends javax.swing.JFrame {
                             .addComponent(nameHomelbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(logoHomelbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
                         .addGap(20, 20, 20)
                         .addComponent(pointsHometxt, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(144, 144, 144)
+                .addGap(110, 110, 110)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
                         .addComponent(pointsGuesttxt, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())

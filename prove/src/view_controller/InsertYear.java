@@ -16,6 +16,14 @@ public class InsertYear extends javax.swing.JFrame {
     private final ViewCalendar father;
     private final Ranking rank;
     
+    /**
+     * Costruttore che prende in ingresso un oggetto di tipo ranking, una stringa
+     * e un Jframe.
+     * @param rank oggetto di tipo Ranking che useremo per settare l'anno del 
+     * campionato.
+     * @param sport stringa con il nome dello sport.
+     * @param father JFrame padre (ViewCalendar).
+     */
     public InsertYear(Ranking rank, String sport, ViewCalendar father) {
         this.father = father;
         this.rank = rank;

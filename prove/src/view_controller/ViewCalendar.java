@@ -5,30 +5,53 @@
  */
 package view_controller;
 
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.print.PrinterException;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import javax.swing.JCheckBox;
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 import model.Match;
 import model.Ranking;
 import org.json.simple.parser.ParseException;
 
 /**
- *
+ * Questo JFrame permette di visualizzare il campionato nella tabella viewCalendar.
+ * Inizialmente quando si apre il JFrame, verrà chiesto di inserire l'anno in cui 
+ * si svolge il campionato, inserito l'anno viene visualizzata la tabella vuota,
+ * se si vuole creare un campionato si deve cliccare sul bottone "Crea Calendario".
+ * Permette anche di cercare le partite di una squadra e cercare le partite per 
+ * una giornata attraverso il bottone cerca e la textfield dove sarà inserito
+ * il nome di una squadra o il numero della giornata. Inoltre è possibile 
+ * visualizzare una singola giornata selezionando la partita dalla tabella e 
+ * cliccando sul bottone "Modifca Visualizza" dove si potrà modificare il punteggio.
+ * Attraverso i bottoni carica e salva campionato è possibile salvare o caricare 
+ * il campionato stesso su file o caricarlo da file con estensione ".json".
+ * Il bottone "Elimina Risultati" elimina tutti i risultati inseriti fino a quel momento.
+ * In questo Jframe è possibile stampare il campionato attraverso il bottone "Stampa".
  * @author giadatrevisani
  */
 public class ViewCalendar extends javax.swing.JFrame {
+    
     private final String sport;
     private final Ranking rank;
     private final DefaultTableModel model;
     private boolean openViewUpdate;
     private boolean openYear;
     private ArrayList<Match> matchesModel;
+    private final JFileChooser fc;
     
     public ViewCalendar(Ranking rank, String sport){
+        this.fc = new JFileChooser(new File("./"));
         this.sport = sport;
         openViewUpdate = false;
         openYear = false;
@@ -39,12 +62,31 @@ public class ViewCalendar extends javax.swing.JFrame {
         
         this.setTitle(sport);
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        printTable();
         
         viewCalendar.getTableHeader().setEnabled(false);
+        viewCalendar.setDefaultEditor(Object.class, null);
+        
+        printTable();
+    }
+    
+    public void setTableBG(){
+        int returnStart = rank.getCalendar().getNumDays()/2+1; // Calcolo il valore del primo giorno del ritorno
+        
+        int numCols = viewCalendar.getColumnModel().getColumnCount();
+        for (int i = 0; i < numCols; i++) {
+            // Setto un nuovo cell renderer per colorare solo le righe del ritorno
+            // Ho due diversi renderer, perchè nell'ultima colonna voglio le checkbox
+            if(i != numCols-1){
+                viewCalendar.getColumnModel().getColumn(i).setCellRenderer(getCellRenderer(returnStart));
+            } else {
+                viewCalendar.getColumnModel().getColumn(i).setCellRenderer(new CheckBoxRenderer(returnStart));
+            }
+        }
     }
     
     public void printTable(){
+        setTableBG();
+        
         matchesModel = new ArrayList<Match>();
         model.setRowCount(0);
         for(int i = 0; i < rank.getCalendar().getGames().size(); i++){
@@ -56,7 +98,7 @@ public class ViewCalendar extends javax.swing.JFrame {
             matchesModel.add(rank.getCalendar().getGames().get(i));
         }
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -183,12 +225,12 @@ public class ViewCalendar extends javax.swing.JFrame {
                         .addComponent(takeCalendarbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(27, 27, 27)
                         .addComponent(saveCalendarbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
                         .addComponent(deletebtn, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(27, 27, 27)
                         .addComponent(printbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
-                        .addComponent(createCalendar, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
+                        .addComponent(createCalendar, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
                         .addGap(8, 8, 8)))
                 .addContainerGap())
         );
@@ -202,19 +244,21 @@ public class ViewCalendar extends javax.swing.JFrame {
                         .addComponent(finebtn)
                         .addComponent(serachbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(viewbtn))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(yearlbl, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
                     .addComponent(insertYearlbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(10, 10, 10)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(printbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(deletebtn, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(takeCalendarbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(saveCalendarbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(takeCalendarbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(saveCalendarbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(deletebtn)
                     .addComponent(createCalendar)))
         );
 
@@ -227,10 +271,18 @@ public class ViewCalendar extends javax.swing.JFrame {
     }//GEN-LAST:event_finebtnActionPerformed
 
     private void serachbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_serachbtnActionPerformed
+        setTableBG();
         int j = 0;
+        matchesModel = new ArrayList<Match>();
         model.setRowCount(0);
         for (int i = 0; i < rank.getCalendar().getGames().size(); i++) {
-            if(rank.getCalendar().getGames().get(i).getHomeTeam().getName().equals(searchtxt.getText()) || rank.getCalendar().getGames().get(i).getGuestTeam().getName().equals(searchtxt.getText()) || searchtxt.getText().equals(rank.getCalendar().getGames().get(i).getDay())){
+            int srcDay;
+            try {
+                srcDay = Integer.parseInt(searchtxt.getText());
+            } catch (NumberFormatException e){
+                srcDay = -1;
+            }
+            if(rank.getCalendar().getGames().get(i).getHomeTeam().getName().equals(searchtxt.getText()) || rank.getCalendar().getGames().get(i).getGuestTeam().getName().equals(searchtxt.getText()) || srcDay == rank.getCalendar().getGames().get(i).getDay()){
                 if(rank.getCalendar().getGames().get(i).getPlayed() == false){
                     model.insertRow(j, new Object[]{rank.getCalendar().getGames().get(i).getDay(), rank.getCalendar().getGames().get(i).getHomeTeam().getCity(), rank.getCalendar().getGames().get(i).getHomeTeam().getName(), rank.getCalendar().getGames().get(i).getGuestTeam().getName(), "-", "-", rank.getCalendar().getGames().get(i).getPlayed()});
                 } else {
@@ -239,13 +291,20 @@ public class ViewCalendar extends javax.swing.JFrame {
                 matchesModel.add(rank.getCalendar().getGames().get(i));
                 j++;
             }
-            
         }
     }//GEN-LAST:event_serachbtnActionPerformed
 
     private void takeCalendarbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_takeCalendarbtnActionPerformed
         try {
-            rank.getCalendar().takeFromFile(rank.getTeams());
+            int returnVal = fc.showOpenDialog(null);
+            File file;
+            if (returnVal == JFileChooser.APPROVE_OPTION) {
+                file = fc.getSelectedFile();
+            } else {
+                return ;
+            }
+            
+            rank.getCalendar().takeFromFile(file.getAbsolutePath(), rank.getTeams());
             printTable();
             insertYearlbl.setText(String.valueOf(rank.getCalendar().getYear()));
             JOptionPane.showMessageDialog(null, "Calendario caricato con successo");
@@ -258,7 +317,16 @@ public class ViewCalendar extends javax.swing.JFrame {
 
     private void saveCalendarbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveCalendarbtnActionPerformed
         try {
-            rank.getCalendar().saveCalendar();
+            int returnVal = fc.showSaveDialog(null);
+            
+            File file;
+            if (returnVal == JFileChooser.APPROVE_OPTION) {
+                file = fc.getSelectedFile();
+            } else {
+                return ;
+            }
+            
+            rank.getCalendar().saveCalendar(file.getAbsolutePath());
             System.out.println("Salvato su file");
             JOptionPane.showMessageDialog(null, "Salvato su file");
         } catch (FileNotFoundException ex) {
@@ -339,4 +407,58 @@ public class ViewCalendar extends javax.swing.JFrame {
     private javax.swing.JButton viewbtn;
     private javax.swing.JLabel yearlbl;
     // End of variables declaration//GEN-END:variables
+
+    // Table renderers--------------------------------------------------------
+    
+    // Inner class che mi serve per creare un renderer apposito che mostri una checkbox in base al valore booleano della cella
+    public class CheckBoxRenderer extends JCheckBox implements TableCellRenderer {
+        private final int returnStart;
+        CheckBoxRenderer(int returnStart) {
+            setHorizontalAlignment(JLabel.CENTER);
+            this.returnStart = returnStart;
+        }
+
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value,
+            boolean isSelected, boolean hasFocus, int row, int column) {
+            
+            int daySelected = (int) table.getValueAt(row, 0);
+            Color bgColor = daySelected >= returnStart ? Color.LIGHT_GRAY : Color.WHITE;
+            Color fgColor = Color.BLACK;
+            if(isSelected){
+                bgColor = Color.GRAY;
+                fgColor = Color.WHITE;
+            }
+            
+            setBackground(bgColor);
+            setForeground(fgColor);
+            
+            setSelected((value != null && ((Boolean) value).booleanValue()));
+            return this;
+        }
+    }
+    
+    private DefaultTableCellRenderer getCellRenderer(int returnStart){
+        return new DefaultTableCellRenderer()
+        {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column)
+            {
+                final Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                int daySelected = (int) table.getValueAt(row, 0);
+                Color bgColor = daySelected >= returnStart ? Color.LIGHT_GRAY : Color.WHITE;
+                Color fgColor = Color.BLACK;
+                if(isSelected){
+                    bgColor = Color.GRAY;
+                    fgColor = Color.WHITE;
+                }
+
+                c.setBackground(bgColor);
+                c.setForeground(fgColor);
+                return c;
+            }
+        };
+    }
+    
+    // Table renderers--------------------------------------------------------
 }

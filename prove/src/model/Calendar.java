@@ -10,7 +10,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-//import javax.swing.JOptionPane;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONArray;
@@ -56,14 +55,16 @@ public class Calendar {
     }
     
     /**
-     * @return Metodo che ritorna i match nell'ArrayList di partite.
+     * Metodo che ritorna i match nell'ArrayList di partite.
+     * @return arraylist di partite.
      */
     public ArrayList<Match> getGames(){
         return games;
     }
     
     /**
-     * @return Metodo che ritorna l'anno in cui si svolge il campionato 
+     * Metodo che ritorna l'anno in cui si svolge il campionato.
+     * @return 
      */
     public int getYear(){
         return year;
@@ -89,8 +90,8 @@ public class Calendar {
      * Metodo che crea un file JSon per il salvataggio del calendario su file.
      * @throws java.io.FileNotFoundException
      */
-    public void saveCalendar() throws FileNotFoundException{
-        PrintWriter pw = new PrintWriter("calendar.json"); 
+    public void saveCalendar(String filePath) throws FileNotFoundException{
+        PrintWriter pw = new PrintWriter(filePath); 
         JSONObject jo = new JSONObject();
         jo.put("Year", year);
         JSONArray ja = new JSONArray();
@@ -113,9 +114,9 @@ public class Calendar {
      * @throws java.io.FileNotFoundException
      * @throws org.json.simple.parser.ParseException
      */
-    public void takeFromFile(ArrayList<Team> teams) throws FileNotFoundException, IOException, ParseException, Exception {
+    public void takeFromFile(String filePath, ArrayList<Team> teams) throws FileNotFoundException, IOException, ParseException, Exception {
        games = new ArrayList<Match>();
-       Object obj = new JSONParser().parse(new FileReader("calendar.json"));
+       Object obj = new JSONParser().parse(new FileReader(filePath));
        JSONObject jo = (JSONObject) obj;
        
        this.year = new Long((long) jo.get("Year")).intValue();
@@ -191,6 +192,21 @@ public class Calendar {
         for (int i = 0; i < games.size(); i++) {
             games.get(i).resetResults();
         }
+    }
+    
+    /**
+     * Metodo per calcolare il numero di giornate nel campionato.
+     * @return intero che contiene il numero di giornate.
+     */
+    public int getNumDays(){
+        int maxDay = 0;
+        for (Match game : games) {
+            if(game.getDay() >= maxDay){
+                maxDay = game.getDay();
+            }
+        }
+        
+        return maxDay;
     }
     
     /**

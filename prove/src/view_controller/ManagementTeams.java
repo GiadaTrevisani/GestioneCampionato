@@ -6,9 +6,11 @@
 package view_controller;
 
 import java.awt.Dimension;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Ranking;
@@ -16,18 +18,26 @@ import model.Team;
 import org.json.simple.parser.ParseException;
 
 /**
- *
+ * In questo frame è possibile agire direttamente sulle squadre, la classe 
+ * offre la possibilità di creare una nuova squadra, modificare o eliminare
+ * una squadra già esistente selezionandola dalla tabella della squadre, 
+ * cercare una squadra per nome o per città attraverso il bottone cerca e
+ * la textfield dove verrà inserito il nome, tornare alla lista di squadre 
+ * tramite il bottone "X", salvare su file la lista delle squadre inserite
+ * e infine caricare la lista di squadre dal file JSon.
  * @author giadatrevisani
- */
+*/
 public final class ManagementTeams extends javax.swing.JFrame {
     private final Ranking rank;
     private final String sport;
     private final DefaultTableModel model;
     private boolean openNewTeam, openViewUpdate;
     private ArrayList<Team> teamsModel;
+    private final JFileChooser fc;
     
     
     public ManagementTeams(Ranking rank, String sport){
+        this.fc = new JFileChooser(new File("./"));
         initComponents();
         model = (DefaultTableModel) viewTeams.getModel();
         openNewTeam = false;
@@ -36,20 +46,12 @@ public final class ManagementTeams extends javax.swing.JFrame {
         this.rank = rank;
         teamsModel = new ArrayList<Team>();
         
-//        this.rank.addTeam("mamma", "soliera", "cacca");
-//        this.rank.addTeam("papà", "gallipoli", "cacchina");
-//        this.rank.addTeam("io", "firenze", "caccola");
-//        this.rank.addTeam("vale", "roma", "cacchetta");
-//        this.rank.addTeam("luca", "bologna", "caccona");
-//        this.rank.addTeam("nonna", "eggio", "caccarella");
-//        this.rank.addTeam("nonno", "carpi", "caccuccia");
-        
-       
-        printTable();
         this.creaGui();
         
         viewTeams.getTableHeader().setEnabled(false);
-
+        viewTeams.setDefaultEditor(Object.class, null);
+        
+        printTable();
     }
     
     private void creaGui() {
@@ -118,13 +120,15 @@ public final class ManagementTeams extends javax.swing.JFrame {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Object.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
         });
+        viewTeams.getTableHeader().setResizingAllowed(false);
+        viewTeams.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(viewTeams);
 
         takeTeamsbtn.setText("<html><p style = \"text-align: center\">Carica Squadre<br>Da File</p></html>");
@@ -246,7 +250,15 @@ public final class ManagementTeams extends javax.swing.JFrame {
     private void takeTeamsbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_takeTeamsbtnActionPerformed
         System.out.println("Carico squadre da file");
         try {
-            rank.takeFromFile();
+            int returnVal = fc.showOpenDialog(null);
+            File file;
+            if (returnVal == JFileChooser.APPROVE_OPTION) {
+                file = fc.getSelectedFile();
+            } else {
+                return ;
+            }
+            
+            rank.takeFromFile(file.getAbsolutePath());
             JOptionPane.showMessageDialog(null, "Squadre caricate con successo");
         } catch (IOException | ParseException ex) {
             JOptionPane.showMessageDialog(null, "Squadre non caricate: file mancante oppure non corrretto");
@@ -266,7 +278,16 @@ public final class ManagementTeams extends javax.swing.JFrame {
      */
     private void saveTeamsbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveTeamsbtnActionPerformed
         try {
-            rank.saveTeams();
+            int returnVal = fc.showSaveDialog(null);
+            
+            File file;
+            if (returnVal == JFileChooser.APPROVE_OPTION) {
+                file = fc.getSelectedFile();
+            } else {
+                return ;
+            }
+            
+            rank.saveTeams(file.getAbsolutePath());
             JOptionPane.showMessageDialog(null, "Squadre salvate correttamente");
         } catch (FileNotFoundException ex) {
             System.out.println("Salvataggio non avvenuto");
@@ -298,7 +319,7 @@ public final class ManagementTeams extends javax.swing.JFrame {
     }//GEN-LAST:event_searchbtnActionPerformed
 
     /**
-     * Questo metodo ripristina la tabella iniziale dopo che ho cercato una squadra.
+     * Questo metodo ripristina la tabella iniziale delle squadre dopo che ho cercato una squadra.
     */
     private void finebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_finebtnActionPerformed
         searchTeams.setText("");

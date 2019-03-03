@@ -100,6 +100,12 @@ public abstract class Ranking {
         }
     }
     
+    /**
+     * Metodo usato per trovare una squadra passandogli il nome.
+     * @param name indica il nome della squadra.
+     * @return il team con il nome passato come parametro.
+     * @throws Exception 
+     */
     public Team getTeamforName(String name) throws Exception {
         for (Team t : teams) {
             if(t.getName().equals(name)){
@@ -170,11 +176,18 @@ public abstract class Ranking {
     }
     
     
+    /**
+     * Metodo per aggiornare una squadra. Se si inserisce come nome della squadra
+     * un nome già esistente il motodo ritorna senza effettuare nessun aggiornamento.
+     * @param name nome della squadra.
+     * @param city città sede della squadra.
+     * @param logo logo della squadra.
+     * @param index indice dove è salvata la squadra nell'array.
+     */
     public void updateTeam(String name, String city, String logo, int index){
         for (int i = 0; i < teams.size(); i++) {
             if(teams.get(i).getName().equals(name)){
                 System.out.println("Esiste già un'altra squadra con quel nome");
-                //JOptionPane.showMessageDialog(null, "Esiste già un'altra squadra con quel nome");
                 return ;
             }
         }
@@ -182,7 +195,6 @@ public abstract class Ranking {
         teams.get(index).setCity(city);
         teams.get(index).setLogo(logo);
         System.out.println("Squadra aggiornata");
-        //JOptionPane.showMessageDialog(null, "Squadra aggiornata");
     }
     
     /**
@@ -195,9 +207,9 @@ public abstract class Ranking {
     * riportate all'inizio del file.
     * @throws java.io.FileNotFoundException
     */
-    public void saveTeams() throws FileNotFoundException {
+    public void saveTeams(String filePath) throws FileNotFoundException {
         // writing JSON to file:"teams.json" in cwd 
-        PrintWriter pw = new PrintWriter("teams.json"); 
+        PrintWriter pw = new PrintWriter(filePath); 
         JSONArray ja = new JSONArray();
         for (int i = 0; i < teams.size(); i++) { 
             ja.add(teams.get(i).toJSONObject());
@@ -213,10 +225,10 @@ public abstract class Ranking {
      * @throws java.io.FileNotFoundException
      * @throws org.json.simple.parser.ParseException
      */
-    public void takeFromFile() throws FileNotFoundException, IOException, ParseException {
+    public void takeFromFile(String filePath) throws FileNotFoundException, IOException, ParseException {
         teams = new ArrayList<Team>();
         // parsing file "teams.json" 
-        Object obj = new JSONParser().parse(new FileReader("teams.json"));
+        Object obj = new JSONParser().parse(new FileReader(filePath));
         // typecasting obj to JSONObject 
         JSONArray ja = (JSONArray) obj;
           
@@ -232,7 +244,6 @@ public abstract class Ranking {
      * @param teamName nome della squadra;
      * @return intero con il numero di partite che la squadra ha giocato.
      */
-    
     public int getPlayedForTeam(String teamName){
         int played = 0;
         for(int i = 0; i < calendar.getGames().size(); i++){
