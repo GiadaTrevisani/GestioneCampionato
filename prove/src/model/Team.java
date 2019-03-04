@@ -8,17 +8,12 @@ package model;
 import org.json.simple.JSONObject;
 
 /**
- *
- * @author giadatrevisani
- */
-
-/**
  * La classe Team avrà come parametri il nome della squadra,
  * il nome della città e il logo.
  * Il logo sarà rappresentato da un'immagine del logo della squdra,
  * se non esiste un logo, ne sarà assegnato uno di default.
+ * @author giadatrevisani
 */
-
 public class Team {
     String name;
     String city;
@@ -84,6 +79,11 @@ public class Team {
         this.logo = logo;
     }
     
+    /**
+     * Metodo che serializza questo oggetto di tipo Team in un oggetto di tipo
+     * JSON.
+     * @return un JSONObject contenente i dati di un Team.
+     */
     public JSONObject toJSONObject(){
         JSONObject jo = new JSONObject();
         jo.put("Name" , getName());
@@ -93,6 +93,14 @@ public class Team {
         return jo;
     }
     
+    /**
+     * Metodo che deserializza un oggetto di tipo JSON che viene passato come
+     * parametro e genera un oggetto di tipo team con le informazioni contenute 
+     * nell'oggetto di tipo JSON.
+     * @param jo oggeto JSON.
+     * @return un oggetto di tipo team con le informazioni contenute 
+     * nell'oggetto di tipo JSON.
+     */
     public static Team fromJSONObject(JSONObject jo){
         String teamName = (String) jo.get("Name"); 
         String teamCity = (String) jo.get("City"); 

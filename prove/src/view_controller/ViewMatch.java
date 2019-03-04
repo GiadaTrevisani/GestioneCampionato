@@ -33,6 +33,13 @@ public class ViewMatch extends javax.swing.JFrame {
     private final Match match;
     private final ViewCalendar father;
     
+    /**
+     * Costruttore che prende in ingresso un oggetto di tipo Match, un oggetto 
+     * di tipo Jframe e una stringa.
+     * @param match indica un oggetto di tipo Match.
+     * @param father indica un oggetto di tipo JFrame.
+     * @param sport stringa che inidica lo sport.
+     */
     public ViewMatch(Match match, ViewCalendar father, String sport) {
         this.sport = sport;
         this.father = father;
@@ -51,6 +58,9 @@ public class ViewMatch extends javax.swing.JFrame {
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE); 
     }
     
+    /** 
+     * Metodo che stampa i match nelle label del Jframe.
+     */
     private void printMatch(){
         nameHomelbl.setText(match.getHomeTeam().getName());
         cittaHomelbl.setText(match.getHomeTeam().getCity());

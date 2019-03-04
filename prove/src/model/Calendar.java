@@ -15,20 +15,19 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONArray;
 import org.json.simple.parser.ParseException;
-/**
- * @author giadatrevisani
- */
 
 /**
- * La classe Calendar avrà come parametri un array di partite (grandezza?)
+ * La classe Calendar avrà come parametri un array di partite
  * e l'anno del campionato.
+ * @author giadatrevisani
  */
 public class Calendar {
     private ArrayList<Match> games;
     private int year;
     
     /**
-     * Primo costruttore che prende in ingresso:
+     * Primo costruttore che prende in ingresso un array di partite già esistente
+     * e l'anno di questo campionato.
      * @param games che indica l'Arrayist di tipo Match che saranno inseriti
      * nell'ArrayList nuovo.
      * @param year che indica l'anno in cui si svolge il campionato.
@@ -39,7 +38,8 @@ public class Calendar {
     }
     
     /**
-     * Secondo costruttore che prende in ingresso:
+     * Secondo costruttore che prende in ingresso un intero che indica l'anno
+     * di questo campionato.
      * @param year indica l'anno in cui si svolge il campionato.
      */
     public Calendar(int year){
@@ -65,31 +65,33 @@ public class Calendar {
     
     /**
      * Metodo che ritorna l'anno in cui si svolge il campionato.
-     * @return 
+     * @return intero che indica l'anno di questo campionato.
      */
     public int getYear(){
         return year;
     }
     
     /**
-     * Metodo che setta l'ArrayList di partite che vengono passate in input
-     * @param games ArrayList di partite 
+     * Metodo che setta l'ArrayList di partite che vengono passate in input.
+     * @param games ArrayList di partite.
      */
     public void setGames(ArrayList<Match> games){
         this.games = games;
     }
     
     /**
-     * Metodo che setta l'anno del campionato che si vuole creare
-     * @param year intero che indica l'anno
+     * Metodo che setta l'anno del campionato che si vuole creare.
+     * @param year intero che indica l'anno.
      */
     public void setYear(int year){
         this.year = year;
     }
     
-     /**
-     * Metodo che crea un file JSon per il salvataggio del calendario su file.
-     * @throws java.io.FileNotFoundException
+     
+    /**
+     * Metodo che serializza e salva siu file il calendario.
+     * @param filePath stringa con il filepath.
+     * @throws FileNotFoundException 
      */
     public void saveCalendar(String filePath) throws FileNotFoundException{
         PrintWriter pw = new PrintWriter(filePath); 
@@ -110,10 +112,15 @@ public class Calendar {
     }
     
     /**
-     * Metodo per caricare il calendario da un salvataggio Json.
-     * @param teams
-     * @throws java.io.FileNotFoundException
-     * @throws org.json.simple.parser.ParseException
+     * Metodo per deserializzare il calendario da un salvataggio Json.
+     * @param filePath stringa che indica il filepath.
+     * @param teams ArrayList di tipo Team.
+     * @param callback funzione di callback che viene chiamata per notificare il
+     * progresso del caricamento.
+     * @throws FileNotFoundException
+     * @throws IOException
+     * @throws ParseException
+     * @throws Exception 
      */
     public void takeFromFile(String filePath, ArrayList<Team> teams, Consumer<Integer> callback) throws FileNotFoundException, IOException, ParseException, Exception {
         games = new ArrayList<Match>();
@@ -147,7 +154,7 @@ public class Calendar {
     
     
     /**
-     * Metodo che torna un array di partite che si svolgono nella stessa giornata
+     * Metodo che torna un array di partite che si svolgono nella stessa giornata.
      * @param day viene passato in ingresso al metodo che servirà per fare 
      * un controllo delle partite inserite nell'ArrayList games.
      * @return ArrayList con le partite che si volgono nella stessa giornata.
@@ -198,7 +205,9 @@ public class Calendar {
     }
     
     /**
-     * Metodo per resettare i risultati di tutte le partite.
+     * Metodo per resettare i risultati di tutte le partite. Questo metodo 
+     * scorre tutti i games e tramite il metodo resetResults elimina tutti i 
+     * risultati.
      */
     public void deleteResults(){
         for (int i = 0; i < games.size(); i++) {
@@ -235,7 +244,7 @@ public class Calendar {
     }
     
   /**
-   * Algoritmo per la creazione del calendario di uno sport
+   * Algoritmo per la creazione del calendario di uno sport.
    * @param teams indica l'ArrayList di squadre che vengono passate alla funzione 
    */  
     public void AlgoritmoDiBerger(ArrayList<Team> teams){
@@ -310,6 +319,13 @@ public class Calendar {
         }
     }
 
+    /**
+     * Metodo che esegue uno shift a sinistra di un array di team e che riempie
+     * lo spazio vuoto con un'altro team.
+     * @param data Array da shiftare.
+     * @param add oggetto di tipo team che riempie lo spazio vuoto.
+     * @return array shiftato.
+     */
     private Team[] shiftLeft(Team[] data, Team add) {
        Team[] temp = new Team[data.length];
        for (int i = 0; i < data.length-1; i++) {
@@ -317,8 +333,15 @@ public class Calendar {
        }
        temp[data.length - 1] = add;
        return temp;
-	}
-
+    }
+    
+    /**
+     * Metodo che esegue uno shift a destra di un array di team e che riempie
+     * lo spazio vuoto con un'altro team.
+     * @param data Array da shiftare.
+     * @param add oggetto di tipo team che riempie lo spazio vuoto.
+     * @return array shiftato.
+     */
     private Team[] shiftRight(Team[] data, Team add) {
         Team[] temp = new Team[data.length];
         for (int i = 1; i < data.length; i++) {

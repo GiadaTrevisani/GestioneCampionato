@@ -8,23 +8,40 @@ package model;
 import java.util.ArrayList;
 
 /**
- *
+ * Classe che estende la classe Ranking e si specializza con lo sport basket.
  * @author giadatrevisani
  */
 public class RankingBasket extends Ranking{
 
+    /**
+     * Primo costruttore che prende in ingresso un oggetto di tipo calendar.
+     * @param calendar oggetto di tipo calendar.
+     */
     public RankingBasket(Calendar calendar){
         super(calendar);
     }
 
+    /**
+     * Secondo costruttore che prende in ingresso un arraylist di team e un 
+     * oggetto di tipo calendar.
+     * @param teams ArrayList di team.
+     * @param calendar oggetto di tipo Calendar.
+     */
     public RankingBasket(ArrayList<Team> teams, Calendar calendar){
         super(teams, calendar);
     }
 
+    /**
+     * Terzo costruttore che prende in ingresso un ArrayList di team. 
+     * @param teams ArrayList di team.
+     */
     public RankingBasket(ArrayList<Team> teams){
         super(teams);
     }
 
+    /**
+     * Quarto costruttore che non prende in ingresso niente.
+     */
     public RankingBasket(){
         super();
     }

@@ -40,7 +40,12 @@ public class Select extends JPanel{
     private boolean opencalendar;
     private boolean openranking;
     
-     
+     /**
+      * Costruttore che prende in ingresso una stringa che indica il tipo di 
+      * sport e un JPanel chiamato father.
+      * @param sport stringa che indica il nome dello sport.
+      * @param father oggetto di tipo JPanel.
+      */
     public Select(String sport, JPanel father){      
         cal = new Calendar(); // new Calendar(year);
         

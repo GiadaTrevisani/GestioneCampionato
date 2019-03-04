@@ -6,13 +6,7 @@
 package model;
 
 import java.util.ArrayList;
-// import javax.swing.JOptionPane;
 import org.json.simple.JSONObject;
-
-/**
- *
- * @author giadatrevisani
- */
 /**
  * Nella classe Match sono presenti come parametri i nomi delle 
  * due squadre (casa e ospite) che giocheranno la partita, la data, 
@@ -20,6 +14,7 @@ import org.json.simple.JSONObject;
  * il risutato che ha ottenuto la squadra ospite.
  * In più si è aggiunto un altra variabile booleana che dice se la 
  * partita è stata giocata oppure no.
+ * @author giadatrevisani
 */
 public class Match{
     
@@ -167,13 +162,18 @@ public class Match{
     
     /**
      * Metodo che setta se la partita è stata giocata o meno, passando un booleano
-     * come parametro
-     * @param played 
+     * come parametro.
+     * @param played booleano che definisce se la partita è giocata. 
      */
     public void setPlayed(boolean played){
         this.played = played;
     }
     
+    /**
+     * Metodo che serializza questo oggetto di tipo Match e genera un oggetto di 
+     * tipo JSON.
+     * @return oggetto di tipo JSON.
+     */
     public JSONObject toJSONObject(){
         JSONObject jo = new JSONObject();
         jo.put("HomeTeam", getHomeTeam().getName());
@@ -187,11 +187,11 @@ public class Match{
     }
     
     /**
-     * Metodo statico per creare un match da un JsonObject.
+     * Metodo statico per deserializzzare un match da un JsonObject.
      * @param jo indica il JsonObject.
      * @param teams indica la lista delle squadre presenti.
      * @return il match creato.
-     * @throws Exception 
+     * @throws Exception
      */
     public static Match fromJSONObject(JSONObject jo, ArrayList<Team> teams) throws Exception {
         String homeTeam = (String) jo.get("HomeTeam");
@@ -221,6 +221,13 @@ public class Match{
         return nm;
     }
     
+    /**
+     * Metodo che dato un match ne crea il ritorno.
+     * @param m oggetto di tipo Match di cui creare il ritorno.
+     * @param n_days intero che indica il numero di giorni che servono per fare
+     * l'andata.
+     * @return Il match di ritorno.
+     */
     public static Match swapHomeGuest(Match m, int n_days){
         return new Match(m.getGuestTeam(), m.getHomeTeam(), m.getDay() + n_days);
     }

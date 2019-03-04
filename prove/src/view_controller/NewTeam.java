@@ -10,8 +10,6 @@ import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -43,10 +41,10 @@ public class NewTeam extends javax.swing.JFrame {
      * le squadre da aggiungere o da aggiornare attraverso il bottone btnNew.
      * Ci sarà anche un bottone per cercare il logo della squadra tra quelli
      * presenti nella directory img_logo.
-     * @param team
-     * @param rank
-     * @param father
-     * @param sport
+     * @param team indica un oggeto di tipo Team.
+     * @param rank indica un oggetto di tipo Raning.
+     * @param father indica un oggetto di tipo JFrame.
+     * @param sport stringa che indica il tipo di sport.
      */
     public NewTeam(Team team, Ranking rank, ManagementTeams father, String sport){
         this.sport = sport;

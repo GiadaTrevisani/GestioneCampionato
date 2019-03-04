@@ -51,7 +51,8 @@ public class ViewCalendar extends javax.swing.JFrame {
     private final JFileChooser fc;
     
     /**
-     * Costruttore che prende in ingresso un oggetto di tipo Ranking da cui 
+     * Costruttore che prende in ingresso un oggetto di tipo Ranking, che è una 
+     * classe astratta e quindi viene sfruttato il polimorfismo, da cui 
      * attinge ai dati per riempire la tabella e modificare i dati di calendario,
      * e una stringa che definisce lo sport.
      * @param rank oggetto di tipo Ranking.

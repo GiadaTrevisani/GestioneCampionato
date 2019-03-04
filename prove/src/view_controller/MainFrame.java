@@ -27,13 +27,16 @@ public class MainFrame extends JFrame{
     private final JButton basketbtn;
     private final JPanel whichsports;
     Box vertical;
-    public MainFrame(String gestione_campionati) {
+    /**
+     * Costruttore che non prende in ingresso niente.
+     */
+    public MainFrame() {
         whichsports = new JPanel();
         soccerbtn = new JButton("Soccer");
         volleybtn = new JButton("Volley");
         basketbtn = new JButton("Basket");
         vertical = Box.createHorizontalBox();
-    this.createGUI();
+        this.createGUI();
     }
     
     private void createGUI(){

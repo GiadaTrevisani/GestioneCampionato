@@ -29,6 +29,12 @@ public class ViewRanking extends javax.swing.JFrame {
     
     private ArrayList<Team> teamsInOrder;
     
+    /**
+     * Costruttore che prende in ingresso un oggetto di tipo Ranking e una
+     * stringa.
+     * @param rank indica un oggetto di tipo Ranking.
+     * @param sport stringa che indica lo sport.
+     */
     public ViewRanking(Ranking rank, String sport) {
         this.rank = rank;
         this.sport = sport;
